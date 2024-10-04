@@ -1,21 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const reservationController = require('../controller/bookingController');
 
-const { getBookings, createBooking, getBookingsByUser, deleteBooking, updateBooking } = require('../controller/bookingController.js');
+// Route to create a new reservation
+router.post('/create', reservationController.createReservation);
 
-
-// Get all bookings
-router.get('/all', getBookings);
-
-router.post('/create',createBooking);
-
-router.get('/user/:userId', getBookingsByUser);
-
-//delete booking
-router.delete('/:id', deleteBooking);
-
-// Update booking by _id
-router.put('/:id', updateBooking);
-
+// Route to fetch booked dates for a specific equipment
+router.get('/bookedDates/:equipmentId', reservationController.getBookedDates);
 
 module.exports = router;

@@ -14,18 +14,15 @@ const BookingPage = () => {
         fullName: '',
         email: '',
         phone: '',
-        rentalDuration: 1,
         specialRequests: ''
     });
     const [errors, setErrors] = useState({});
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const userId = currentUser ? currentUser.userID : null; // Safely get userID
 
     useEffect(() => {
         const fetchEquipmentDetails = async () => {
             try {
                 const response = await axios.get(`/api/equipment/getEquipment/${id}`);
-                setEquipment(response.data); // Set equipment data once it's fetched
+                setEquipment(response.data.equipment); // Set equipment data once it's fetched
             } catch (error) {
                 console.error('Error fetching equipment details:', error);
             }
@@ -100,10 +97,8 @@ const BookingPage = () => {
 
         try {
             const bookingData = {
-                userId,
                 equipmentId: id,
                 fullName: formData.fullName,
-                rentalDuration: formData.rentalDuration,
                 userEmail: formData.email,
                 userPhone: formData.phone,
                 specialRequests: formData.specialRequests,
@@ -122,9 +117,12 @@ const BookingPage = () => {
         }
     };
 
-    // Disable already booked dates
-    const tileDisabled = ({ date, view }) => {
-        return bookedDates.some(bookedDate => new Date(bookedDate).toDateString() === date.toDateString());
+    // Disable already booked dates in the calendar
+    const tileDisabled = ({ date }) => {
+        return bookedDates.some(bookedDate => {
+            const booked = new Date(bookedDate);
+            return booked.toDateString() === date.toDateString();
+        });
     };
 
     return (
@@ -134,7 +132,7 @@ const BookingPage = () => {
                 <div className={styles.equipmentImageSection}>
                     {equipment && (
                         <img
-                            src={equipment.image}
+                            src={`/${equipment.imageUrl}`} // Display equipment image
                             alt={equipment.name}
                             className={styles.equipmentImage}
                         />
@@ -202,21 +200,6 @@ const BookingPage = () => {
                                 onChange={setSelectedDate}
                                 value={selectedDate}
                                 tileDisabled={tileDisabled} // Disable already booked dates
-                            />
-                        </div>
-
-                        {/* Rental Duration */}
-                        <div className={styles.formGroup}>
-                            <label htmlFor="rentalDuration" className={styles.label}>Rental Duration (days)</label>
-                            <input
-                                type="number"
-                                id="rentalDuration"
-                                name="rentalDuration"
-                                className={styles.input}
-                                value={formData.rentalDuration}
-                                onChange={handleChange}
-                                required
-                                min="1"
                             />
                         </div>
 
