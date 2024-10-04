@@ -1,0 +1,33 @@
+/* AdminPage.module.css */
+
+.loaderContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f4f8;
+  }
+  
+  .dashboardContainer {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+  }
+  
+  .sideMenuAndContent {
+    display: flex;
+    width: 100%;
+  }
+  
+  .sidebarContainer {
+    width: 250px;
+    background-color: #2d3748;
+    padding: 1rem;
+  }
+  
+  .pageContent {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 2rem;
+  }
+  

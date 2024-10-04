@@ -5,6 +5,7 @@ import Navbar from "../components/CommonComponents/Navbar";
 import axios from "axios";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import styles from "./LoginPage.module.css";
 
 function LoginPage() {
     const [email, setEmail] = useState("");
@@ -52,44 +53,41 @@ function LoginPage() {
     return (
         <>
             <Navbar />
-            <div className="sg_main_container_login_page">
-                <div className="sg_login_background_main">
-                    <div className="sg_login_main_container">
+            <div className={styles.mainContainer}>
+                <div className={styles.backgroundContainer}>
+                    <div className={styles.formContainer}>
                         <form onSubmit={handleLogin}>
-                            <div className="sg_login_title_main_container">
-                                <h2 className="sg_logon_title">
-                                    Hi, Welcome Back
-                                </h2>
-                                <p className="sg_login_subtitle">
-                                    Enter your credentials to continue
-                                </p>
+                            <div className={styles.titleContainer}>
+                                <h2 className={styles.title}>Hi, Welcome Back</h2>
+                                <p className={styles.subtitle}>Enter your credentials to continue</p>
                             </div>
-                            <div className="sg_input_filed_main">
+                            <div className={styles.inputFieldsContainer}>
                                 <input
                                     type="email"
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
-                                    className="sg_login_email_input"
+                                    className={styles.inputEmail}
                                 />
-                                <div className="">
+                                <div className={styles.passwordFieldContainer}>
                                     <input
-                                        type={
-                                            showPassword ? "text" : "password"
-                                        }
+                                        type={showPassword ? "text" : "password"}
                                         placeholder="Password"
                                         value={password}
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
+                                        onChange={(e) => setPassword(e.target.value)}
                                         required
-                                        className="sg_login_password_input"
+                                        className={styles.inputPassword}
                                     />
-                                    
+                                    <Icon
+                                        path={showPassword ? mdiEyeOff : mdiEye}
+                                        size={1}
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className={styles.passwordToggleIcon}
+                                    />
                                 </div>
                             </div>
-                            <div className="sg_login_remember_me">
+                            <div className={styles.rememberMeSection}>
                                 <label>
                                     <input
                                         type="checkbox"
@@ -97,22 +95,16 @@ function LoginPage() {
                                     />
                                     Remember me
                                 </label>
-                                <a
-                                    href="/"
-                                    className="sg_login_forgot_password"
-                                >
+                                <a href="/" className={styles.forgotPasswordLink}>
                                     Forgot Password?
                                 </a>
                             </div>
-                            <button
-                                type="submit"
-                                className="sg_login_main_button"
-                            >
+                            <button type="submit" className={styles.loginButton}>
                                 Login
                             </button>
-                            <p className="sg_signup_txt_main">
+                            <p className={styles.signupText}>
                                 Don't have an account?{" "}
-                                <a href="/" className="sg_signup_link">
+                                <a href="/" className={styles.signupLink}>
                                     Sign up
                                 </a>
                             </p>

@@ -6,6 +6,7 @@ import { FaEdit, FaTrashAlt, FaDownload, FaSearch } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import debounce from "lodash.debounce";
+import styles from "./EventDetails.module.css";
 
 function EventDetails() {
   const [bookings, setBookings] = useState([]);
@@ -197,89 +198,68 @@ function EventDetails() {
   }, 300); // Debounced search for performance
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-bl from-white to-[#E0F0E0]">
-      <section className="p-10 max-w-6xl mx-auto flex-grow">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4 mt-6 tracking-wider">
-            Event Bookings
-          </h1>
+    <div className={styles.container}>
+      <section className={styles.contentSection}>
+        <div className={styles.headerSection}>
+          <h1 className={styles.title}>Event Bookings</h1>
           <button
             onClick={handleDownloadReport}
-            className="bg-[#E0F0E0] text-gray-700 px-5 py-3 rounded-lg hover:bg-green-400 transition-all ease-in-out duration-300 flex items-center"
+            className={styles.downloadButton}
           >
-            <FaDownload className="mr-2" /> Download Report
+            <FaDownload className={styles.icon} /> Download Report
           </button>
         </div>
 
-        <div className="flex justify-between items-center mb-8">
+        <div className={styles.searchSection}>
           <input
             type="text"
             placeholder="Search by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+            className={styles.searchInput}
           />
-          <FaSearch className="ml-2 text-gray-500" size={24} />
+          <FaSearch className={styles.searchIcon} size={24} />
         </div>
 
         {filteredBookings.length === 0 ? (
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <p className="text-gray-600">No bookings found.</p>
+          <div className={styles.noBookingsMessage}>
+            <p>No bookings found.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-auto bg-white rounded-lg shadow-lg border border-gray-100">
-              <thead className="bg-[#E0F0E0] text-gray-800">
+          <div className={styles.tableWrapper}>
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-medium">
-                    Full Name
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium">
-                    Quantity
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium">
-                    Ticket Type
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium">
-                    Email
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium">
-                    Phone
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium">
-                    Special Request
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium">
-                    Actions
-                  </th>
+                  <th>Full Name</th>
+                  <th>Quantity</th>
+                  <th>Ticket Type</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Special Request</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-700">
+              <tbody>
                 {filteredBookings.map((booking) => (
-                  <tr
-                    key={booking._id}
-                    className="border-b hover:bg-gray-50 transition duration-200"
-                  >
-                    <td className="px-6 py-4 text-sm">{booking.fullName}</td>
-                    <td className="px-6 py-4 text-sm">{booking.ticketQuantity}</td>
-                    <td className="px-6 py-4 text-sm">{booking.ticketType}</td>
-                    <td className="px-6 py-4 text-sm">{booking.userEmail}</td>
-                    <td className="px-6 py-4 text-sm">{booking.userPhone}</td>
-                    <td className="px-6 py-4 text-sm">
-                      {booking.specialRequest || "None"}
-                    </td>
-                    <td className="px-6 py-4 flex space-x-4 text-sm">
+                  <tr key={booking._id} className={styles.tableRow}>
+                    <td>{booking.fullName}</td>
+                    <td>{booking.ticketQuantity}</td>
+                    <td>{booking.ticketType}</td>
+                    <td>{booking.userEmail}</td>
+                    <td>{booking.userPhone}</td>
+                    <td>{booking.specialRequest || "None"}</td>
+                    <td className={styles.actionsCell}>
                       <button
                         onClick={() => handleEditBooking(booking)}
-                        className="text-green-600 hover:text-green-800"
+                        className={styles.editButton}
                       >
-                        <FaEdit className="inline mr-1" />
+                        <FaEdit className={styles.icon} />
                       </button>
                       <button
                         onClick={() => handleDeleteBooking(booking._id)}
-                        className="text-red-600 hover:text-red-800"
+                        className={styles.deleteButton}
                       >
-                        <FaTrashAlt className="inline mr-1" />
+                        <FaTrashAlt className={styles.icon} />
                       </button>
                     </td>
                   </tr>
@@ -292,88 +272,81 @@ function EventDetails() {
 
       {/* Edit Modal */}
       {isEditing && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6">
-              Edit Booking
-            </h3>
-            <div className="space-y-4">
-              <label className="block">
-                Full Name:
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                />
-                {errors.fullName && <p className="text-red-500">{errors.fullName}</p>}
-              </label>
-              <label className="block">
-                Ticket Quantity:
-                <input
-                  type="number"
-                  name="ticketQuantity"
-                  value={formData.ticketQuantity}
-                  onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                />
-                {errors.ticketQuantity && (
-                  <p className="text-red-500">{errors.ticketQuantity}</p>
-                )}
-              </label>
-              <label className="block">
-                Ticket Type:
-                <input
-                  type="text"
-                  name="ticketType"
-                  value={formData.ticketType}
-                  onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                />
-              </label>
-              <label className="block">
-                Email:
-                <input
-                  type="email"
-                  name="userEmail"
-                  value={formData.userEmail}
-                  onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                />
-                {errors.userEmail && <p className="text-red-500">{errors.userEmail}</p>}
-              </label>
-              <label className="block">
-                Phone:
-                <input
-                  type="tel"
-                  name="userPhone"
-                  value={formData.userPhone}
-                  onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                />
-                {errors.userPhone && <p className="text-red-500">{errors.userPhone}</p>}
-              </label>
-              <label className="block">
-                Special Request:
-                <textarea
-                  name="specialRequest"
-                  value={formData.specialRequest}
-                  onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                />
-              </label>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3 className={styles.modalTitle}>Edit Booking</h3>
+            <div className={styles.modalFormGroup}>
+              <label>Full Name:</label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                className={styles.modalInput}
+              />
+              {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
             </div>
-            <div className="flex justify-end space-x-4 mt-6">
-              <button
-                onClick={handleSave}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200"
-              >
+            <div className={styles.modalFormGroup}>
+              <label>Ticket Quantity:</label>
+              <input
+                type="number"
+                name="ticketQuantity"
+                value={formData.ticketQuantity}
+                onChange={handleInputChange}
+                className={styles.modalInput}
+              />
+              {errors.ticketQuantity && (
+                <p className={styles.error}>{errors.ticketQuantity}</p>
+              )}
+            </div>
+            <div className={styles.modalFormGroup}>
+              <label>Ticket Type:</label>
+              <input
+                type="text"
+                name="ticketType"
+                value={formData.ticketType}
+                onChange={handleInputChange}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.modalFormGroup}>
+              <label>Email:</label>
+              <input
+                type="email"
+                name="userEmail"
+                value={formData.userEmail}
+                onChange={handleInputChange}
+                className={styles.modalInput}
+              />
+              {errors.userEmail && <p className={styles.error}>{errors.userEmail}</p>}
+            </div>
+            <div className={styles.modalFormGroup}>
+              <label>Phone:</label>
+              <input
+                type="tel"
+                name="userPhone"
+                value={formData.userPhone}
+                onChange={handleInputChange}
+                className={styles.modalInput}
+              />
+              {errors.userPhone && <p className={styles.error}>{errors.userPhone}</p>}
+            </div>
+            <div className={styles.modalFormGroup}>
+              <label>Special Request:</label>
+              <textarea
+                name="specialRequest"
+                value={formData.specialRequest}
+                onChange={handleInputChange}
+                className={styles.modalTextarea}
+              />
+            </div>
+            <div className={styles.modalActions}>
+              <button onClick={handleSave} className={styles.saveButton}>
                 Save
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-200"
+                className={styles.cancelButton}
               >
                 Cancel
               </button>

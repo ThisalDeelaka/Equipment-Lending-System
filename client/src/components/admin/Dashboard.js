@@ -3,6 +3,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/cards";
 import { Users, Ticket, Calendar, MapPin, BarChart, PieChart } from 'lucide-react';
+import styles from './Dashboard.module.css';
 
 function Dashboard() {
   const [bookingsData, setBookingsData] = useState([]);
@@ -42,39 +43,39 @@ function Dashboard() {
   const ticketLocationData = Object.entries(getTicketsByLocation());
 
   return (
-    <div className="min-h-screen p-6 space-y-6 bg-gradient-to-br from-gray-100 to-gray-200">
-      <div className="w-full max-w-[1220px] mx-auto bg-white rounded-xl shadow-xl p-8 space-y-6">
-        <h1 className="text-4xl font-extrabold text-gray-800">Analytics Dashboard</h1>
+    <div className={styles.dashboardContainer}>
+      <div className={styles.dashboardContent}>
+        <h1 className={styles.dashboardTitle}>Analytics Dashboard</h1>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="bg-gradient-to-br from-indigo-50 to-white shadow-lg hover:shadow-xl transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-700">Total Bookings</CardTitle>
-              <Users className="h-6 w-6 text-indigo-500" />
+        <div className={styles.summaryCardsGrid}>
+          <Card className={styles.summaryCard}>
+            <CardHeader className={styles.cardHeader}>
+              <CardTitle className={styles.cardTitle}>Total Bookings</CardTitle>
+              <Users className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-indigo-600">{bookingsData.length}</div>
+              <div className={styles.cardValue}>{bookingsData.length}</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-teal-50 to-white shadow-lg hover:shadow-xl transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-700">Total Tickets</CardTitle>
-              <Ticket className="h-6 w-6 text-teal-500" />
+          <Card className={styles.summaryCard}>
+            <CardHeader className={styles.cardHeader}>
+              <CardTitle className={styles.cardTitle}>Total Tickets</CardTitle>
+              <Ticket className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-teal-600">{ticketsData.length}</div>
+              <div className={styles.cardValue}>{ticketsData.length}</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-pink-50 to-white shadow-lg hover:shadow-xl transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-700">Next Event</CardTitle>
-              <Calendar className="h-6 w-6 text-pink-500" />
+          <Card className={styles.summaryCard}>
+            <CardHeader className={styles.cardHeader}>
+              <CardTitle className={styles.cardTitle}>Next Event</CardTitle>
+              <Calendar className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-pink-600">
+              <div className={styles.cardValue}>
                 {ticketsData.length > 0
                   ? format(new Date(Math.min(...ticketsData.map(t => new Date(t.date)))), 'MMM d, yyyy')
                   : 'No upcoming events'}
@@ -82,13 +83,13 @@ function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-yellow-50 to-white shadow-lg hover:shadow-xl transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-700">Popular Location</CardTitle>
-              <MapPin className="h-6 w-6 text-yellow-500" />
+          <Card className={styles.summaryCard}>
+            <CardHeader className={styles.cardHeader}>
+              <CardTitle className={styles.cardTitle}>Popular Location</CardTitle>
+              <MapPin className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-yellow-600">
+              <div className={styles.cardValue}>
                 {ticketLocationData.length > 0
                   ? ticketLocationData.reduce((a, b) => a[1] > b[1] ? a : b)[0]
                   : 'N/A'}
@@ -98,51 +99,51 @@ function Dashboard() {
         </div>
 
         {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="shadow-lg hover:shadow-xl transition-all bg-white rounded-lg">
+        <div className={styles.chartsGrid}>
+          <Card className={styles.chartCard}>
             <CardHeader>
-              <CardTitle className="flex items-center text-xl font-bold">
-                <BarChart className="h-6 w-6 mr-2 text-blue-500" />
+              <CardTitle className={styles.chartTitle}>
+                <BarChart className={styles.chartIcon} />
                 Bookings Over Time
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className={styles.chartContent}>
                 {getBookingsByDate().slice(-5).map(({ date, count }) => (
-                  <div key={date} className="flex items-center">
-                    <div className="w-28 text-sm text-gray-600">{date}</div>
-                    <div className="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
+                  <div key={date} className={styles.chartRow}>
+                    <div className={styles.chartDate}>{date}</div>
+                    <div className={styles.chartBarContainer}>
                       <div
-                        className="h-full bg-blue-500"
+                        className={styles.chartBar}
                         style={{ width: `${(count / Math.max(...getBookingsByDate().map(b => b.count))) * 100}%` }}
                       ></div>
                     </div>
-                    <div className="w-12 text-right text-sm text-gray-700">{count}</div>
+                    <div className={styles.chartCount}>{count}</div>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg hover:shadow-xl transition-all bg-white rounded-lg">
+          <Card className={styles.chartCard}>
             <CardHeader>
-              <CardTitle className="flex items-center text-xl font-bold">
-                <PieChart className="h-6 w-6 mr-2 text-green-500" />
+              <CardTitle className={styles.chartTitle}>
+                <PieChart className={styles.chartIcon} />
                 Tickets by Location
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className={styles.chartContent}>
                 {ticketLocationData.map(([location, count]) => (
-                  <div key={location} className="flex items-center">
-                    <div className="w-28 text-sm truncate text-gray-600">{location}</div>
-                    <div className="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
+                  <div key={location} className={styles.chartRow}>
+                    <div className={styles.chartLocation}>{location}</div>
+                    <div className={styles.chartBarContainer}>
                       <div
-                        className="h-full bg-green-500"
+                        className={styles.chartBar}
                         style={{ width: `${(count / Math.max(...ticketLocationData.map(t => t[1]))) * 100}%` }}
                       ></div>
                     </div>
-                    <div className="w-12 text-right text-sm text-gray-700">{count}</div>
+                    <div className={styles.chartCount}>{count}</div>
                   </div>
                 ))}
               </div>

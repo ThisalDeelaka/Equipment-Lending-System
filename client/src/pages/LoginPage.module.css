@@ -1,0 +1,133 @@
+/* LoginPage.module.css */
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #f0f4f8, #e6f7ff);
+  }
+  
+  .backgroundContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 2rem;
+  }
+  
+  .formContainer {
+    background-color: #ffffff;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .titleContainer {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3748;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #718096;
+  }
+  
+  .inputFieldsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .inputEmail, .inputPassword {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+  }
+  
+  .inputEmail:focus, .inputPassword:focus {
+    border-color: #3182ce;
+    outline: none;
+  }
+  
+  .passwordFieldContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .passwordToggleIcon {
+    position: absolute;
+    right: 1rem;
+    cursor: pointer;
+    color: #a0aec0;
+    transition: color 0.3s;
+  }
+  
+  .passwordToggleIcon:hover {
+    color: #2b6cb0;
+  }
+  
+  .rememberMeSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .forgotPasswordLink {
+    color: #3182ce;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .forgotPasswordLink:hover {
+    color: #2b6cb0;
+  }
+  
+  .loginButton {
+    width: 100%;
+    padding: 1rem;
+    background-color: #3182ce;
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .loginButton:hover {
+    background-color: #2b6cb0;
+  }
+  
+  .signupText {
+    text-align: center;
+    color: #718096;
+    margin-top: 1.5rem;
+  }
+  
+  .signupLink {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .signupLink:hover {
+    color: #2b6cb0;
+  }
+  

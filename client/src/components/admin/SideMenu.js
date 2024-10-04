@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import { Menu, ConfigProvider } from "antd";
+import styles from "./SideMenu.module.css";
 
 // Helper function to create a menu item object
 function getItem(label, key, icon) {
@@ -45,39 +46,35 @@ function SideMenu() {
     };
 
     return (
-        <div className="Admin_SideMenu bg-white h-full shadow-lg flex flex-col">
+        <div className={styles.sideMenu}>
             {/* Sidebar "Farmcart" logo text */}
-            <div className="p-6 text-center">
-                <h1 className="text-3xl font-bold text-green-600 tracking-wide">Farmcart</h1>
+            <div className={styles.logoContainer}>
+                <h1 className={styles.logoText}>Farmcart</h1>
             </div>
 
             {/* Sidebar Menu */}
             <ConfigProvider
                 theme={{
                     token: {
-                        colorPrimary: "#27ae61",  // Primary color accent
+                        colorPrimary: "#27ae61",
                     },
                     components: {
                         Menu: {
-                            iconSize: "24px",   // Size of the icons
-                            itemHeight: "48px", // Height of each menu item
-                            subMenuItemBg: "#f5f5f5",  // Background color for submenu items
+                            iconSize: "24px",
+                            itemHeight: "48px",
+                            subMenuItemBg: "#f5f5f5",
                         },
                     },
                 }}
             >
                 <Menu
-                    mode="inline"  // Vertical sidebar layout
-                    openKeys={openKeys}  // Open submenu keys
-                    selectedKeys={[selectedKeys]}  // Selected menu item key
-                    onOpenChange={onOpenChange}  // Submenu open/close handler
-                    onClick={(item) => navigate(item.key)}  // Navigate on menu item click
-                    style={{
-                        width: 256,  // Sidebar width
-                        border: "none",  // Remove default border
-                        fontSize: "16px",  // Font size for menu items
-                    }}
-                    items={items}  // Array of menu items
+                    mode="inline"
+                    openKeys={openKeys}
+                    selectedKeys={[selectedKeys]}
+                    onOpenChange={onOpenChange}
+                    onClick={(item) => navigate(item.key)}
+                    className={styles.menu}
+                    items={items}
                     theme="light"
                 />
             </ConfigProvider>

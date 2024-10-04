@@ -8,8 +8,9 @@ import {
     Grid,
     theme,
 } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import styles from "./NavBarUser.module.css";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -48,26 +49,6 @@ function NavBarUser() {
         window.location.href = "/login";
     }
 
-    const styles = {
-        header: {
-            backgroundColor: token.colorBgContainer,
-            position: "sticky",
-            top: 0,
-            zIndex: 1000,
-            backdropFilter: "blur(10px)", // Glossy effect
-            backgroundColor: "rgba(255, 255, 255, 0.8)", // Transparent background
-            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)", // Slight shadow for glossy effect
-            borderBottom: `${token.lineWidth}px ${token.lineType} ${token.colorSplit}`,
-        },
-        logo: {
-            display: "block",
-            height: screens.md ? token.sizeLG * 1.5 : token.sizeLG,
-            fontSize: screens.md ? "1.5rem" : "1.2rem",
-            color: "#27ae61",
-            fontWeight: "bold",
-        },
-    };
-
     const items = [
         {
             label: (
@@ -98,28 +79,28 @@ function NavBarUser() {
                 },
             }}
         >
-            <nav style={styles.header} className="sticky top-0 bg-white shadow-lg z-50">
-                <div className="container mx-auto flex justify-between items-center px-4 py-4">
-                    <Link to="/" className="text-lg font-bold">
-                        <span style={styles.logo}>FarmCart</span>
+            <nav className={styles.header}>
+                <div className={styles.container}>
+                    <Link to="/" className={styles.logo}>
+                        FarmCart
                     </Link>
                     {user ? (
                         <Dropdown menu={{ items }}>
-                            <a onClick={(e) => e.preventDefault()} className="flex items-center space-x-2">
-                                <Avatar size={30} src={user.profilePic || defaultProfilePic} />
+                            <a onClick={(e) => e.preventDefault()} className={styles.userMenu}>
+                                <Avatar size={30} src={user.profilePic || defaultProfilePic} className={styles.userAvatar} />
                                 <span>{user.username}</span>
-                                <Icon icon="gridicons:dropdown" />
+                                <Icon icon="gridicons:dropdown" className={styles.dropdownIcon} />
                             </a>
                         </Dropdown>
                     ) : (
-                        <Space>
+                        <Space className={styles.buttonGroup}>
                             {screens.md && (
                                 <Link to="/login">
-                                    <Button className="text-lg">Log in</Button>
+                                    <Button className={styles.button}>Log in</Button>
                                 </Link>
                             )}
                             <Link to="/signup">
-                                <Button className="text-lg">Sign up</Button>
+                                <Button className={styles.button}>Sign up</Button>
                             </Link>
                         </Space>
                     )}

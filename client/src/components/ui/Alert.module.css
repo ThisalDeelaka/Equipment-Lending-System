@@ -1,0 +1,31 @@
+/* Alert.module.css */
+
+.alert {
+    position: relative;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid;
+    padding: 1rem;
+  }
+  
+  .default {
+    background-color: var(--background-color, #ffffff);
+    color: var(--foreground-color, #000000);
+  }
+  
+  .destructive {
+    border-color: var(--destructive-border-color, #f87171);
+    color: var(--destructive-text-color, #f87171);
+  }
+  
+  .alertTitle {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: normal;
+  }
+  
+  .alertDescription {
+    font-size: 0.875rem;
+  }
+  

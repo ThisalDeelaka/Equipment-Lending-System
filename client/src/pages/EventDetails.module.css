@@ -1,0 +1,221 @@
+/* EventDetails.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to bottom left, #ffffff, #e0f0e0);
+  }
+  
+  .contentSection {
+    padding: 2.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-grow: 1;
+  }
+  
+  .headerSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2f855a;
+  }
+  
+  .downloadButton {
+    background-color: #e0f0e0;
+    color: #4a5568;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .downloadButton:hover {
+    background-color: #38a169;
+    color: #fff;
+  }
+  
+  .icon {
+    margin-right: 0.5rem;
+  }
+  
+  .searchSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .searchInput {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+  }
+  
+  .searchInput:focus {
+    border-color: #38a169;
+    outline: none;
+  }
+  
+  .searchIcon {
+    margin-left: 0.5rem;
+    color: #718096;
+  }
+  
+  .noBookingsMessage {
+    text-align: center;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tableWrapper {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .tableHeader {
+    background-color: #e0f0e0;
+    color: #2d3748;
+  }
+  
+  .table th, .table td {
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .tableRow:hover {
+    background-color: #f7fafc;
+  }
+  
+  .actionsCell {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .editButton {
+    color: #38a169;
+    transition: color 0.3s;
+  }
+  
+  .editButton:hover {
+    color: #276749;
+  }
+  
+  .deleteButton {
+    color: #e53e3e;
+    transition: color 0.3s;
+  }
+  
+  .deleteButton:hover {
+    color: #c53030;
+  }
+  
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .modalTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2f855a;
+    margin-bottom: 1.5rem;
+  }
+  
+  .modalFormGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .modalInput, .modalTextarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+  }
+  
+  .modalInput:focus, .modalTextarea:focus {
+    border-color: #38a169;
+    outline: none;
+  }
+  
+  .modalTextarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .error {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  
+  .modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .saveButton {
+    padding: 0.75rem 1.5rem;
+    background: #38a169;
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .saveButton:hover {
+    background: #2f855a;
+  }
+  
+  .cancelButton {
+    padding: 0.75rem 1.5rem;
+    background: #718096;
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .cancelButton:hover {
+    background: #4a5568;
+  }

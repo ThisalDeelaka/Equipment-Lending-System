@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { message } from "antd";
+import styles from "./UserProfilePage.module.css";
 
 function UserProfilePage() {
     const [user, setUser] = useState({});
@@ -14,7 +15,7 @@ function UserProfilePage() {
         ticketType: "",
         specialRequest: "",
     });
-    const [bookings, setBookings] = useState([]); // State to store user bookings
+    const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
         const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -24,7 +25,6 @@ function UserProfilePage() {
         }
     }, []);
 
-    // Fetch user bookings
     const fetchUserBookings = async (userID) => {
         try {
             const response = await axios.get(`/api/bookings/user/${userID}`);
@@ -35,23 +35,20 @@ function UserProfilePage() {
         }
     };
 
-    // Handle edit booking
-const handleEditBooking = (booking) => {
-    setIsEditing(true);
-    setFormData({
-        _id: booking._id,  // Include _id in the form data
-        ticketId: booking.ticketId,
-        fullName: booking.fullName,
-        ticketQuantity: booking.ticketQuantity,
-        userEmail: booking.userEmail,
-        userPhone: booking.userPhone,
-        ticketType: booking.ticketType,
-        specialRequest: booking.specialRequest,
-    });
-};
+    const handleEditBooking = (booking) => {
+        setIsEditing(true);
+        setFormData({
+            _id: booking._id,
+            ticketId: booking.ticketId,
+            fullName: booking.fullName,
+            ticketQuantity: booking.ticketQuantity,
+            userEmail: booking.userEmail,
+            userPhone: booking.userPhone,
+            ticketType: booking.ticketType,
+            specialRequest: booking.specialRequest,
+        });
+    };
 
-
-    // Handle delete booking
     const handleDeleteBooking = async (bookingId) => {
         try {
             await axios.delete(`/api/bookings/${bookingId}`);
@@ -65,7 +62,6 @@ const handleEditBooking = (booking) => {
         }
     };
 
-    // Handle input change for booking form
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -74,12 +70,11 @@ const handleEditBooking = (booking) => {
         });
     };
 
-    // Save booking changes
     const handleSave = async () => {
         try {
-            await updateBooking(formData); // Call the updateBooking function
+            await updateBooking(formData);
             setIsEditing(false);
-            fetchUserBookings(user.userID); // Refresh bookings after edit
+            fetchUserBookings(user.userID);
             message.success("Booking updated successfully.");
         } catch (error) {
             console.error("Failed to update booking", error);
@@ -87,33 +82,32 @@ const handleEditBooking = (booking) => {
         }
     };
 
-    // Update booking function
     const updateBooking = async (updatedBooking) => {
         try {
             const response = await axios.put(`/api/bookings/${updatedBooking._id}`, updatedBooking);
             return response.data;
         } catch (error) {
             console.error("Error updating booking:", error);
-            throw error; // Throw error so it can be caught in handleSave
+            throw error;
         }
     };
 
     return (
-        <div className="pp_user-profile-page">
-            <div className={`profile-card-1234`}>
-                <div className={`profile-header-1234`}>
+        <div className={styles.userProfilePage}>
+            <div className={styles.profileCard}>
+                <div className={styles.profileHeader}>
                     <img
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png"
                         alt="Profile"
                     />
-                    <div className={`profile-info-1234`}>
+                    <div className={styles.profileInfo}>
                         <h3>
                             {user.firstName} {user.lastName}
                         </h3>
                         <p>{user.userType}</p>
                     </div>
                 </div>
-                <div className={`profile-details-1234`}>
+                <div className={styles.profileDetails}>
                     <p>
                         <strong>Email:</strong> {user.email}
                     </p>
@@ -123,15 +117,14 @@ const handleEditBooking = (booking) => {
                 </div>
             </div>
 
-            {/* Display Bookings */}
-            <div className="pp_additional-features-container">
+            <div className={styles.bookingsContainer}>
                 <h1>Your Tickets</h1>
-                <div className="pp_booking-list">
+                <div className={styles.bookingList}>
                     {bookings.length === 0 ? (
                         <p>You have no bookings.</p>
                     ) : (
                         bookings.map((booking) => (
-                            <div key={booking._id} className="pp_booking-card">
+                            <div key={booking._id} className={styles.bookingCard}>
                                 <h3>Ticket ID: {booking.ticketId}</h3>
                                 <p>
                                     <strong>Full Name:</strong> {booking.fullName}
@@ -150,19 +143,19 @@ const handleEditBooking = (booking) => {
                                 </p>
                                 <p>
                                     <strong>Special Request:</strong>{" "}
-                                    <span className="pp_special-request">
+                                    <span className={styles.specialRequest}>
                                         {booking.specialRequest || "None"}
                                     </span>
                                 </p>
-                                <div className="pp_booking-actions">
+                                <div className={styles.bookingActions}>
                                     <button
-                                        className="pp_edit-button"
+                                        className={styles.editButton}
                                         onClick={() => handleEditBooking(booking)}
                                     >
                                         Edit
                                     </button>
                                     <button
-                                        className="pp_delete-button"
+                                        className={styles.deleteButton}
                                         onClick={() => handleDeleteBooking(booking._id)}
                                     >
                                         Delete
@@ -174,10 +167,9 @@ const handleEditBooking = (booking) => {
                 </div>
             </div>
 
-            {/* Edit Booking Modal */}
             {isEditing && (
-                <div className="pp_edit-modal">
-                    <div className="pp_modal-content">
+                <div className={styles.editModal}>
+                    <div className={styles.modalContent}>
                         <h3>Edit Booking</h3>
                         <label>
                             Full Name:
@@ -233,12 +225,12 @@ const handleEditBooking = (booking) => {
                                 onChange={handleInputChange}
                             />
                         </label>
-                        <div className="pp_modal-buttons">
-                            <button className="pp_save-button" onClick={handleSave}>
+                        <div className={styles.modalButtons}>
+                            <button className={styles.saveButton} onClick={handleSave}>
                                 Save
                             </button>
                             <button
-                                className="pp_cancel-button"
+                                className={styles.cancelButton}
                                 onClick={() => setIsEditing(false)}
                             >
                                 Cancel

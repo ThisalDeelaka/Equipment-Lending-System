@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import styles from './BookingPage.module.css';
 
 const BookingPage = () => {
     const { id } = useParams(); // Get event ID from URL
@@ -108,82 +109,81 @@ const BookingPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center p-8 min-h-screen bg-gradient-to-r from-gray-100 to-gray-200">
-            <div className="w-full max-w-6xl bg-white rounded-lg shadow-xl overflow-hidden flex flex-wrap md:flex-nowrap transform transition-all duration-500 hover:shadow-2xl">
-                
+        <div className={styles.container}>
+            <div className={styles.bookingCard}>
                 {/* Event image section */}
-                <div className="w-full md:w-1/2 p-4 relative">
+                <div className={styles.eventImageSection}>
                     {event && (
                         <img
                             src={event.image}
                             alt={event.title}
-                            className="object-cover rounded-md shadow-md w-full h-64 md:h-full"
+                            className={styles.eventImage}
                         />
                     )}
                 </div>
 
                 {/* Booking form section */}
-                <div className="w-full md:w-1/2 p-8" style={{ backgroundColor: '#E0F0E0' }}>
-                    <h1 className="text-4xl font-bold text-green-700 mb-6">Reserve Your Event</h1>
-                    <p className="text-gray-600 text-lg mb-6">Fill out the details below to confirm your booking.</p>
+                <div className={styles.bookingFormSection}>
+                    <h1 className={styles.title}>Reserve Your Event</h1>
+                    <p className={styles.subtitle}>Fill out the details below to confirm your booking.</p>
 
-                    <form className="space-y-6" onSubmit={handleSubmit}>
+                    <form className={styles.form} onSubmit={handleSubmit}>
                         {/* Full Name */}
-                        <div className="form-group">
-                            <label htmlFor="fullName" className="block text-lg font-semibold text-gray-700">Full Name</label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="fullName" className={styles.label}>Full Name</label>
                             <input
                                 type="text"
                                 id="fullName"
                                 name="fullName"
-                                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300"
+                                className={styles.input}
                                 value={formData.fullName}
                                 onChange={handleChange}
                                 required
                                 placeholder="John Doe"
                             />
-                            {errors.fullName && <p className="text-red-500">{errors.fullName}</p>}
+                            {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
                         </div>
 
                         {/* Email Address */}
-                        <div className="form-group">
-                            <label htmlFor="email" className="block text-lg font-semibold text-gray-700">Email Address</label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="email" className={styles.label}>Email Address</label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
-                                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300"
+                                className={styles.input}
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
                                 placeholder="johndoe@example.com"
                             />
-                            {errors.email && <p className="text-red-500">{errors.email}</p>}
+                            {errors.email && <p className={styles.error}>{errors.email}</p>}
                         </div>
 
                         {/* Phone Number */}
-                        <div className="form-group">
-                            <label htmlFor="phone" className="block text-lg font-semibold text-gray-700">Phone Number</label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="phone" className={styles.label}>Phone Number</label>
                             <input
                                 type="tel"
                                 id="phone"
                                 name="phone"
-                                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300"
+                                className={styles.input}
                                 value={formData.phone}
                                 onChange={handleChange}
                                 required
                                 placeholder="07X XXXXXXX"
                             />
-                            {errors.phone && <p className="text-red-500">{errors.phone}</p>}
+                            {errors.phone && <p className={styles.error}>{errors.phone}</p>}
                         </div>
 
                         {/* Ticket Quantity */}
-                        <div className="form-group">
-                            <label htmlFor="ticketQuantity" className="block text-lg font-semibold text-gray-700">Number of Tickets</label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="ticketQuantity" className={styles.label}>Number of Tickets</label>
                             <input
                                 type="number"
                                 id="ticketQuantity"
                                 name="ticketQuantity"
-                                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300"
+                                className={styles.input}
                                 value={formData.ticketQuantity}
                                 onChange={handleChange}
                                 required
@@ -192,12 +192,12 @@ const BookingPage = () => {
                         </div>
 
                         {/* Ticket Type */}
-                        <div className="form-group">
-                            <label htmlFor="ticketType" className="block text-lg font-semibold text-gray-700">Ticket Type</label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="ticketType" className={styles.label}>Ticket Type</label>
                             <select
                                 id="ticketType"
                                 name="ticketType"
-                                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300"
+                                className={styles.select}
                                 value={formData.ticketType}
                                 onChange={handleChange}
                                 required
@@ -210,12 +210,12 @@ const BookingPage = () => {
                         </div>
 
                         {/* Special Requests */}
-                        <div className="form-group">
-                            <label htmlFor="specialRequests" className="block text-lg font-semibold text-gray-700">Special Requests</label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="specialRequests" className={styles.label}>Special Requests</label>
                             <textarea
                                 id="specialRequests"
                                 name="specialRequests"
-                                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300"
+                                className={styles.textarea}
                                 value={formData.specialRequests}
                                 onChange={handleChange}
                                 placeholder="Any special requests?"
@@ -225,7 +225,7 @@ const BookingPage = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full mt-6 bg-gradient-to-r from-green-400 to-green-600 text-white py-3 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl hover:from-green-500 hover:to-green-700 transition duration-300"
+                            className={styles.submitButton}
                         >
                             Confirm Booking
                         </button>

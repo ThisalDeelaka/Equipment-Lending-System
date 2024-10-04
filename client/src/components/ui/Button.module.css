@@ -1,0 +1,99 @@
+/* Button.module.css */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+    ring-offset: var(--background-color);
+    outline: none;
+    border: none;
+  }
+  
+  .default {
+    background-color: var(--primary-color, #007bff);
+    color: var(--primary-foreground-color, #ffffff);
+  }
+  
+  .default:hover {
+    background-color: var(--primary-hover-color, #0056b3);
+  }
+  
+  .destructive {
+    background-color: var(--destructive-color, #f87171);
+    color: var(--destructive-foreground-color, #ffffff);
+  }
+  
+  .destructive:hover {
+    background-color: var(--destructive-hover-color, #e53935);
+  }
+  
+  .outline {
+    border: 1px solid var(--input-border-color, #ced4da);
+    background-color: var(--background-color, #ffffff);
+    color: var(--text-color, #000000);
+  }
+  
+  .outline:hover {
+    background-color: var(--accent-color, #f8f9fa);
+    color: var(--accent-foreground-color, #000000);
+  }
+  
+  .secondary {
+    background-color: var(--secondary-color, #6c757d);
+    color: var(--secondary-foreground-color, #ffffff);
+  }
+  
+  .secondary:hover {
+    background-color: var(--secondary-hover-color, #5a6268);
+  }
+  
+  .ghost {
+    background-color: transparent;
+    color: var(--accent-color, #007bff);
+  }
+  
+  .ghost:hover {
+    background-color: var(--accent-hover-color, #f8f9fa);
+    color: var(--accent-foreground-color, #0056b3);
+  }
+  
+  .link {
+    background-color: transparent;
+    color: var(--primary-color, #007bff);
+    text-decoration: underline;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+    color: var(--primary-hover-color, #0056b3);
+  }
+  
+  .default-size {
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .sm {
+    height: 2.25rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+  }
+  
+  .lg {
+    height: 2.75rem;
+    padding: 0.5rem 2rem;
+    border-radius: 0.375rem;
+  }
+  
+  .icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }

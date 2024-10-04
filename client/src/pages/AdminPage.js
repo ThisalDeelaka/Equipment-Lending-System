@@ -3,36 +3,25 @@ import SideMenu from "../components/admin/SideMenu";
 import NavBar from "../components/admin/NavBar";
 import AdminRoutes from "../components/AdminRoutes";
 import { useNavigate } from "react-router-dom";
-import Loader  from "../components/Loader";
+import Loader from "../components/Loader";
+import styles from "./AdminPage.module.css";
 
 function AdminPage() {
-    // const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-
-    // useEffect(() => {
-    //     const user = JSON.parse(localStorage.getItem("currentUser"));
-    //     if (!user) {
-    //         navigate("/login");
-    //     } else if (user.userType !== "Admin") {
-    //         navigate("/accessdenied");
-    //     } else {
-    //         setLoading(false);
-    //     }
-    // }, []);
 
     return (
         <>
             {loading ? (
-                <div className="center" style={{ height: "100vh" }}>
+                <div className={styles.loaderContainer}>
                     <Loader />
                 </div>
             ) : (
-                <div className="Admin_DashboardContainer">
-                    <div className="Admin_SideMenuAndPageContent">
-                        <div className="admin_sidebar_container">
+                <div className={styles.dashboardContainer}>
+                    <div className={styles.sideMenuAndContent}>
+                        <div className={styles.sidebarContainer}>
                             <SideMenu />
                         </div>
-                        <div className="Admin_PageContent">
+                        <div className={styles.pageContent}>
                             <NavBar />
                             <AdminRoutes />
                         </div>

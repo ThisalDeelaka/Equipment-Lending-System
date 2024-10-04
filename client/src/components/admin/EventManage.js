@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './EventManagement.module.css';
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -59,18 +60,18 @@ const EventManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="w-full max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Event Management</h2>
+    <div className={styles.container}>
+      <div className={styles.contentWrapper}>
+        <h2 className={styles.title}>Event Management</h2>
 
         {/* Error Message */}
-        {error && <p className="text-red-600 mb-4">{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
 
         {/* Event Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className={styles.eventForm}>
+          <div className={styles.inputGrid}>
             <input
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={styles.input}
               name="name"
               value={newEvent.name}
               onChange={handleInputChange}
@@ -78,7 +79,7 @@ const EventManagement = () => {
               required
             />
             <input
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={styles.input}
               name="location"
               value={newEvent.location}
               onChange={handleInputChange}
@@ -88,7 +89,7 @@ const EventManagement = () => {
           </div>
 
           <input
-            className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className={styles.input}
             name="description"
             value={newEvent.description}
             onChange={handleInputChange}
@@ -96,9 +97,9 @@ const EventManagement = () => {
             required
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className={styles.inputGrid}>
             <input
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={styles.input}
               name="date"
               type="date"
               value={newEvent.date}
@@ -106,7 +107,7 @@ const EventManagement = () => {
               required
             />
             <input
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={styles.input}
               name="image"
               value={newEvent.image}
               onChange={handleInputChange}
@@ -117,7 +118,7 @@ const EventManagement = () => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white p-3 rounded-md hover:bg-indigo-700 transition duration-300 font-semibold"
+            className={styles.submitButton}
           >
             {isEditing ? 'Update Event' : 'Add Event'}
           </button>
@@ -125,27 +126,27 @@ const EventManagement = () => {
 
         {/* Loading State */}
         {loading ? (
-          <p className="text-center mt-6 text-lg text-gray-500">Loading events...</p>
+          <p className={styles.loadingText}>Loading events...</p>
         ) : (
-          <ul className="mt-6 space-y-4">
+          <ul className={styles.eventList}>
             {events.map((event) => (
-              <li key={event._id} className="bg-white rounded-lg shadow-md p-6 flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-800">{event.name}</h3>
-                  <p className="text-sm text-gray-500">
+              <li key={event._id} className={styles.eventCard}>
+                <div className={styles.eventInfo}>
+                  <h3 className={styles.eventName}>{event.name}</h3>
+                  <p className={styles.eventDetails}>
                     {new Date(event.date).toLocaleDateString()} - {event.location}
                   </p>
                 </div>
-                <div className="flex space-x-4">
+                <div className={styles.actionButtons}>
                   <button
                     onClick={() => handleEdit(event)}
-                    className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition"
+                    className={styles.editButton}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(event._id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                    className={styles.deleteButton}
                   >
                     Delete
                   </button>

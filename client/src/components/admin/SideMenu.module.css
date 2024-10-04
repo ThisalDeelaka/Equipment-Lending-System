@@ -1,0 +1,28 @@
+/* SideMenu.module.css */
+
+.sideMenu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logoContainer {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .logoText {
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #27ae61;
+    letter-spacing: 0.05em;
+  }
+  
+  .menu {
+    width: 100%;
+    border: none;
+    font-size: 1rem;
+  }
+  

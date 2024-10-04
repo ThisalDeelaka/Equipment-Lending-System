@@ -1,3 +1,4 @@
+/* Updated React Component with CSS Modules */
 import React, { useState, useEffect } from "react";
 import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { format, isBefore, startOfToday } from "date-fns";
@@ -21,6 +22,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Alert, AlertDescription } from "../ui/alert";
+import styles from "./ManageTicket.module.css";
 
 function ManageTicket() {
   const [tickets, setTickets] = useState([]);
@@ -170,32 +172,30 @@ function ManageTicket() {
   const totalPages = Math.ceil(tickets.length / itemsPerPage);
 
   return (
-    <Card className="w-full max-w-[1220px] h-screen mx-auto bg-white rounded-lg m-5 shadow-md">
-      <CardHeader className="bg-gray-100 p-4">
-        <CardTitle className="text-3xl font-semibold text-gray-800">
-          Manage Events
-        </CardTitle>
+    <Card className={styles.card}>
+      <CardHeader className={styles.cardHeader}>
+        <CardTitle className={styles.cardTitle}>Manage Events</CardTitle>
       </CardHeader>
-      <CardContent className="p-6">
+      <CardContent className={styles.cardContent}>
         {alertMessage && (
-          <Alert className="mb-4">
+          <Alert className={styles.alert}>
             <AlertDescription>{alertMessage}</AlertDescription>
           </Alert>
         )}
 
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-700">Events List</h2>
+        <div className={styles.headerSection}>
+          <h2 className={styles.eventsListTitle}>Events List</h2>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
-                <Plus className="mr-2 h-5 w-5" /> Add New Event
+              <Button className={styles.addButton}>
+                <Plus className={styles.icon} /> Add New Event
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className={styles.dialogContent}>
               <DialogHeader>
                 <DialogTitle>Add New Event</DialogTitle>
               </DialogHeader>
-              <div className="grid gap-4 py-4">
+              <div className={styles.formGrid}>
                 <Input
                   placeholder="Image URL"
                   name="image"
@@ -209,7 +209,7 @@ function ManageTicket() {
                   value={newTicket.title}
                   onChange={handleNewTicketChange}
                 />
-                {errors.title && <p className="text-red-500">{errors.title}</p>}
+                {errors.title && <p className={styles.errorText}>{errors.title}</p>}
 
                 <Input
                   type="date"
@@ -217,7 +217,7 @@ function ManageTicket() {
                   value={newTicket.date}
                   onChange={handleNewTicketChange}
                 />
-                {errors.date && <p className="text-red-500">{errors.date}</p>}
+                {errors.date && <p className={styles.errorText}>{errors.date}</p>}
 
                 <Input
                   placeholder="Location"
@@ -225,11 +225,11 @@ function ManageTicket() {
                   value={newTicket.location}
                   onChange={handleNewTicketChange}
                 />
-                {errors.location && <p className="text-red-500">{errors.location}</p>}
+                {errors.location && <p className={styles.errorText}>{errors.location}</p>}
 
                 <Button
                   onClick={addTicket}
-                  className="bg-green-500 hover:bg-green-600 text-white"
+                  className={styles.saveButton}
                 >
                   Add Event
                 </Button>
@@ -238,35 +238,35 @@ function ManageTicket() {
           </Dialog>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className={styles.tableContainer}>
           <Table>
             <TableHeader>
-              <TableRow className="bg-gray-100">
-                <TableHead className="w-1/5">Image</TableHead>
-                <TableHead className="w-1/5">Title</TableHead>
-                <TableHead className="w-1/5">Date</TableHead>
-                <TableHead className="w-1/5">Location</TableHead>
-                <TableHead className="w-1/5">Actions</TableHead>
+              <TableRow className={styles.tableHeaderRow}>
+                <TableHead className={styles.tableHead}>Image</TableHead>
+                <TableHead className={styles.tableHead}>Title</TableHead>
+                <TableHead className={styles.tableHead}>Date</TableHead>
+                <TableHead className={styles.tableHead}>Location</TableHead>
+                <TableHead className={styles.tableHead}>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredTickets.map((ticket) => (
                 <TableRow
                   key={ticket._id}
-                  className="bg-white hover:bg-gray-50 transition-shadow"
+                  className={styles.tableRow}
                 >
                   <TableCell>
                     <img
                       src={ticket.image}
                       alt={ticket.title}
-                      className="w-16 h-16 object-cover rounded"
+                      className={styles.ticketImage}
                     />
                   </TableCell>
-                  <TableCell className="font-medium">{ticket.title}</TableCell>
+                  <TableCell className={styles.tableCell}>{ticket.title}</TableCell>
                   <TableCell>{format(new Date(ticket.date), "PP")}</TableCell>
                   <TableCell>{ticket.location}</TableCell>
                   <TableCell>
-                    <div className="flex space-x-2">
+                    <div className={styles.actionButtons}>
                       <Button
                         variant="outline"
                         size="sm"
@@ -274,17 +274,17 @@ function ManageTicket() {
                           setEditTicket(ticket);
                           setIsEditDialogOpen(true);
                         }}
-                        className="text-blue-500 hover:text-blue-600"
+                        className={styles.editButton}
                       >
-                        <Pencil className="h-5 w-5" />
+                        <Pencil className={styles.icon} />
                       </Button>
                       <Button
                         variant="destructive"
                         size="sm"
                         onClick={() => deleteTicket(ticket._id)}
-                        className="bg-red-500 hover:bg-red-600 text-white"
+                        className={styles.deleteButton}
                       >
-                        <Trash2 className="h-5 w-5" />
+                        <Trash2 className={styles.icon} />
                       </Button>
                     </div>
                   </TableCell>
@@ -295,33 +295,33 @@ function ManageTicket() {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-between items-center mt-6">
+        <div className={styles.paginationContainer}>
           <Button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className="bg-gray-300 text-gray-700 hover:bg-gray-400 transition px-4 py-2 rounded-md"
+            className={styles.paginationButton}
           >
-            <ChevronLeft className="mr-2 h-5 w-5" /> Previous
+            <ChevronLeft className={styles.icon} /> Previous
           </Button>
-          <span className="text-sm font-medium text-gray-600">
+          <span className={styles.paginationInfo}>
             Page {currentPage} of {totalPages}
           </span>
           <Button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className="bg-gray-300 text-gray-700 hover:bg-gray-400 transition px-4 py-2 rounded-md"
+            className={styles.paginationButton}
           >
-            Next <ChevronRight className="ml-2 h-5 w-5" />
+            Next <ChevronRight className={styles.icon} />
           </Button>
         </div>
 
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className={styles.dialogContent}>
             <DialogHeader>
               <DialogTitle>Edit Ticket</DialogTitle>
             </DialogHeader>
             {editTicket && (
-              <div className="grid gap-4 py-4">
+              <div className={styles.formGrid}>
                 <Input
                   placeholder="Image URL"
                   name="image"
@@ -335,7 +335,7 @@ function ManageTicket() {
                   value={editTicket.title}
                   onChange={handleEditTicketChange}
                 />
-                {errors.title && <p className="text-red-500">{errors.title}</p>}
+                {errors.title && <p className={styles.errorText}>{errors.title}</p>}
 
                 <Input
                   type="date"
@@ -343,7 +343,7 @@ function ManageTicket() {
                   value={format(new Date(editTicket.date), "yyyy-MM-dd")}
                   onChange={handleEditTicketChange}
                 />
-                {errors.date && <p className="text-red-500">{errors.date}</p>}
+                {errors.date && <p className={styles.errorText}>{errors.date}</p>}
 
                 <Input
                   placeholder="Location"
@@ -352,12 +352,12 @@ function ManageTicket() {
                   onChange={handleEditTicketChange}
                 />
                 {errors.location && (
-                  <p className="text-red-500">{errors.location}</p>
+                  <p className={styles.errorText}>{errors.location}</p>
                 )}
 
                 <Button
                   onClick={updateTicket}
-                  className="bg-blue-500 hover:bg-blue-600 text-white"
+                  className={styles.saveButton}
                 >
                   Save Changes
                 </Button>

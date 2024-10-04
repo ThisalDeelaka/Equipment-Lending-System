@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import styles from "./Footer.module.css";
 
 const Footer = () => {
     return (
-        <footer className="footer3422">
-            <div className="container3422">
-                <div className="row3422">
-                    <div className="footer-col3422">
+        <footer className={styles.footer}>
+            <div className={styles.container}>
+                <div className={styles.row}>
+                    <div className={styles.footerCol}>
                         <h4>Company</h4>
                         <ul>
                             <li>
@@ -25,7 +26,7 @@ const Footer = () => {
                         </ul>
                     </div>
                     
-                    <div className="footer-col3422">
+                    <div className={styles.footerCol}>
                         <h4>Book Now</h4>
                         <ul>
                             <li>
@@ -39,9 +40,9 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-                    <div className="footer-col3422">
+                    <div className={styles.footerCol}>
                         <h4>follow us</h4>
-                        <div className="social-links3422">
+                        <div className={styles.socialLinks}>
                             <Link to="#">
                                 <Icon icon="ic:baseline-facebook" />
                             </Link>
