@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/cards";
-import { Users, Calendar, MapPin, BarChart, PieChart } from 'lucide-react';
+import { Settings, Calendar, BarChart, CheckCircle, FileText } from 'lucide-react';
 import styles from './Dashboard.module.css';
 
-function Dashboard() {
+function AdminDashboard() {
   const [reservationsData, setReservationsData] = useState([]);
   const [equipmentData, setEquipmentData] = useState([]);
+  const [checkInOutData, setCheckInOutData] = useState([]);
+  const [reportsData, setReportsData] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -16,9 +18,14 @@ function Dashboard() {
   const fetchData = async () => {
     try {
       const reservationsResponse = await axios.get('/api/reservations/all');
-      const equipmentResponse = await axios.get('/api/equipment/getEquipment');
+      const equipmentResponse = await axios.get('/api/equipment/getAll');
+      const checkInOutResponse = await axios.get('/api/equipment/checkInOut');
+      const reportsResponse = await axios.get('/api/reports/getAll');
+      
       setReservationsData(reservationsResponse.data);
       setEquipmentData(equipmentResponse.data.equipment);
+      setCheckInOutData(checkInOutResponse.data);
+      setReportsData(reportsResponse.data);
     } catch (error) {
       console.error('Failed to fetch data', error);
     }
@@ -33,26 +40,17 @@ function Dashboard() {
     return Object.entries(reservationsByDate).map(([date, count]) => ({ date, count }));
   };
 
-  const getEquipmentByLocation = () => {
-    return equipmentData.reduce((acc, equipment) => {
-      acc[equipment.location] = (acc[equipment.location] || 0) + 1;
-      return acc;
-    }, {});
-  };
-
-  const equipmentLocationData = Object.entries(getEquipmentByLocation());
-
   return (
     <div className={styles.dashboardContainer}>
       <div className={styles.dashboardContent}>
-        <h1 className={styles.dashboardTitle}>Analytics Dashboard</h1>
+        <h1 className={styles.dashboardTitle}>Admin Dashboard</h1>
 
         {/* Summary Cards */}
         <div className={styles.summaryCardsGrid}>
           <Card className={styles.summaryCard}>
             <CardHeader className={styles.cardHeader}>
               <CardTitle className={styles.cardTitle}>Total Reservations</CardTitle>
-              <Users className={styles.cardIcon} />
+              <Calendar className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
               <div className={styles.cardValue}>{reservationsData.length}</div>
@@ -62,7 +60,7 @@ function Dashboard() {
           <Card className={styles.summaryCard}>
             <CardHeader className={styles.cardHeader}>
               <CardTitle className={styles.cardTitle}>Total Equipment</CardTitle>
-              <Calendar className={styles.cardIcon} />
+              <Settings className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
               <div className={styles.cardValue}>{equipmentData.length}</div>
@@ -72,7 +70,7 @@ function Dashboard() {
           <Card className={styles.summaryCard}>
             <CardHeader className={styles.cardHeader}>
               <CardTitle className={styles.cardTitle}>Next Available Equipment</CardTitle>
-              <Calendar className={styles.cardIcon} />
+              <CheckCircle className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
               <div className={styles.cardValue}>
@@ -85,15 +83,11 @@ function Dashboard() {
 
           <Card className={styles.summaryCard}>
             <CardHeader className={styles.cardHeader}>
-              <CardTitle className={styles.cardTitle}>Popular Location</CardTitle>
-              <MapPin className={styles.cardIcon} />
+              <CardTitle className={styles.cardTitle}>Recent Check-Ins/Check-Outs</CardTitle>
+              <FileText className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
-              <div className={styles.cardValue}>
-                {equipmentLocationData.length > 0
-                  ? equipmentLocationData.reduce((a, b) => a[1] > b[1] ? a : b)[0]
-                  : 'N/A'}
-              </div>
+              <div className={styles.cardValue}>{checkInOutData.length}</div>
             </CardContent>
           </Card>
         </div>
@@ -124,35 +118,10 @@ function Dashboard() {
               </div>
             </CardContent>
           </Card>
-
-          <Card className={styles.chartCard}>
-            <CardHeader>
-              <CardTitle className={styles.chartTitle}>
-                <PieChart className={styles.chartIcon} />
-                Equipment by Location
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className={styles.chartContent}>
-                {equipmentLocationData.map(([location, count]) => (
-                  <div key={location} className={styles.chartRow}>
-                    <div className={styles.chartLocation}>{location}</div>
-                    <div className={styles.chartBarContainer}>
-                      <div
-                        className={styles.chartBar}
-                        style={{ width: `${(count / Math.max(...equipmentLocationData.map(e => e[1]))) * 100}%` }}
-                      ></div>
-                    </div>
-                    <div className={styles.chartCount}>{count}</div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default AdminDashboard;

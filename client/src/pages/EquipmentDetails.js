@@ -339,7 +339,7 @@ function EquipmentDetails() {
         </div>
       )}
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
