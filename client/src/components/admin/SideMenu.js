@@ -16,7 +16,7 @@ function getItem(label, key, icon) {
 // Array of menu items for the sidebar
 const items = [
     getItem("Dashboard", "/admin", <Icon icon="material-symbols:dashboard-outline" />),
-    getItem("Manage Equipment", "/admin/manage-ticket", <Icon icon="ic:outline-inventory" />),
+    getItem("Manage Equipment", "/admin/manage-equipment", <Icon icon="ic:outline-inventory" />),
     getItem("Manage Bookings", "/admin/manage-booking", <Icon icon="akar-icons:book" />),
 ];
 

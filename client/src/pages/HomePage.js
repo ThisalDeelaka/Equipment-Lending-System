@@ -11,9 +11,9 @@ const HomePage = () => {
   const fetchEquipment = async () => {
     try {
       const response = await axios.get("/api/equipment/getEquipment");
-      setEquipmentList(response.data.equipment || []);
+      setEquipmentList(response.data.equipments || []); // Use `equipments` to match the backend
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching equipment:", error);
     }
   };
 
@@ -22,20 +22,21 @@ const HomePage = () => {
   }, []);
 
   const handleCardClick = (equipmentId) => {
-    navigate(`/booking/${equipmentId}`);
+    navigate(`/booking/${equipmentId}`); // Navigate to the booking page for the equipment
   };
 
   const handleMyEquipmentClick = () => {
     navigate('/eventDetails'); // Redirect to /equipmentDetails
   };
 
-  const filteredEquipment = equipmentList.filter((equipment) => {
-    const searchTextMatch =
-      (equipment.name && equipment.name.toLowerCase().includes(searchText.toLowerCase())) ||
-      (equipment.description && equipment.description.toLowerCase().includes(searchText.toLowerCase()));
-
-    return searchTextMatch;
-  });
+  const filteredEquipment = equipmentList
+    .filter(equipment => equipment.status === "Available") // Filter by status "Available"
+    .filter((equipment) => {
+      const searchTextMatch =
+        (equipment.name && equipment.name.toLowerCase().includes(searchText.toLowerCase())) ||
+        (equipment.type && equipment.type.toLowerCase().includes(searchText.toLowerCase()));
+      return searchTextMatch;
+    });
 
   return (
     <div className={styles.container}>
@@ -86,13 +87,13 @@ const HomePage = () => {
                 onClick={() => handleCardClick(equipment._id)}
               >
                 <img
-                  src={equipment.image}
+                  src={equipment.image || "/default-image.jpg"} // Default image if no image available
                   alt={equipment.name}
                   className={styles.equipmentImage}
                 />
                 <div className={styles.equipmentContent}>
                   <p className={styles.equipmentAvailability}>
-                    {equipment.isAvailable ? "Available" : "Not Available"}
+                    {equipment.status === "Available" ? "Available" : "Not Available"}
                   </p>
                   <h4 className={styles.equipmentName}>{equipment.name}</h4>
                   <p className={styles.equipmentType}>{equipment.type}</p>
@@ -102,9 +103,6 @@ const HomePage = () => {
           ) : (
             <p className={styles.noEquipmentMessage}>No equipment available for reservation.</p>
           )}
-        </div>
-        <div className={styles.loadMoreContainer}>
-          <button className={styles.loadMoreButton}>Load More</button>
         </div>
       </section>
     </div>
