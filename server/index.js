@@ -4,6 +4,8 @@ const cors = require("cors");
 
 const app = express();
 
+app.use('/uploads', express.static('uploads')); // Serve images from the 'uploads' folder
+
 // Database configuration (ensure your dbConfig is correctly set up)
 const dbConfig = require("./config/db");
 

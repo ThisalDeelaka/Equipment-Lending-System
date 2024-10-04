@@ -17,6 +17,7 @@ function ManageEquipment() {
     type: "",
     condition: "Good", // Default condition
     status: "Available", // Default status
+    image: null, // Image file for upload
   });
   const [editEquipment, setEditEquipment] = useState(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -58,6 +59,10 @@ function ManageEquipment() {
     }
   };
 
+  const handleFileChange = (e) => {
+    setNewEquipment({ ...newEquipment, image: e.target.files[0] }); // Update image file for upload
+  };
+
   const handleNewEquipmentChange = (e) => {
     const { name, value } = e.target;
     setNewEquipment({ ...newEquipment, [name]: value });
@@ -74,10 +79,23 @@ function ManageEquipment() {
       return;
     }
 
+    const formData = new FormData(); // Use FormData to handle file uploads
+    formData.append("name", newEquipment.name);
+    formData.append("type", newEquipment.type);
+    formData.append("condition", newEquipment.condition);
+    formData.append("status", newEquipment.status);
+    if (newEquipment.image) {
+      formData.append("image", newEquipment.image); // Append image file
+    }
+
     try {
-      const response = await axios.post("/api/equipment/add-equipment", newEquipment);
+      const response = await axios.post("/api/equipment/add-equipment", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setEquipmentList([...equipmentList, response.data.equipment]);
-      setNewEquipment({ name: "", type: "", condition: "Good", status: "Available" });
+      setNewEquipment({ name: "", type: "", condition: "Good", status: "Available", image: null });
       setIsAddDialogOpen(false);
       showAlert("Equipment added successfully!");
     } catch (error) {
@@ -92,8 +110,21 @@ function ManageEquipment() {
       return;
     }
 
+    const formData = new FormData();
+    formData.append("name", editEquipment.name);
+    formData.append("type", editEquipment.type);
+    formData.append("condition", editEquipment.condition);
+    formData.append("status", editEquipment.status);
+    if (editEquipment.image) {
+      formData.append("image", editEquipment.image); // Append new image file if changed
+    }
+
     try {
-      const response = await axios.put(`/api/equipment/upequipment/${editEquipment._id}`, editEquipment);
+      const response = await axios.put(`/api/equipment/upequipment/${editEquipment._id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setEquipmentList(
         equipmentList.map((item) => (item._id === editEquipment._id ? response.data.equipment : item))
       );
@@ -157,7 +188,6 @@ function ManageEquipment() {
                   value={newEquipment.name}
                   onChange={handleNewEquipmentChange}
                 />
-
                 <Input
                   placeholder="Type"
                   name="type"
@@ -211,6 +241,9 @@ function ManageEquipment() {
                   </label>
                 </fieldset>
 
+                {/* File Upload for Image */}
+                <Input type="file" accept="image/*" onChange={handleFileChange} />
+
                 <Button onClick={addEquipment} className={styles.saveButton}>
                   Add Equipment
                 </Button>
@@ -219,6 +252,7 @@ function ManageEquipment() {
           </Dialog>
         </div>
 
+        {/* Equipment List Table */}
         <div className={styles.tableContainer}>
           <Table>
             <TableHeader>
@@ -283,6 +317,7 @@ function ManageEquipment() {
           </Button>
         </div>
 
+        {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className={styles.dialogContent}>
             <DialogHeader>
@@ -296,7 +331,6 @@ function ManageEquipment() {
                   value={editEquipment.name}
                   onChange={handleEditEquipmentChange}
                 />
-
                 <Input
                   placeholder="Type"
                   name="type"
@@ -349,6 +383,8 @@ function ManageEquipment() {
                     Under Maintenance
                   </label>
                 </fieldset>
+
+                <Input type="file" accept="image/*" onChange={handleFileChange} />
 
                 <Button onClick={updateEquipment} className={styles.saveButton}>
                   Save Changes

@@ -87,7 +87,7 @@ const HomePage = () => {
                 onClick={() => handleCardClick(equipment._id)}
               >
                 <img
-                  src={equipment.image || "/default-image.jpg"} // Default image if no image available
+                  src={equipment.imageUrl ? `/${equipment.imageUrl}` : "/default-image.jpg"} // Use imageUrl from the backend
                   alt={equipment.name}
                   className={styles.equipmentImage}
                 />
