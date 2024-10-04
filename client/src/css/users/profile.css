@@ -1,0 +1,232 @@
+.pp_additional-features-container h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.pp_user-profile-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+.profile-card-1234 {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 80px 20px;
+    max-width: 350px;
+    width: 100%;
+    text-align: center;
+    min-height: calc(100vh - 180px);
+}
+
+.profile-header-1234 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-header-1234 img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #27ae61;
+    margin-bottom: 15px;
+}
+
+.profile-info-1234 h3 {
+    margin-top: 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+.profile-info-1234 p {
+    color: #666;
+    font-size: 16px;
+    margin: 5px 0 15px;
+}
+
+.profile-details-1234 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.profile-details-1234 p {
+    font-size: 16px;
+    color: #555;
+    margin: 10px 0;
+}
+
+
+.pp_additional-features-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pp_booking-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pp_booking-card {
+    background-color: #fafafa;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 15px;
+    position: relative;
+}
+
+.pp_booking-card h3 {
+    margin: 0 0 10px 0;
+}
+
+.pp_booking-actions {
+    margin-top: 10px;
+}
+
+.pp_edit-button,
+.pp_delete-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.pp_edit-button:hover,
+.pp_delete-button:hover {
+    background-color: #45a049;
+}
+
+.pp_delete-button {
+    background-color: #f44336;
+}
+
+.pp_delete-button:hover {
+    background-color: #e41e10;
+}
+
+/* Modal Container */
+.pp_edit-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 1;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -55%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Modal Content */
+.pp_modal-content {
+    text-align: center;
+}
+
+/* Modal Title */
+.pp_modal-content h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333333;
+}
+
+/* Form Labels */
+.pp_modal-content label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #666666;
+}
+
+.pp_modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #dddddd;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+.pp_modal-content input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Modal Buttons */
+.pp_modal-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Save Button */
+.pp_save-button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.pp_save-button:hover {
+    background-color: #218838;
+}
+
+/* Cancel Button */
+.pp_cancel-button {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.pp_cancel-button:hover {
+    background-color: #c82333;
+}
+
+/* Optional: For larger screens */
+@media (min-width: 768px) {
+    .pp_edit-modal {
+        width: 450px;
+    }
+}

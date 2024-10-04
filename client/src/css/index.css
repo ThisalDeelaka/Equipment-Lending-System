@@ -1,0 +1,20 @@
+/* Special functionalities */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.body {
+    background-color: #efefef;
+}
+
+@import url('./users/footer.css');
+@import url("./users/navbar.css");
+@import url('./users/login.css');
+@import url('./users/signup.css');
+@import url('./users/homepage.css');
+@import url('./users/booking.css');
+@import url('./users/profile.css');
+
+@import url('./admin/dashboard.css');
