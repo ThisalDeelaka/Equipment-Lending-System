@@ -1,87 +1,87 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './EventManagement.module.css';
+import styles from './EquipmentManagement.module.css';
 
-const EventManagement = () => {
-  const [events, setEvents] = useState([]);
-  const [newEvent, setNewEvent] = useState({ id: null, name: '', description: '', date: '', location: '', image: '' });
+const EquipmentManagement = () => {
+  const [equipmentList, setEquipmentList] = useState([]);
+  const [newEquipment, setNewEquipment] = useState({ id: null, name: '', description: '', availableDate: '', location: '', image: '' });
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchEvents();
+    fetchEquipment();
   }, []);
 
-  const fetchEvents = async () => {
+  const fetchEquipment = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/events');
-      setEvents(response.data);
+      const response = await axios.get('/api/equipment');
+      setEquipmentList(response.data);
       setLoading(false);
     } catch (err) {
-      setError('Failed to fetch events');
+      setError('Failed to fetch equipment');
       setLoading(false);
     }
   };
 
   const handleInputChange = (e) => {
-    setNewEvent({ ...newEvent, [e.target.name]: e.target.value });
+    setNewEquipment({ ...newEquipment, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`/api/events/${newEvent.id}`, newEvent);
+        await axios.put(`/api/equipment/${newEquipment.id}`, newEquipment);
         setIsEditing(false);
       } else {
-        await axios.post('/api/events', newEvent);
+        await axios.post('/api/equipment', newEquipment);
       }
-      setNewEvent({ id: null, name: '', description: '', date: '', location: '', image: '' });
-      fetchEvents();
+      setNewEquipment({ id: null, name: '', description: '', availableDate: '', location: '', image: '' });
+      fetchEquipment();
     } catch (err) {
-      setError('Failed to save the event');
+      setError('Failed to save the equipment');
     }
   };
 
-  const handleEdit = (event) => {
-    setNewEvent(event);
+  const handleEdit = (equipment) => {
+    setNewEquipment(equipment);
     setIsEditing(true);
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/events/${id}`);
-      fetchEvents();
+      await axios.delete(`/api/equipment/${id}`);
+      fetchEquipment();
     } catch (err) {
-      setError('Failed to delete the event');
+      setError('Failed to delete the equipment');
     }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.contentWrapper}>
-        <h2 className={styles.title}>Event Management</h2>
+        <h2 className={styles.title}>Equipment Management</h2>
 
         {/* Error Message */}
         {error && <p className={styles.error}>{error}</p>}
 
-        {/* Event Form */}
-        <form onSubmit={handleSubmit} className={styles.eventForm}>
+        {/* Equipment Form */}
+        <form onSubmit={handleSubmit} className={styles.equipmentForm}>
           <div className={styles.inputGrid}>
             <input
               className={styles.input}
               name="name"
-              value={newEvent.name}
+              value={newEquipment.name}
               onChange={handleInputChange}
-              placeholder="Event Name"
+              placeholder="Equipment Name"
               required
             />
             <input
               className={styles.input}
               name="location"
-              value={newEvent.location}
+              value={newEquipment.location}
               onChange={handleInputChange}
               placeholder="Location"
               required
@@ -91,7 +91,7 @@ const EventManagement = () => {
           <input
             className={styles.input}
             name="description"
-            value={newEvent.description}
+            value={newEquipment.description}
             onChange={handleInputChange}
             placeholder="Description"
             required
@@ -100,16 +100,16 @@ const EventManagement = () => {
           <div className={styles.inputGrid}>
             <input
               className={styles.input}
-              name="date"
+              name="availableDate"
               type="date"
-              value={newEvent.date}
+              value={newEquipment.availableDate}
               onChange={handleInputChange}
               required
             />
             <input
               className={styles.input}
               name="image"
-              value={newEvent.image}
+              value={newEquipment.image}
               onChange={handleInputChange}
               placeholder="Image URL"
               required
@@ -120,32 +120,32 @@ const EventManagement = () => {
             type="submit"
             className={styles.submitButton}
           >
-            {isEditing ? 'Update Event' : 'Add Event'}
+            {isEditing ? 'Update Equipment' : 'Add Equipment'}
           </button>
         </form>
 
         {/* Loading State */}
         {loading ? (
-          <p className={styles.loadingText}>Loading events...</p>
+          <p className={styles.loadingText}>Loading equipment...</p>
         ) : (
-          <ul className={styles.eventList}>
-            {events.map((event) => (
-              <li key={event._id} className={styles.eventCard}>
-                <div className={styles.eventInfo}>
-                  <h3 className={styles.eventName}>{event.name}</h3>
-                  <p className={styles.eventDetails}>
-                    {new Date(event.date).toLocaleDateString()} - {event.location}
+          <ul className={styles.equipmentList}>
+            {equipmentList.map((equipment) => (
+              <li key={equipment._id} className={styles.equipmentCard}>
+                <div className={styles.equipmentInfo}>
+                  <h3 className={styles.equipmentName}>{equipment.name}</h3>
+                  <p className={styles.equipmentDetails}>
+                    {new Date(equipment.availableDate).toLocaleDateString()} - {equipment.location}
                   </p>
                 </div>
                 <div className={styles.actionButtons}>
                   <button
-                    onClick={() => handleEdit(event)}
+                    onClick={() => handleEdit(equipment)}
                     className={styles.editButton}
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(event._id)}
+                    onClick={() => handleDelete(equipment._id)}
                     className={styles.deleteButton}
                   >
                     Delete
@@ -160,4 +160,4 @@ const EventManagement = () => {
   );
 };
 
-export default EventManagement;
+export default EquipmentManagement;

@@ -4,14 +4,13 @@ import axios from 'axios';
 import styles from './BookingPage.module.css';
 
 const BookingPage = () => {
-    const { id } = useParams(); // Get event ID from URL
-    const [event, setEvent] = useState(null); // Store event data
+    const { id } = useParams(); // Get equipment ID from URL
+    const [equipment, setEquipment] = useState(null); // Store equipment data
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
         phone: '',
-        ticketQuantity: 1,
-        ticketType: '',
+        rentalDuration: 1,
         specialRequests: ''
     });
     const [errors, setErrors] = useState({});
@@ -19,15 +18,15 @@ const BookingPage = () => {
     const userId = currentUser ? currentUser.userID : null; // Safely get userID
 
     useEffect(() => {
-        const fetchEventDetails = async () => {
+        const fetchEquipmentDetails = async () => {
             try {
-                const response = await axios.get(`/api/tickets/getTickets/${id}`);
-                setEvent(response.data); // Set event data once it's fetched
+                const response = await axios.get(`/api/equipment/getEquipment/${id}`);
+                setEquipment(response.data); // Set equipment data once it's fetched
             } catch (error) {
-                console.error('Error fetching event details:', error);
+                console.error('Error fetching equipment details:', error);
             }
         };
-        fetchEventDetails();
+        fetchEquipmentDetails();
     }, [id]);
 
     // Handle form data changes with strict validation
@@ -87,12 +86,11 @@ const BookingPage = () => {
         try {
             const bookingData = {
                 userId,
-                ticketId: id,
+                equipmentId: id,
                 fullName: formData.fullName,
-                ticketQuantity: formData.ticketQuantity,
+                rentalDuration: formData.rentalDuration,
                 userEmail: formData.email,
                 userPhone: formData.phone,
-                ticketType: formData.ticketType,
                 specialRequests: formData.specialRequests,
             };
 
@@ -111,21 +109,21 @@ const BookingPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.bookingCard}>
-                {/* Event image section */}
-                <div className={styles.eventImageSection}>
-                    {event && (
+                {/* Equipment image section */}
+                <div className={styles.equipmentImageSection}>
+                    {equipment && (
                         <img
-                            src={event.image}
-                            alt={event.title}
-                            className={styles.eventImage}
+                            src={equipment.image}
+                            alt={equipment.name}
+                            className={styles.equipmentImage}
                         />
                     )}
                 </div>
 
                 {/* Booking form section */}
                 <div className={styles.bookingFormSection}>
-                    <h1 className={styles.title}>Reserve Your Event</h1>
-                    <p className={styles.subtitle}>Fill out the details below to confirm your booking.</p>
+                    <h1 className={styles.title}>Reserve Equipment</h1>
+                    <p className={styles.subtitle}>Fill out the details below to confirm your reservation.</p>
 
                     <form className={styles.form} onSubmit={handleSubmit}>
                         {/* Full Name */}
@@ -176,37 +174,19 @@ const BookingPage = () => {
                             {errors.phone && <p className={styles.error}>{errors.phone}</p>}
                         </div>
 
-                        {/* Ticket Quantity */}
+                        {/* Rental Duration */}
                         <div className={styles.formGroup}>
-                            <label htmlFor="ticketQuantity" className={styles.label}>Number of Tickets</label>
+                            <label htmlFor="rentalDuration" className={styles.label}>Rental Duration (days)</label>
                             <input
                                 type="number"
-                                id="ticketQuantity"
-                                name="ticketQuantity"
+                                id="rentalDuration"
+                                name="rentalDuration"
                                 className={styles.input}
-                                value={formData.ticketQuantity}
+                                value={formData.rentalDuration}
                                 onChange={handleChange}
                                 required
                                 min="1"
                             />
-                        </div>
-
-                        {/* Ticket Type */}
-                        <div className={styles.formGroup}>
-                            <label htmlFor="ticketType" className={styles.label}>Ticket Type</label>
-                            <select
-                                id="ticketType"
-                                name="ticketType"
-                                className={styles.select}
-                                value={formData.ticketType}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="" disabled>Select a Ticket Type</option>
-                                <option value="Standard">Standard</option>
-                                <option value="VIP">VIP</option>
-                                <option value="Premium">Premium</option>
-                            </select>
                         </div>
 
                         {/* Special Requests */}
@@ -227,7 +207,7 @@ const BookingPage = () => {
                             type="submit"
                             className={styles.submitButton}
                         >
-                            Confirm Booking
+                            Confirm Reservation
                         </button>
                     </form>
                 </div>

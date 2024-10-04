@@ -4,35 +4,35 @@ import { useNavigate } from "react-router-dom";
 import styles from "./HomePage.module.css";
 
 const HomePage = () => {
-  const [events, setEvents] = useState([]);
+  const [equipmentList, setEquipmentList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
 
-  const fetchEvents = async () => {
+  const fetchEquipment = async () => {
     try {
-      const response = await axios.get("/api/tickets/getTickets");
-      setEvents(response.data.tickets || []);
+      const response = await axios.get("/api/equipment/getEquipment");
+      setEquipmentList(response.data.equipment || []);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchEvents();
+    fetchEquipment();
   }, []);
 
-  const handleCardClick = (eventId) => {
-    navigate(`/booking/${eventId}`);
+  const handleCardClick = (equipmentId) => {
+    navigate(`/booking/${equipmentId}`);
   };
 
-  const handleMyEventsClick = () => {
-    navigate('/eventDetails'); // Redirect to /eventDetails
+  const handleMyEquipmentClick = () => {
+    navigate('/eventDetails'); // Redirect to /equipmentDetails
   };
 
-  const filteredEvents = events.filter((event) => {
+  const filteredEquipment = equipmentList.filter((equipment) => {
     const searchTextMatch =
-      (event.title && event.title.toLowerCase().includes(searchText.toLowerCase())) ||
-      (event.description && event.description.toLowerCase().includes(searchText.toLowerCase()));
+      (equipment.name && equipment.name.toLowerCase().includes(searchText.toLowerCase())) ||
+      (equipment.description && equipment.description.toLowerCase().includes(searchText.toLowerCase()));
 
     return searchTextMatch;
   });
@@ -42,19 +42,19 @@ const HomePage = () => {
       {/* Hero Section */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>Farmcart</h1>
+          <h1 className={styles.heroTitle}>Equipment Lending</h1>
           <h2 className={styles.heroSubtitle}>
-            Explore Fresh Local Farm Events Near You
+            Explore Event Equipment Available for Reservation
           </h2>
           <p className={styles.heroText}>
-            Discover the best farm events around your area. Shop fresh produce directly from farmers and participate in unique experiences.
+            Discover the best event-related equipment for your needs. Reserve audio-visual gear, lighting, staging materials, and more with ease.
           </p>
           <div className={styles.heroButtons}>
             <button
-              className={styles.myEventsButton}
-              onClick={handleMyEventsClick}
+              className={styles.myEquipmentButton}
+              onClick={handleMyEquipmentClick}
             >
-              My Events
+              My Equipment
             </button>
             <button className={styles.learnMoreButton}>
               Learn More
@@ -68,42 +68,39 @@ const HomePage = () => {
         <input
           type="text"
           className={styles.searchInput}
-          placeholder="Search by Event or Farm"
+          placeholder="Search by Equipment Name or Type"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
       </section>
 
-      {/* Upcoming Events Section */}
-      <section className={styles.upcomingEventsSection}>
-        <h3 className={styles.sectionTitle}>Upcoming Farm Events</h3>
-        <div className={styles.eventsGrid}>
-          {filteredEvents.length > 0 ? (
-            filteredEvents.map((event) => (
+      {/* Available Equipment Section */}
+      <section className={styles.availableEquipmentSection}>
+        <h3 className={styles.sectionTitle}>Available Equipment</h3>
+        <div className={styles.equipmentGrid}>
+          {filteredEquipment.length > 0 ? (
+            filteredEquipment.map((equipment) => (
               <div
-                key={event._id}
-                className={styles.eventCard}
-                onClick={() => handleCardClick(event._id)}
+                key={equipment._id}
+                className={styles.equipmentCard}
+                onClick={() => handleCardClick(equipment._id)}
               >
                 <img
-                  src={event.image}
-                  alt={event.title}
-                  className={styles.eventImage}
+                  src={equipment.image}
+                  alt={equipment.name}
+                  className={styles.equipmentImage}
                 />
-                <div className={styles.eventContent}>
-                  <p className={styles.eventDate}>
-                    {new Date(event.date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })}
+                <div className={styles.equipmentContent}>
+                  <p className={styles.equipmentAvailability}>
+                    {equipment.isAvailable ? "Available" : "Not Available"}
                   </p>
-                  <h4 className={styles.eventTitle}>{event.title}</h4>
-                  <p className={styles.eventLocation}>{event.location}</p>
+                  <h4 className={styles.equipmentName}>{equipment.name}</h4>
+                  <p className={styles.equipmentType}>{equipment.type}</p>
                 </div>
               </div>
             ))
           ) : (
-            <p className={styles.noEventsMessage}>No upcoming events found.</p>
+            <p className={styles.noEquipmentMessage}>No equipment available for reservation.</p>
           )}
         </div>
         <div className={styles.loadMoreContainer}>

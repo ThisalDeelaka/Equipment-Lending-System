@@ -10,7 +10,7 @@ import AdminPage from "./pages/AdminPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import BookingPage from "./pages/BookingPage"
 import Footer from "./components/CommonComponents/Footer";
-import EventDetails from "./pages/EventDetails";
+import EventDetails from "./pages/EquipmentDetails";
 
 function App() {
   return (
