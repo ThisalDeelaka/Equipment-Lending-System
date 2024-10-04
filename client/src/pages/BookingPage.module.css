@@ -1,5 +1,6 @@
 /* BookingPage.module.css */
 
+/* Container for the entire booking page */
 .container {
     display: flex;
     align-items: center;
@@ -9,6 +10,7 @@
     background: linear-gradient(to right, #f7fafc, #edf2f7);
 }
 
+/* Card that holds the booking content */
 .bookingCard {
     width: 100%;
     max-width: 1000px;
@@ -25,6 +27,7 @@
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* Equipment image section */
 .equipmentImageSection {
     width: 100%;
     flex: 1;
@@ -37,6 +40,7 @@
     object-fit: cover;
 }
 
+/* Form section */
 .bookingFormSection {
     width: 100%;
     padding: 2rem;
@@ -56,6 +60,7 @@
     margin-bottom: 2rem;
 }
 
+/* Form styles */
 .form {
     display: flex;
     flex-direction: column;
@@ -67,6 +72,7 @@
     flex-direction: column;
 }
 
+/* Form labels */
 .label {
     font-size: 1rem;
     font-weight: 600;
@@ -74,6 +80,7 @@
     margin-bottom: 0.5rem;
 }
 
+/* Input fields */
 .input,
 .select,
 .textarea {
@@ -84,29 +91,31 @@
     transition: border 0.3s, box-shadow 0.3s;
 }
 
+/* Focus styles for inputs and textareas */
 .input:focus,
 .select:focus,
 .textarea:focus {
     outline: none;
-    border-color: #38b2ac; /* Teal */
+    border-color: #38b2ac; /* Teal border on focus */
     box-shadow: 0 0 0 4px rgba(56, 178, 172, 0.25); /* Light teal shadow */
 }
 
 .textarea {
-    min-height: 100px; /* Ensure minimum height */
+    min-height: 100px; /* Ensure minimum height for textarea */
     resize: vertical; /* Allow vertical resizing */
 }
 
+/* Error message styling */
 .error {
     color: #e53e3e; /* Red for errors */
     font-size: 0.875rem;
     margin-top: 0.5rem;
 }
 
-/* Button styling */
+/* Submit button styles */
 .submitButton {
     padding: 1rem;
-    background: linear-gradient(to right, #38b2ac, #2f855a); /* Gradient for the button */
+    background: linear-gradient(to right, #38b2ac, #2f855a); /* Gradient for button */
     color: white;
     font-size: 1.25rem;
     font-weight: 600;
@@ -127,13 +136,23 @@
     margin-top: 1rem; /* Space above the calendar */
     border: 1px solid #d1d5db; /* Light gray border */
     border-radius: 0.375rem; /* Rounded corners */
+    padding: 1rem;
 }
 
+/* Styling for dates that are already booked */
 .bookedTile {
     background-color: #fca5a5; /* Light red background for booked dates */
     color: #ffffff; /* White text */
+    pointer-events: none; /* Prevent interaction with booked dates */
 }
 
 .bookedTile:hover {
     background-color: #fca5a5; /* Keep the same color on hover */
 }
+
+/* Custom styling for the active date */
+.activeDate {
+    background-color: #38b2ac; /* Teal for active date */
+    color: #ffffff;
+}
+

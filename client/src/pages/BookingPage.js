@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Calendar from 'react-calendar'; // Calendar component import
+import 'react-calendar/dist/Calendar.css'; // Calendar CSS
 import axios from 'axios';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import styles from './BookingPage.module.css';
 
 const BookingPage = () => {
     const { id } = useParams(); // Get equipment ID from URL
     const [equipment, setEquipment] = useState(null); // Store equipment data
+    const [bookedDates, setBookedDates] = useState([]); // Store already booked dates
+    const [selectedDate, setSelectedDate] = useState(new Date()); // Store the selected date
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
         phone: '',
         rentalDuration: 1,
-        specialRequests: '',
-        reservationDate: new Date(), // Initialize reservation date
+        specialRequests: ''
     });
     const [errors, setErrors] = useState({});
-    const [bookedDates, setBookedDates] = useState([]); // Array to store booked dates
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const userId = currentUser ? currentUser.userID : null; // Safely get userID
 
@@ -33,8 +33,8 @@ const BookingPage = () => {
 
         const fetchBookedDates = async () => {
             try {
-                const response = await axios.get(`/api/bookings/getBookedDates/${id}`); // API to get booked dates
-                setBookedDates(response.data); // Expecting an array of dates
+                const response = await axios.get(`/api/bookings/bookedDates/${id}`);
+                setBookedDates(response.data); // Set the already booked dates for the equipment
             } catch (error) {
                 console.error('Error fetching booked dates:', error);
             }
@@ -50,7 +50,7 @@ const BookingPage = () => {
         let inputValue = value;
         let updatedErrors = { ...errors };
 
-        // Validation logic for Full Name
+        // Validation logic for Full Name (allow only alphabetic characters and space)
         if (name === 'fullName') {
             inputValue = value.replace(/[^A-Za-z\s]/g, ''); // Remove non-alphabetic characters
             if (value !== inputValue) {
@@ -60,7 +60,7 @@ const BookingPage = () => {
             }
         }
 
-        // Validation logic for Phone
+        // Validation logic for Phone (allow only numbers, and exactly 10 digits)
         if (name === 'phone') {
             inputValue = value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
             if (inputValue.length > 10) {
@@ -73,7 +73,7 @@ const BookingPage = () => {
             }
         }
 
-        // Validation logic for Email
+        // Validation logic for Email (check if email structure is valid)
         if (name === 'email') {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex pattern
             if (!emailRegex.test(value)) {
@@ -86,18 +86,6 @@ const BookingPage = () => {
         // Set the sanitized input value to the state
         setFormData({ ...formData, [name]: inputValue });
         setErrors(updatedErrors);
-    };
-
-    // Handle date change from calendar
-    const handleDateChange = (date) => {
-        setFormData({ ...formData, reservationDate: date });
-    };
-
-    // Check if a date is booked
-    const isBookedDate = (date) => {
-        return bookedDates.some((bookedDate) => {
-            return new Date(bookedDate).toDateString() === date.toDateString();
-        });
     };
 
     // Handle form submission
@@ -119,7 +107,7 @@ const BookingPage = () => {
                 userEmail: formData.email,
                 userPhone: formData.phone,
                 specialRequests: formData.specialRequests,
-                reservationDate: formData.reservationDate.toISOString(), // Format the date for submission
+                reservationDate: selectedDate, // Include the selected date for reservation
             };
 
             const response = await axios.post('/api/bookings/create', bookingData);
@@ -132,6 +120,11 @@ const BookingPage = () => {
         } catch (error) {
             console.error('Error submitting the booking:', error);
         }
+    };
+
+    // Disable already booked dates
+    const tileDisabled = ({ date, view }) => {
+        return bookedDates.some(bookedDate => new Date(bookedDate).toDateString() === date.toDateString());
     };
 
     return (
@@ -154,20 +147,6 @@ const BookingPage = () => {
                     <p className={styles.subtitle}>Fill out the details below to confirm your reservation.</p>
 
                     <form className={styles.form} onSubmit={handleSubmit}>
-                        {/* Reservation Date */}
-                        <div className={styles.formGroup}>
-                            <label htmlFor="reservationDate" className={styles.label}>Select Reservation Date</label>
-                            <Calendar
-                                onChange={handleDateChange}
-                                value={formData.reservationDate}
-                                tileClassName={({ date }) => 
-                                    isBookedDate(date) ? styles.bookedTile : null // Apply class if booked
-                                }
-                                className={styles.calendar}
-                                tileDisabled={({ date }) => isBookedDate(date)} // Disable booked dates
-                            />
-                        </div>
-
                         {/* Full Name */}
                         <div className={styles.formGroup}>
                             <label htmlFor="fullName" className={styles.label}>Full Name</label>
@@ -214,6 +193,16 @@ const BookingPage = () => {
                                 placeholder="07X XXXXXXX"
                             />
                             {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+                        </div>
+
+                        {/* Calendar Component */}
+                        <div className={styles.formGroup}>
+                            <label className={styles.label}>Select Reservation Date</label>
+                            <Calendar
+                                onChange={setSelectedDate}
+                                value={selectedDate}
+                                tileDisabled={tileDisabled} // Disable already booked dates
+                            />
                         </div>
 
                         {/* Rental Duration */}
