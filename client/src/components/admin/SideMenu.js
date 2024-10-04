@@ -16,8 +16,8 @@ function getItem(label, key, icon) {
 // Array of menu items for the sidebar
 const items = [
     getItem("Dashboard", "/admin", <Icon icon="material-symbols:dashboard-outline" />),
-    getItem("Manage Events", "/admin/manage-ticket", <Icon icon="ic:outline-inventory" />),
-    getItem("Manage Bookings", "/admin/manage-Booking", <Icon icon="akar-icons:book" />),
+    getItem("Manage Equipment", "/admin/manage-equipment", <Icon icon="ic:outline-inventory" />),
+    getItem("Manage Bookings", "/admin/manage-booking", <Icon icon="akar-icons:book" />),
 ];
 
 // Keys of submenu items that have children, used to manage open states

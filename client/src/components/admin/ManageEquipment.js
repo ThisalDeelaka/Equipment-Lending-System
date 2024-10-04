@@ -1,4 +1,4 @@
-/* Updated React Component with CSS Modules */
+/* Updated React Component for Managing Equipment */
 import React, { useState, useEffect } from "react";
 import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { format, isBefore, startOfToday } from "date-fns";
@@ -22,18 +22,18 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Alert, AlertDescription } from "../ui/alert";
-import styles from "./ManageTicket.module.css";
+import styles from "./ManageEquipment.module.css";
 
-function ManageTicket() {
-  const [tickets, setTickets] = useState([]);
-  const [filteredTickets, setFilteredTickets] = useState([]);
-  const [newTicket, setNewTicket] = useState({
+function ManageEquipment() {
+  const [equipmentList, setEquipmentList] = useState([]);
+  const [filteredEquipment, setFilteredEquipment] = useState([]);
+  const [newEquipment, setNewEquipment] = useState({
     image: "",
-    title: "",
-    date: "",
+    name: "",
+    availabilityDate: "",
     location: "",
   });
-  const [editTicket, setEditTicket] = useState(null);
+  const [editEquipment, setEditEquipment] = useState(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -42,27 +42,27 @@ function ManageTicket() {
   const [itemsPerPage] = useState(4);
 
   useEffect(() => {
-    fetchTickets();
+    fetchEquipment();
   }, []);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    setFilteredTickets(tickets.slice(startIndex, endIndex));
-  }, [tickets, currentPage, itemsPerPage]);
+    setFilteredEquipment(equipmentList.slice(startIndex, endIndex));
+  }, [equipmentList, currentPage, itemsPerPage]);
 
-  const fetchTickets = async () => {
+  const fetchEquipment = async () => {
     try {
-      const response = await axios.get(`/api/tickets/getTickets`);
-      setTickets(response.data.tickets);
+      const response = await axios.get(`/api/equipment/getEquipment`);
+      setEquipmentList(response.data.equipment);
     } catch (error) {
-      console.error("Failed to fetch tickets", error);
-      showAlert("Failed to fetch tickets. Please try again.");
+      console.error("Failed to fetch equipment", error);
+      showAlert("Failed to fetch equipment. Please try again.");
     }
   };
 
   const handleNextPage = () => {
-    if (currentPage * itemsPerPage < tickets.length) {
+    if (currentPage * itemsPerPage < equipmentList.length) {
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
@@ -77,18 +77,18 @@ function ManageTicket() {
     let updatedValue = value;
     let updatedErrors = { ...errors };
 
-    // Prevent numbers and invalid characters in Title and Location
-    if (name === "title" || name === "location") {
+    // Prevent numbers and invalid characters in Name and Location
+    if (name === "name" || name === "location") {
       updatedValue = value.replace(/[^A-Za-z\s]/g, ""); // Only allow letters and spaces
     }
 
-    // Validate Date (only future dates)
-    if (name === "date") {
+    // Validate Availability Date (only future dates)
+    if (name === "availabilityDate") {
       const selectedDate = new Date(value);
       if (isBefore(selectedDate, startOfToday())) {
-        updatedErrors.date = "Please select a future date";
+        updatedErrors.availabilityDate = "Please select a future date";
       } else {
-        delete updatedErrors.date;
+        delete updatedErrors.availabilityDate;
       }
     }
 
@@ -96,37 +96,37 @@ function ManageTicket() {
     return updatedValue;
   };
 
-  const handleNewTicketChange = (e) => {
+  const handleNewEquipmentChange = (e) => {
     const { name, value } = e.target;
     const validatedValue = validateInput(name, value);
-    setNewTicket({ ...newTicket, [name]: validatedValue });
+    setNewEquipment({ ...newEquipment, [name]: validatedValue });
   };
 
-  const handleEditTicketChange = (e) => {
+  const handleEditEquipmentChange = (e) => {
     const { name, value } = e.target;
     const validatedValue = validateInput(name, value);
-    setEditTicket({ ...editTicket, [name]: validatedValue });
+    setEditEquipment({ ...editEquipment, [name]: validatedValue });
   };
 
-  const addTicket = async () => {
+  const addEquipment = async () => {
     if (Object.keys(errors).length > 0) {
       showAlert("Please fix the errors before submitting.");
       return;
     }
 
     try {
-      const response = await axios.post("/api/tickets/add-ticket", newTicket);
-      setTickets([...tickets, response.data.ticket]);
-      setNewTicket({ image: "", title: "", date: "", location: "" });
+      const response = await axios.post("/api/equipment/add-equipment", newEquipment);
+      setEquipmentList([...equipmentList, response.data.equipment]);
+      setNewEquipment({ image: "", name: "", availabilityDate: "", location: "" });
       setIsAddDialogOpen(false);
-      showAlert("Ticket added successfully!");
+      showAlert("Equipment added successfully!");
     } catch (error) {
-      console.error("Failed to add ticket", error);
-      showAlert("Failed to add ticket. Please try again.");
+      console.error("Failed to add equipment", error);
+      showAlert("Failed to add equipment. Please try again.");
     }
   };
 
-  const updateTicket = async () => {
+  const updateEquipment = async () => {
     if (Object.keys(errors).length > 0) {
       showAlert("Please fix the errors before submitting.");
       return;
@@ -134,32 +134,32 @@ function ManageTicket() {
 
     try {
       const response = await axios.put(
-        `/api/tickets/tickets/${editTicket._id}`,
-        editTicket
+        `/api/equipment/equipment/${editEquipment._id}`,
+        editEquipment
       );
-      setTickets(
-        tickets.map((ticket) =>
-          ticket._id === editTicket._id ? response.data.ticket : ticket
+      setEquipmentList(
+        equipmentList.map((item) =>
+          item._id === editEquipment._id ? response.data.equipment : item
         )
       );
-      setEditTicket(null);
+      setEditEquipment(null);
       setIsEditDialogOpen(false);
-      showAlert("Ticket updated successfully!");
+      showAlert("Equipment updated successfully!");
     } catch (error) {
-      console.error("Failed to update ticket", error);
-      showAlert("Failed to update ticket. Please try again.");
+      console.error("Failed to update equipment", error);
+      showAlert("Failed to update equipment. Please try again.");
     }
   };
 
-  const deleteTicket = async (id) => {
-    if (window.confirm("Are you sure you want to delete this ticket?")) {
+  const deleteEquipment = async (id) => {
+    if (window.confirm("Are you sure you want to delete this equipment?")) {
       try {
-        await axios.delete(`/api/tickets/tickets/${id}`);
-        setTickets(tickets.filter((ticket) => ticket._id !== id));
-        showAlert("Ticket deleted successfully!");
+        await axios.delete(`/api/equipment/equipment/${id}`);
+        setEquipmentList(equipmentList.filter((item) => item._id !== id));
+        showAlert("Equipment deleted successfully!");
       } catch (error) {
-        console.error("Failed to delete ticket", error);
-        showAlert("Failed to delete ticket. Please try again.");
+        console.error("Failed to delete equipment", error);
+        showAlert("Failed to delete equipment. Please try again.");
       }
     }
   };
@@ -169,12 +169,12 @@ function ManageTicket() {
     setTimeout(() => setAlertMessage(""), 3000);
   };
 
-  const totalPages = Math.ceil(tickets.length / itemsPerPage);
+  const totalPages = Math.ceil(equipmentList.length / itemsPerPage);
 
   return (
     <Card className={styles.card}>
       <CardHeader className={styles.cardHeader}>
-        <CardTitle className={styles.cardTitle}>Manage Events</CardTitle>
+        <CardTitle className={styles.cardTitle}>Manage Equipment</CardTitle>
       </CardHeader>
       <CardContent className={styles.cardContent}>
         {alertMessage && (
@@ -184,54 +184,54 @@ function ManageTicket() {
         )}
 
         <div className={styles.headerSection}>
-          <h2 className={styles.eventsListTitle}>Events List</h2>
+          <h2 className={styles.equipmentListTitle}>Equipment List</h2>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
               <Button className={styles.addButton}>
-                <Plus className={styles.icon} /> Add New Event
+                <Plus className={styles.icon} /> Add New Equipment
               </Button>
             </DialogTrigger>
             <DialogContent className={styles.dialogContent}>
               <DialogHeader>
-                <DialogTitle>Add New Event</DialogTitle>
+                <DialogTitle>Add New Equipment</DialogTitle>
               </DialogHeader>
               <div className={styles.formGrid}>
                 <Input
                   placeholder="Image URL"
                   name="image"
-                  value={newTicket.image}
-                  onChange={handleNewTicketChange}
+                  value={newEquipment.image}
+                  onChange={handleNewEquipmentChange}
                 />
 
                 <Input
-                  placeholder="Title"
-                  name="title"
-                  value={newTicket.title}
-                  onChange={handleNewTicketChange}
+                  placeholder="Name"
+                  name="name"
+                  value={newEquipment.name}
+                  onChange={handleNewEquipmentChange}
                 />
-                {errors.title && <p className={styles.errorText}>{errors.title}</p>}
+                {errors.name && <p className={styles.errorText}>{errors.name}</p>}
 
                 <Input
                   type="date"
-                  name="date"
-                  value={newTicket.date}
-                  onChange={handleNewTicketChange}
+                  name="availabilityDate"
+                  value={newEquipment.availabilityDate}
+                  onChange={handleNewEquipmentChange}
                 />
-                {errors.date && <p className={styles.errorText}>{errors.date}</p>}
+                {errors.availabilityDate && <p className={styles.errorText}>{errors.availabilityDate}</p>}
 
                 <Input
                   placeholder="Location"
                   name="location"
-                  value={newTicket.location}
-                  onChange={handleNewTicketChange}
+                  value={newEquipment.location}
+                  onChange={handleNewEquipmentChange}
                 />
                 {errors.location && <p className={styles.errorText}>{errors.location}</p>}
 
                 <Button
-                  onClick={addTicket}
+                  onClick={addEquipment}
                   className={styles.saveButton}
                 >
-                  Add Event
+                  Add Equipment
                 </Button>
               </div>
             </DialogContent>
@@ -243,35 +243,35 @@ function ManageTicket() {
             <TableHeader>
               <TableRow className={styles.tableHeaderRow}>
                 <TableHead className={styles.tableHead}>Image</TableHead>
-                <TableHead className={styles.tableHead}>Title</TableHead>
-                <TableHead className={styles.tableHead}>Date</TableHead>
+                <TableHead className={styles.tableHead}>Name</TableHead>
+                <TableHead className={styles.tableHead}>Availability Date</TableHead>
                 <TableHead className={styles.tableHead}>Location</TableHead>
                 <TableHead className={styles.tableHead}>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredTickets.map((ticket) => (
+              {filteredEquipment.map((item) => (
                 <TableRow
-                  key={ticket._id}
+                  key={item._id}
                   className={styles.tableRow}
                 >
                   <TableCell>
                     <img
-                      src={ticket.image}
-                      alt={ticket.title}
-                      className={styles.ticketImage}
+                      src={item.image}
+                      alt={item.name}
+                      className={styles.equipmentImage}
                     />
                   </TableCell>
-                  <TableCell className={styles.tableCell}>{ticket.title}</TableCell>
-                  <TableCell>{format(new Date(ticket.date), "PP")}</TableCell>
-                  <TableCell>{ticket.location}</TableCell>
+                  <TableCell className={styles.tableCell}>{item.name}</TableCell>
+                  <TableCell>{format(new Date(item.availabilityDate), "PP")}</TableCell>
+                  <TableCell>{item.location}</TableCell>
                   <TableCell>
                     <div className={styles.actionButtons}>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          setEditTicket(ticket);
+                          setEditEquipment(item);
                           setIsEditDialogOpen(true);
                         }}
                         className={styles.editButton}
@@ -281,7 +281,7 @@ function ManageTicket() {
                       <Button
                         variant="destructive"
                         size="sm"
-                        onClick={() => deleteTicket(ticket._id)}
+                        onClick={() => deleteEquipment(item._id)}
                         className={styles.deleteButton}
                       >
                         <Trash2 className={styles.icon} />
@@ -318,45 +318,45 @@ function ManageTicket() {
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className={styles.dialogContent}>
             <DialogHeader>
-              <DialogTitle>Edit Ticket</DialogTitle>
+              <DialogTitle>Edit Equipment</DialogTitle>
             </DialogHeader>
-            {editTicket && (
+            {editEquipment && (
               <div className={styles.formGrid}>
                 <Input
                   placeholder="Image URL"
                   name="image"
-                  value={editTicket.image}
-                  onChange={handleEditTicketChange}
+                  value={editEquipment.image}
+                  onChange={handleEditEquipmentChange}
                 />
 
                 <Input
-                  placeholder="Title"
-                  name="title"
-                  value={editTicket.title}
-                  onChange={handleEditTicketChange}
+                  placeholder="Name"
+                  name="name"
+                  value={editEquipment.name}
+                  onChange={handleEditEquipmentChange}
                 />
-                {errors.title && <p className={styles.errorText}>{errors.title}</p>}
+                {errors.name && <p className={styles.errorText}>{errors.name}</p>}
 
                 <Input
                   type="date"
-                  name="date"
-                  value={format(new Date(editTicket.date), "yyyy-MM-dd")}
-                  onChange={handleEditTicketChange}
+                  name="availabilityDate"
+                  value={format(new Date(editEquipment.availabilityDate), "yyyy-MM-dd")}
+                  onChange={handleEditEquipmentChange}
                 />
-                {errors.date && <p className={styles.errorText}>{errors.date}</p>}
+                {errors.availabilityDate && <p className={styles.errorText}>{errors.availabilityDate}</p>}
 
                 <Input
                   placeholder="Location"
                   name="location"
-                  value={editTicket.location}
-                  onChange={handleEditTicketChange}
+                  value={editEquipment.location}
+                  onChange={handleEditEquipmentChange}
                 />
                 {errors.location && (
                   <p className={styles.errorText}>{errors.location}</p>
                 )}
 
                 <Button
-                  onClick={updateTicket}
+                  onClick={updateEquipment}
                   className={styles.saveButton}
                 >
                   Save Changes
@@ -370,4 +370,4 @@ function ManageTicket() {
   );
 }
 
-export default ManageTicket;
+export default ManageEquipment;

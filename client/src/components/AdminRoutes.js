@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./admin/Dashboard";
-import ManageTicket from "./admin/ManageTicket";
-import ManageBookings from "./admin/ManageBookings";
+import ManageTicket from "./admin/ManageEquipment";
+import ManageBookings from "./admin/ReservationTable";
 function AdminRoutes() {
   return (
     <div>

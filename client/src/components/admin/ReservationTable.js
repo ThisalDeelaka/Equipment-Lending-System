@@ -15,37 +15,37 @@ import { ChevronLeft, ChevronRight, Download, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import styles from "./BookingTable.module.css";
 
-function BookingTable() {
-  const [bookings, setBookings] = useState([]);
+function ReservationTable() {
+  const [reservations, setReservations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetchBookings();
+    fetchReservations();
   }, []);
 
-  const fetchBookings = async () => {
+  const fetchReservations = async () => {
     try {
-      const response = await axios.get("/api/bookings/all");
-      setBookings(response.data);
+      const response = await axios.get("/api/reservations/all");
+      setReservations(response.data);
     } catch (error) {
-      console.error("Failed to fetch bookings", error);
+      console.error("Failed to fetch reservations", error);
     }
   };
 
-  const filteredBookings = bookings.filter((booking) =>
-    booking.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredReservations = reservations.filter((reservation) =>
+    reservation.fullName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentBookings = filteredBookings.slice(
+  const currentReservations = filteredReservations.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
 
-  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredReservations.length / itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -69,22 +69,20 @@ function BookingTable() {
       "Full Name",
       "Email",
       "Phone",
-      "Ticket Quantity",
-      "Ticket Type",
+      "Rental Duration",
       "Special Request",
-      "Booking Date",
+      "Reservation Date",
     ];
     const csvContent = [
       headers.join(","),
-      ...filteredBookings.map((booking) =>
+      ...filteredReservations.map((reservation) =>
         [
-          booking.fullName,
-          booking.userEmail,
-          booking.userPhone,
-          booking.ticketQuantity,
-          booking.ticketType,
-          booking.specialRequest || "N/A",
-          format(new Date(booking.createdAt), "PP"),
+          reservation.fullName,
+          reservation.userEmail,
+          reservation.userPhone,
+          reservation.rentalDuration,
+          reservation.specialRequest || "N/A",
+          format(new Date(reservation.createdAt), "PP"),
         ].join(",")
       ),
     ].join("\n");
@@ -94,7 +92,7 @@ function BookingTable() {
     if (link.download !== undefined) {
       const url = URL.createObjectURL(blob);
       link.setAttribute("href", url);
-      link.setAttribute("download", "bookings.csv");
+      link.setAttribute("download", "reservations.csv");
       link.style.visibility = "hidden";
       document.body.appendChild(link);
       link.click();
@@ -105,7 +103,7 @@ function BookingTable() {
   return (
     <Card className={styles.bookingTableCard}>
       <CardHeader className={styles.cardHeader}>
-        <CardTitle className={styles.cardTitle}>Booking Records</CardTitle>
+        <CardTitle className={styles.cardTitle}>Reservation Records</CardTitle>
       </CardHeader>
       <CardContent className={styles.cardContent}>
         <div className={styles.topSection}>
@@ -138,22 +136,20 @@ function BookingTable() {
                 <TableHead className={styles.tableHead}>Full Name</TableHead>
                 <TableHead className={styles.tableHead}>Email</TableHead>
                 <TableHead className={styles.tableHead}>Phone</TableHead>
-                <TableHead className={styles.tableHead}>Ticket Quantity</TableHead>
-                <TableHead className={styles.tableHead}>Ticket Type</TableHead>
+                <TableHead className={styles.tableHead}>Rental Duration</TableHead>
                 <TableHead className={styles.tableHead}>Special Request</TableHead>
-                <TableHead className={styles.tableHead}>Booking Date</TableHead>
+                <TableHead className={styles.tableHead}>Reservation Date</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentBookings.map((booking) => (
-                <TableRow key={booking._id} className={styles.tableRow}>
-                  <TableCell className={styles.tableCell}>{booking.fullName}</TableCell>
-                  <TableCell className={styles.tableCell}>{booking.userEmail}</TableCell>
-                  <TableCell className={styles.tableCell}>{booking.userPhone}</TableCell>
-                  <TableCell className={styles.tableCell}>{booking.ticketQuantity}</TableCell>
-                  <TableCell className={styles.tableCell}>{booking.ticketType}</TableCell>
-                  <TableCell className={styles.tableCell}>{booking.specialRequest || 'N/A'}</TableCell>
-                  <TableCell className={styles.tableCell}>{format(new Date(booking.createdAt), "PP")}</TableCell>
+              {currentReservations.map((reservation) => (
+                <TableRow key={reservation._id} className={styles.tableRow}>
+                  <TableCell className={styles.tableCell}>{reservation.fullName}</TableCell>
+                  <TableCell className={styles.tableCell}>{reservation.userEmail}</TableCell>
+                  <TableCell className={styles.tableCell}>{reservation.userPhone}</TableCell>
+                  <TableCell className={styles.tableCell}>{reservation.rentalDuration}</TableCell>
+                  <TableCell className={styles.tableCell}>{reservation.specialRequest || 'N/A'}</TableCell>
+                  <TableCell className={styles.tableCell}>{format(new Date(reservation.createdAt), "PP")}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -187,4 +183,4 @@ function BookingTable() {
   );
 }
 
-export default BookingTable;
+export default ReservationTable;

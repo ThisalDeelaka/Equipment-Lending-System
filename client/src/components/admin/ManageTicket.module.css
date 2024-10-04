@@ -1,4 +1,4 @@
-/* ManageTicket.module.css */
+/* ManageEquipment.module.css */
 
 .card {
     width: 100%;
@@ -36,7 +36,7 @@
     margin-bottom: 1.5rem;
   }
   
-  .eventsListTitle {
+  .equipmentListTitle {
     font-size: 1.25rem;
     font-weight: 600;
     color: #374151;
@@ -105,7 +105,7 @@
     background-color: #f9fafb;
   }
   
-  .ticketImage {
+  .equipmentImage {
     width: 4rem;
     height: 4rem;
     object-fit: cover;
@@ -164,3 +164,4 @@
     font-weight: 500;
     color: #4b5563;
   }
+  
