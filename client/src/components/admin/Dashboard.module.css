@@ -1,24 +1,56 @@
-/* Dashboard.module.css */
 
+/* Sidebar Menu Items */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 12px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: #EFBF04;
+  color: black;
+}
+
+.sidebar a .icon {
+  margin-right: 10px;
+}
+
+/* Dashboard Container */
 .dashboardContainer {
   min-height: 100vh;
   padding: 2rem;
-  background: linear-gradient(to bottom right, #f7f9fc, #e2e8f0);
+  padding-left: 300px; /* Adjusted for sidebar width */
+  background-color: #1c1c1c; /* Dark theme background */
 }
 
+/* Dashboard Content */
 .dashboardContent {
-  max-width: 1220px;
-  margin: 0 auto;
-  background-color: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  max-width: calc(100% - 300px); /* Adjusted for sidebar width */
+  margin: 2rem auto;
+  background-color: #2a2a2a; /* Slightly lighter background */
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
   padding: 2rem;
 }
 
+/* Dashboard Title */
 .dashboardTitle {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #2d3748;
+  color: #EFBF04; /* Gold title */
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -32,17 +64,20 @@
 }
 
 .summaryCard {
-  background: linear-gradient(to bottom right, #ffffff, #f0f4f8);
-  border-radius: 1rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s;
+  background-color: #333333; /* Slightly lighter background */
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
   padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #444444; /* Subtle border to define card edges */
 }
 
 .summaryCard:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
 }
 
+/* Card Header */
 .cardHeader {
   display: flex;
   justify-content: space-between;
@@ -51,21 +86,22 @@
 }
 
 .cardTitle {
-  font-size: 1.25rem;
+  font-size: 1.2rem; /* Slightly smaller for balance */
   font-weight: 600;
-  color: #4a5568;
+  color: #EFBF04; /* Gold text */
 }
 
 .cardIcon {
   height: 1.75rem;
   width: 1.75rem;
-  color: #3182ce;
+  color: #EFBF04; /* Gold icon */
 }
 
+/* Card Value */
 .cardValue {
   font-size: 2rem;
   font-weight: 700;
-  color: #2d3748;
+  color: #ffffff; /* White for high contrast */
   text-align: center;
 }
 
@@ -83,28 +119,30 @@
 }
 
 .chartCard {
-  background-color: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s;
+  background-color: #333333; /* Lighter dark background */
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
   padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #444444; /* Subtle border */
 }
 
 .chartCard:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .chartTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #2d3748;
+  color: #EFBF04; /* Gold color for titles */
   display: flex;
   align-items: center;
 }
 
 .chartIcon {
   margin-right: 0.5rem;
-  color: #38a169;
+  color: #EFBF04; /* Gold icons */
 }
 
 .chartContent {
@@ -121,13 +159,13 @@
 .chartDate {
   width: 6rem;
   font-size: 0.875rem;
-  color: #718096;
+  color: #a0aec0; /* Muted color for dates */
 }
 
 .chartBarContainer {
   flex-grow: 1;
   height: 1rem;
-  background-color: #e2e8f0;
+  background-color: #3c3c3c;
   border-radius: 0.5rem;
   overflow: hidden;
   margin: 0 1rem;
@@ -135,7 +173,7 @@
 
 .chartBar {
   height: 100%;
-  background-color: #38a169;
+  background-color: #EFBF04; /* Gold bar */
   border-radius: 0.5rem;
 }
 
@@ -143,44 +181,5 @@
   width: 3rem;
   text-align: right;
   font-size: 0.875rem;
-  color: #4a5568;
-}
-
-/* Check-In/Check-Out Card */
-.checkInOutCard {
-  background: linear-gradient(to bottom right, #ffffff, #e6fffa);
-  border-radius: 1rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  transition: box-shadow 0.3s;
-}
-
-.checkInOutCard:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.checkInOutHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 1rem;
-}
-
-.checkInOutTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2d3748;
-}
-
-.checkInOutIcon {
-  height: 1.75rem;
-  width: 1.75rem;
-  color: #38b2ac;
-}
-
-.checkInOutValue {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #2d3748;
-  text-align: center;
+  color: #a0aec0; /* Muted text color */
 }

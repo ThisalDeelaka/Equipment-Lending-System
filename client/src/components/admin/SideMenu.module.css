@@ -1,28 +1,84 @@
-/* SideMenu.module.css */
+/* Sidebar Container */
+.sidebar {
+  width: 220px; /* Slightly narrower for a sleek look */
+  background-color: #1e1e1e; /* Modern dark background, not too black */
+  color: white;
+  position: fixed;
+  height: 100%;
+  padding: 20px 15px; /* Reduced padding for a tighter layout */
+  top: 0;
+  left: 0;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15); /* Deeper shadow for depth */
+  border-radius: 10px 0 0 10px; /* Soft rounded corners on the left */
+  z-index: 999; /* Ensure it's always visible */
+}
 
-.sideMenu {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logoContainer {
-    padding: 1.5rem;
-    text-align: center;
-  }
-  
-  .logoText {
-    font-size: 1.875rem;
-    font-weight: bold;
-    color: #27ae61;
-    letter-spacing: 0.05em;
-  }
-  
-  .menu {
-    width: 100%;
-    border: none;
-    font-size: 1rem;
-  }
-  
+/* Sidebar Title */
+.logo {
+  color: #EFBF04; /* Gold for the title */
+  margin-bottom: 20px;
+  font-size: 1.5rem; /* Slightly smaller */
+  font-weight: 700; /* Bold, cleaner look */
+  text-align: left; /* Aligned to the left */
+  letter-spacing: 0.05em;
+}
+
+/* Sidebar Menu Items */
+.menu {
+  margin-top: 1rem;
+  background-color: transparent; /* Transparent background for the menu */
+  border: none;
+}
+
+/* General Menu Item Styling */
+.menu .ant-menu-item {
+  margin-bottom: 10px;
+  padding: 12px 16px;
+  color: #bfbfbf; /* Lighter gray for unselected items */
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  border-radius: 8px; /* More rounded corners for a modern look */
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+/* Selected Item Styling */
+.menu .ant-menu-item-selected {
+  background-color: #EFBF04 !important; /* Gold background for selected item */
+  color: black !important; /* Black text for selected item */
+  font-weight: 600;
+  transform: translateX(3px); /* Subtle slide on selection */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for selected item */
+}
+
+/* Hover Effect for Menu Items */
+.menu .ant-menu-item:hover {
+  background-color: #EFBF04 !important; /* Gold background on hover */
+  color: black !important; /* Black text on hover */
+  transform: translateX(3px); /* Less pronounced slide effect */
+}
+
+/* Icon Styling within Menu Items */
+.icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  color: inherit; /* Inherit color from menu item */
+}
+
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

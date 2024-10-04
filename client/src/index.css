@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 
 font-face {
@@ -33,20 +31,7 @@ font-face {
   src: url(./fonts/Product-Sans-Bold-Italic.ttf) format("truetype");
 }
 
-:root {
-  --main-blue-color: #0866ff;
-  --line-color: #ced0d4;
-  --background-color: #f0f2f5;
-  --red-color: #e41e3f;
-  --gray-text-color: #65676b;
 
-  --black-200: #020202;
-  --black-300: #333333;
-  --black-400: #1f1e31;
-  --black-500: #555555;
-
-  --color-white: #fff;
-}
 
 * {
   margin: 0;

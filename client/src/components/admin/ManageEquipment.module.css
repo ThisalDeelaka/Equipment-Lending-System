@@ -2,18 +2,25 @@
 
 /* Card container styling */
 .card {
-  width: 100%;
+  width: calc(100% - 240px); /* Adjust width to account for sidebar */
   max-width: 1220px;
-  height: auto; /* Allow the height to adapt based on content */
-  margin: 1.25rem auto;
-  background-color: #ffffff;
+  margin: 1.5rem auto;
+  background-color: #242526; /* Dark background for consistency */
   border-radius: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: relative;
+  
+}
+
+/* Adjust for sidebar and navbar */
+.adjustForSidebarNavbar {
+  margin-top: 80px; /* Adjust based on navbar height */
+  padding-left: 320px; /* Adjust to avoid sidebar overlap */
 }
 
 /* Card header styles */
 .cardHeader {
-  background-color: #f3f4f6;
+  background-color: #1c1c1c;
   padding: 1.5rem;
   border-top-left-radius: 0.75rem;
   border-top-right-radius: 0.75rem;
@@ -21,9 +28,10 @@
 
 /* Card title styling */
 .cardTitle {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #EFBF04; /* Gold color for the title */
+  text-align: center;
 }
 
 /* Card content padding */
@@ -39,106 +47,38 @@
   border-left: 4px solid #34d399; /* Green border */
 }
 
-/* Header section for buttons */
-.headerSection {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
 /* Title for equipment list */
 .equipmentListTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #374151;
+  color: #EFBF04; /* Gold */
 }
 
 /* Add button styling */
 .addButton {
-  background-color: #2563eb; /* Blue */
-  color: white;
+  background-color: #EFBF04; /* Gold */
+  color: black;
   padding: 0.75rem 1.5rem;
   border-radius: 0.375rem;
   transition: background-color 0.2s ease-in-out;
   font-weight: 500;
 }
 
+/* Add hover effect */
 .addButton:hover {
-  background-color: #1d4ed8; /* Darker blue */
-}
-
-/* Icon styling */
-.icon {
-  margin-right: 0.5rem;
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-/* Dialog content styling */
-.dialogContent {
-  max-width: 450px;
-  padding: 2rem; /* Add padding around dialog content */
-}
-
-/* Grid for forms */
-.formGrid {
-  display: grid;
-  grid-template-columns: 1fr; /* Single column layout */
-  gap: 1.5rem; /* Increased gap for better spacing */
-}
-
-/* Label styling */
-label {
-  font-weight: 600; /* Bold labels */
-  color: #374151; /* Dark gray */
-  margin-bottom: 0.5rem; /* Space between label and input */
-}
-
-/* Input and select field styling */
-input[type="text"],
-select {
-  width: 100%; /* Full width */
-  padding: 0.75rem; /* Padding for comfort */
-  border: 1px solid #d1d5db; /* Light gray border */
-  border-radius: 0.375rem; /* Rounded corners */
-  transition: border-color 0.2s; /* Smooth border color change */
-}
-
-input[type="text"]:focus,
-select:focus {
-  border-color: #2563eb; /* Blue border on focus */
-  outline: none; /* Remove default outline */
-}
-
-/* Error text styling */
-.errorText {
-  color: #ef4444; /* Red */
-}
-
-/* Save button styling */
-.saveButton {
-  background-color: #10b981; /* Green */
-  color: white;
-  padding: 0.75rem 1.5rem; /* Padding for comfort */
-  border-radius: 0.375rem; /* Rounded corners */
-  font-weight: 600; /* Bold text */
-  transition: background-color 0.2s; /* Smooth transition */
-  width: 100%; /* Full width */
-}
-
-.saveButton:hover {
-  background-color: #059669; /* Darker green on hover */
+  background-color: #D4A903; /* Darker gold on hover */
 }
 
 /* Table container */
 .tableContainer {
   overflow-x: auto;
+  margin-top: 1.5rem; /* Additional margin */
 }
 
 /* Table header row */
 .tableHeaderRow {
-  background-color: #f3f4f6; /* Light gray */
+  background-color: #2a2a2a; /* Darker background for table header */
+  color: #EFBF04; /* Gold text for header */
 }
 
 /* Table head styling */
@@ -148,25 +88,12 @@ select:focus {
 
 /* Table row styling */
 .tableRow {
-  background-color: #ffffff;
+  background-color: #1c1c1c; /* Maintain consistent dark background */
   transition: background-color 0.2s ease-in-out;
 }
 
 .tableRow:hover {
-  background-color: #f9fafb; /* Slightly darker gray */
-}
-
-/* Equipment image styling */
-.equipmentImage {
-  width: 4rem;
-  height: 4rem;
-  object-fit: cover;
-  border-radius: 0.375rem;
-}
-
-/* Table cell styling */
-.tableCell {
-  font-weight: 500;
+  background-color: #2a2a2a; /* Slight hover effect */
 }
 
 /* Action buttons section */
@@ -177,22 +104,24 @@ select:focus {
 
 /* Edit button styling */
 .editButton {
-  color: #3b82f6; /* Blue */
-  padding: 0.5rem 1rem;
-  border: none;
+  background-color: transparent;
+  color: #EFBF04; /* Gold */
+  padding: 0.5rem;
+  border: 1px solid #EFBF04; /* Gold border */
   border-radius: 0.375rem;
-  transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out, border-color 0.2s;
 }
 
 .editButton:hover {
-  color: #1d4ed8; /* Darker blue */
+  color: black;
+  background-color: #EFBF04;
 }
 
 /* Delete button styling */
 .deleteButton {
   background-color: #ef4444; /* Red */
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 0.375rem;
   transition: background-color 0.2s ease-in-out;
@@ -212,49 +141,61 @@ select:focus {
 
 /* Pagination button styling */
 .paginationButton {
-  background-color: #d1d5db; /* Light gray */
-  color: #374151; /* Dark gray */
+  background-color: #EFBF04; /* Gold */
+  color: black;
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
   transition: background-color 0.2s ease-in-out;
 }
 
 .paginationButton:hover {
-  background-color: #9ca3af; /* Darker gray */
+  background-color: #D4A903; /* Darker gold */
 }
 
 /* Pagination info styling */
 .paginationInfo {
   font-size: 1rem;
   font-weight: 500;
-  color: #4b5563; /* Medium gray */
+  color: #EFBF04; /* Gold */
 }
 
-/* Dropdown and radio button styles */
-select {
-  padding: 0.75rem;
+/* Dialog content styling */
+.dialogContent {
+  padding: 2rem;
+  background-color: #2a2a2a;
+  border-radius: 0.5rem;
+}
+
+/* Form grid styling */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Save button styling */
+.saveButton {
+  background-color: #EFBF04;
+  color: black;
+  padding: 0.75rem 1.5rem;
   border-radius: 0.375rem;
-  border: 1px solid #d1d5db; /* Light gray */
-  transition: border-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 500;
+  grid-column: span 2;
 }
 
-select:focus {
-  border-color: #2563eb; /* Blue */
-  outline: none;
+.saveButton:hover {
+  background-color: #D4A903;
 }
 
-fieldset {
-  border: none; /* Remove default border */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
+/* Body background styling */
+body {
+  background-color: #1c1c1c; /* Dark background for consistency */
+  color: #e5e5e5; /* Light text color for readability */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
-legend {
-  font-weight: 600; /* Bold legend */
-  margin-bottom: 0.5rem; /* Space below legend */
-  color: #374151; /* Dark gray */
-}
 
-input[type="radio"] {
-  margin-right: 0.5rem; /* Space between radio button and label */
-}

@@ -15,9 +15,9 @@ function ManageEquipment() {
   const [newEquipment, setNewEquipment] = useState({
     name: "",
     type: "",
-    condition: "Good", // Default condition
-    status: "Available", // Default status
-    image: null, // Image file for upload
+    condition: "Good",
+    status: "Available",
+    image: null,
   });
   const [editEquipment, setEditEquipment] = useState(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -40,7 +40,7 @@ function ManageEquipment() {
   const fetchEquipment = async () => {
     try {
       const response = await axios.get(`/api/equipment/getEquipment`);
-      setEquipmentList(response.data.equipments || []); // Defensive coding
+      setEquipmentList(response.data.equipments || []);
     } catch (error) {
       console.error("Failed to fetch equipment", error);
       showAlert("Failed to fetch equipment. Please try again.");
@@ -60,7 +60,7 @@ function ManageEquipment() {
   };
 
   const handleFileChange = (e) => {
-    setNewEquipment({ ...newEquipment, image: e.target.files[0] }); // Update image file for upload
+    setNewEquipment({ ...newEquipment, image: e.target.files[0] });
   };
 
   const handleNewEquipmentChange = (e) => {
@@ -79,13 +79,13 @@ function ManageEquipment() {
       return;
     }
 
-    const formData = new FormData(); // Use FormData to handle file uploads
+    const formData = new FormData();
     formData.append("name", newEquipment.name);
     formData.append("type", newEquipment.type);
     formData.append("condition", newEquipment.condition);
     formData.append("status", newEquipment.status);
     if (newEquipment.image) {
-      formData.append("image", newEquipment.image); // Append image file
+      formData.append("image", newEquipment.image);
     }
 
     try {
@@ -116,7 +116,7 @@ function ManageEquipment() {
     formData.append("condition", editEquipment.condition);
     formData.append("status", editEquipment.status);
     if (editEquipment.image) {
-      formData.append("image", editEquipment.image); // Append new image file if changed
+      formData.append("image", editEquipment.image);
     }
 
     try {
@@ -155,10 +155,10 @@ function ManageEquipment() {
     setTimeout(() => setAlertMessage(""), 3000);
   };
 
-  const totalPages = Math.ceil((equipmentList?.length || 0) / itemsPerPage); // Defensive coding
+  const totalPages = Math.ceil((equipmentList?.length || 0) / itemsPerPage);
 
   return (
-    <Card className={styles.card}>
+    <Card className={`${styles.card} ${styles.adjustForSidebarNavbar}`}>
       <CardHeader className={styles.cardHeader}>
         <CardTitle className={styles.cardTitle}>Manage Equipment</CardTitle>
       </CardHeader>
@@ -241,7 +241,6 @@ function ManageEquipment() {
                   </label>
                 </fieldset>
 
-                {/* File Upload for Image */}
                 <Input type="file" accept="image/*" onChange={handleFileChange} />
 
                 <Button onClick={addEquipment} className={styles.saveButton}>
@@ -252,7 +251,6 @@ function ManageEquipment() {
           </Dialog>
         </div>
 
-        {/* Equipment List Table */}
         <div className={styles.tableContainer}>
           <Table>
             <TableHeader>
@@ -306,7 +304,6 @@ function ManageEquipment() {
           </Table>
         </div>
 
-        {/* Pagination */}
         <div className={styles.paginationContainer}>
           <Button onClick={handlePreviousPage} disabled={currentPage === 1} className={styles.paginationButton}>
             <ChevronLeft className={styles.icon} /> Previous
@@ -317,7 +314,6 @@ function ManageEquipment() {
           </Button>
         </div>
 
-        {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className={styles.dialogContent}>
             <DialogHeader>
