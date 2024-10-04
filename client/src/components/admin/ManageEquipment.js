@@ -1,4 +1,3 @@
-/* Updated React Component for Managing Equipment */
 import React, { useState, useEffect } from "react";
 import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import axios from "axios";
@@ -40,7 +39,7 @@ function ManageEquipment() {
   const fetchEquipment = async () => {
     try {
       const response = await axios.get(`/api/equipment/getEquipment`);
-      setEquipmentList(response.data.equipment);
+      setEquipmentList(response.data.equipments || []); // Defensive coding
     } catch (error) {
       console.error("Failed to fetch equipment", error);
       showAlert("Failed to fetch equipment. Please try again.");
@@ -48,7 +47,7 @@ function ManageEquipment() {
   };
 
   const handleNextPage = () => {
-    if (currentPage * itemsPerPage < equipmentList.length) {
+    if (currentPage * itemsPerPage < (equipmentList?.length || 0)) {
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
@@ -94,7 +93,7 @@ function ManageEquipment() {
     }
 
     try {
-      const response = await axios.put(`/api/equipment/equipment/${editEquipment._id}`, editEquipment);
+      const response = await axios.put(`/api/equipment/upequipment/${editEquipment._id}`, editEquipment);
       setEquipmentList(
         equipmentList.map((item) => (item._id === editEquipment._id ? response.data.equipment : item))
       );
@@ -110,7 +109,7 @@ function ManageEquipment() {
   const deleteEquipment = async (id) => {
     if (window.confirm("Are you sure you want to delete this equipment?")) {
       try {
-        await axios.delete(`/api/equipment/equipment/${id}`);
+        await axios.delete(`/api/equipment/delequipment/${id}`);
         setEquipmentList(equipmentList.filter((item) => item._id !== id));
         showAlert("Equipment deleted successfully!");
       } catch (error) {
@@ -125,7 +124,7 @@ function ManageEquipment() {
     setTimeout(() => setAlertMessage(""), 3000);
   };
 
-  const totalPages = Math.ceil(equipmentList.length / itemsPerPage);
+  const totalPages = Math.ceil((equipmentList?.length || 0) / itemsPerPage); // Defensive coding
 
   return (
     <Card className={styles.card}>
@@ -232,37 +231,43 @@ function ManageEquipment() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredEquipment.map((item) => (
-                <TableRow key={item._id} className={styles.tableRow}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.type}</TableCell>
-                  <TableCell>{item.condition}</TableCell>
-                  <TableCell>{item.status}</TableCell>
-                  <TableCell>
-                    <div className={styles.actionButtons}>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setEditEquipment(item);
-                          setIsEditDialogOpen(true);
-                        }}
-                        className={styles.editButton}
-                      >
-                        <Pencil className={styles.icon} />
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => deleteEquipment(item._id)}
-                        className={styles.deleteButton}
-                      >
-                        <Trash2 className={styles.icon} />
-                      </Button>
-                    </div>
-                  </TableCell>
+              {filteredEquipment.length > 0 ? (
+                filteredEquipment.map((item) => (
+                  <TableRow key={item._id} className={styles.tableRow}>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.type}</TableCell>
+                    <TableCell>{item.condition}</TableCell>
+                    <TableCell>{item.status}</TableCell>
+                    <TableCell>
+                      <div className={styles.actionButtons}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setEditEquipment(item);
+                            setIsEditDialogOpen(true);
+                          }}
+                          className={styles.editButton}
+                        >
+                          <Pencil className={styles.icon} />
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => deleteEquipment(item._id)}
+                          className={styles.deleteButton}
+                        >
+                          <Trash2 className={styles.icon} />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan="5">No equipment available</TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </div>

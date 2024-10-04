@@ -10,7 +10,7 @@ const dbConfig = require("./config/db");
 //importing the routes
 const userRoute = require("./routes/userRoute");
 const bookingRoute = require("./routes/bookingRoute");
-const ticketRoute = require("./routes/ticketRoute");
+const equipment = require("./routes/equipmentRoute");
 
 // Middleware
 app.use(cors()); // Apply CORS middleware here
@@ -19,7 +19,7 @@ app.use(express.json()); // Parse JSON bodies
 // Route Definitions
 app.use("/api/users", userRoute);
 app.use("/api/bookings", bookingRoute);
-app.use("/api/tickets", ticketRoute);
+app.use("/api/equipment", equipment);
 
 // Start the server
 const port = process.env.PORT || 5000;
