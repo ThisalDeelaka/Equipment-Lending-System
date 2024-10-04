@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import styles from './BookingPage.module.css';
 
 const BookingPage = () => {
@@ -11,9 +13,11 @@ const BookingPage = () => {
         email: '',
         phone: '',
         rentalDuration: 1,
-        specialRequests: ''
+        specialRequests: '',
+        reservationDate: new Date(), // Initialize reservation date
     });
     const [errors, setErrors] = useState({});
+    const [bookedDates, setBookedDates] = useState([]); // Array to store booked dates
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const userId = currentUser ? currentUser.userID : null; // Safely get userID
 
@@ -26,7 +30,18 @@ const BookingPage = () => {
                 console.error('Error fetching equipment details:', error);
             }
         };
+
+        const fetchBookedDates = async () => {
+            try {
+                const response = await axios.get(`/api/bookings/getBookedDates/${id}`); // API to get booked dates
+                setBookedDates(response.data); // Expecting an array of dates
+            } catch (error) {
+                console.error('Error fetching booked dates:', error);
+            }
+        };
+
         fetchEquipmentDetails();
+        fetchBookedDates();
     }, [id]);
 
     // Handle form data changes with strict validation
@@ -35,7 +50,7 @@ const BookingPage = () => {
         let inputValue = value;
         let updatedErrors = { ...errors };
 
-        // Validation logic for Full Name (allow only alphabetic characters and space)
+        // Validation logic for Full Name
         if (name === 'fullName') {
             inputValue = value.replace(/[^A-Za-z\s]/g, ''); // Remove non-alphabetic characters
             if (value !== inputValue) {
@@ -45,7 +60,7 @@ const BookingPage = () => {
             }
         }
 
-        // Validation logic for Phone (allow only numbers, and exactly 10 digits)
+        // Validation logic for Phone
         if (name === 'phone') {
             inputValue = value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
             if (inputValue.length > 10) {
@@ -58,7 +73,7 @@ const BookingPage = () => {
             }
         }
 
-        // Validation logic for Email (check if email structure is valid)
+        // Validation logic for Email
         if (name === 'email') {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex pattern
             if (!emailRegex.test(value)) {
@@ -71,6 +86,18 @@ const BookingPage = () => {
         // Set the sanitized input value to the state
         setFormData({ ...formData, [name]: inputValue });
         setErrors(updatedErrors);
+    };
+
+    // Handle date change from calendar
+    const handleDateChange = (date) => {
+        setFormData({ ...formData, reservationDate: date });
+    };
+
+    // Check if a date is booked
+    const isBookedDate = (date) => {
+        return bookedDates.some((bookedDate) => {
+            return new Date(bookedDate).toDateString() === date.toDateString();
+        });
     };
 
     // Handle form submission
@@ -92,6 +119,7 @@ const BookingPage = () => {
                 userEmail: formData.email,
                 userPhone: formData.phone,
                 specialRequests: formData.specialRequests,
+                reservationDate: formData.reservationDate.toISOString(), // Format the date for submission
             };
 
             const response = await axios.post('/api/bookings/create', bookingData);
@@ -126,6 +154,20 @@ const BookingPage = () => {
                     <p className={styles.subtitle}>Fill out the details below to confirm your reservation.</p>
 
                     <form className={styles.form} onSubmit={handleSubmit}>
+                        {/* Reservation Date */}
+                        <div className={styles.formGroup}>
+                            <label htmlFor="reservationDate" className={styles.label}>Select Reservation Date</label>
+                            <Calendar
+                                onChange={handleDateChange}
+                                value={formData.reservationDate}
+                                tileClassName={({ date }) => 
+                                    isBookedDate(date) ? styles.bookedTile : null // Apply class if booked
+                                }
+                                className={styles.calendar}
+                                tileDisabled={({ date }) => isBookedDate(date)} // Disable booked dates
+                            />
+                        </div>
+
                         {/* Full Name */}
                         <div className={styles.formGroup}>
                             <label htmlFor="fullName" className={styles.label}>Full Name</label>

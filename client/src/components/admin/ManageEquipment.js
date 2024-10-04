@@ -1,26 +1,12 @@
 /* Updated React Component for Managing Equipment */
 import React, { useState, useEffect } from "react";
 import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
-import { format, isBefore, startOfToday } from "date-fns";
 import axios from "axios";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/cards";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Alert, AlertDescription } from "../ui/alert";
 import styles from "./ManageEquipment.module.css";
 
@@ -28,10 +14,10 @@ function ManageEquipment() {
   const [equipmentList, setEquipmentList] = useState([]);
   const [filteredEquipment, setFilteredEquipment] = useState([]);
   const [newEquipment, setNewEquipment] = useState({
-    image: "",
     name: "",
-    availabilityDate: "",
-    location: "",
+    type: "",
+    condition: "Good", // Default condition
+    status: "Available", // Default status
   });
   const [editEquipment, setEditEquipment] = useState(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -73,39 +59,14 @@ function ManageEquipment() {
     }
   };
 
-  const validateInput = (name, value) => {
-    let updatedValue = value;
-    let updatedErrors = { ...errors };
-
-    // Prevent numbers and invalid characters in Name and Location
-    if (name === "name" || name === "location") {
-      updatedValue = value.replace(/[^A-Za-z\s]/g, ""); // Only allow letters and spaces
-    }
-
-    // Validate Availability Date (only future dates)
-    if (name === "availabilityDate") {
-      const selectedDate = new Date(value);
-      if (isBefore(selectedDate, startOfToday())) {
-        updatedErrors.availabilityDate = "Please select a future date";
-      } else {
-        delete updatedErrors.availabilityDate;
-      }
-    }
-
-    setErrors(updatedErrors);
-    return updatedValue;
-  };
-
   const handleNewEquipmentChange = (e) => {
     const { name, value } = e.target;
-    const validatedValue = validateInput(name, value);
-    setNewEquipment({ ...newEquipment, [name]: validatedValue });
+    setNewEquipment({ ...newEquipment, [name]: value });
   };
 
   const handleEditEquipmentChange = (e) => {
     const { name, value } = e.target;
-    const validatedValue = validateInput(name, value);
-    setEditEquipment({ ...editEquipment, [name]: validatedValue });
+    setEditEquipment({ ...editEquipment, [name]: value });
   };
 
   const addEquipment = async () => {
@@ -117,7 +78,7 @@ function ManageEquipment() {
     try {
       const response = await axios.post("/api/equipment/add-equipment", newEquipment);
       setEquipmentList([...equipmentList, response.data.equipment]);
-      setNewEquipment({ image: "", name: "", availabilityDate: "", location: "" });
+      setNewEquipment({ name: "", type: "", condition: "Good", status: "Available" });
       setIsAddDialogOpen(false);
       showAlert("Equipment added successfully!");
     } catch (error) {
@@ -133,14 +94,9 @@ function ManageEquipment() {
     }
 
     try {
-      const response = await axios.put(
-        `/api/equipment/equipment/${editEquipment._id}`,
-        editEquipment
-      );
+      const response = await axios.put(`/api/equipment/equipment/${editEquipment._id}`, editEquipment);
       setEquipmentList(
-        equipmentList.map((item) =>
-          item._id === editEquipment._id ? response.data.equipment : item
-        )
+        equipmentList.map((item) => (item._id === editEquipment._id ? response.data.equipment : item))
       );
       setEditEquipment(null);
       setIsEditDialogOpen(false);
@@ -197,40 +153,66 @@ function ManageEquipment() {
               </DialogHeader>
               <div className={styles.formGrid}>
                 <Input
-                  placeholder="Image URL"
-                  name="image"
-                  value={newEquipment.image}
-                  onChange={handleNewEquipmentChange}
-                />
-
-                <Input
                   placeholder="Name"
                   name="name"
                   value={newEquipment.name}
                   onChange={handleNewEquipmentChange}
                 />
-                {errors.name && <p className={styles.errorText}>{errors.name}</p>}
 
                 <Input
-                  type="date"
-                  name="availabilityDate"
-                  value={newEquipment.availabilityDate}
+                  placeholder="Type"
+                  name="type"
+                  value={newEquipment.type}
                   onChange={handleNewEquipmentChange}
                 />
-                {errors.availabilityDate && <p className={styles.errorText}>{errors.availabilityDate}</p>}
 
-                <Input
-                  placeholder="Location"
-                  name="location"
-                  value={newEquipment.location}
+                <label htmlFor="condition">Condition</label>
+                <select
+                  id="condition"
+                  name="condition"
+                  value={newEquipment.condition}
                   onChange={handleNewEquipmentChange}
-                />
-                {errors.location && <p className={styles.errorText}>{errors.location}</p>}
-
-                <Button
-                  onClick={addEquipment}
-                  className={styles.saveButton}
                 >
+                  <option value="Good">Good</option>
+                  <option value="Fair">Fair</option>
+                  <option value="Poor">Poor</option>
+                </select>
+
+                <fieldset>
+                  <legend>Status</legend>
+                  <label>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="Available"
+                      checked={newEquipment.status === "Available"}
+                      onChange={handleNewEquipmentChange}
+                    />
+                    Available
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="Unavailable"
+                      checked={newEquipment.status === "Unavailable"}
+                      onChange={handleNewEquipmentChange}
+                    />
+                    Unavailable
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="Under Maintenance"
+                      checked={newEquipment.status === "Under Maintenance"}
+                      onChange={handleNewEquipmentChange}
+                    />
+                    Under Maintenance
+                  </label>
+                </fieldset>
+
+                <Button onClick={addEquipment} className={styles.saveButton}>
                   Add Equipment
                 </Button>
               </div>
@@ -242,29 +224,20 @@ function ManageEquipment() {
           <Table>
             <TableHeader>
               <TableRow className={styles.tableHeaderRow}>
-                <TableHead className={styles.tableHead}>Image</TableHead>
                 <TableHead className={styles.tableHead}>Name</TableHead>
-                <TableHead className={styles.tableHead}>Availability Date</TableHead>
-                <TableHead className={styles.tableHead}>Location</TableHead>
+                <TableHead className={styles.tableHead}>Type</TableHead>
+                <TableHead className={styles.tableHead}>Condition</TableHead>
+                <TableHead className={styles.tableHead}>Status</TableHead>
                 <TableHead className={styles.tableHead}>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredEquipment.map((item) => (
-                <TableRow
-                  key={item._id}
-                  className={styles.tableRow}
-                >
-                  <TableCell>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className={styles.equipmentImage}
-                    />
-                  </TableCell>
-                  <TableCell className={styles.tableCell}>{item.name}</TableCell>
-                  <TableCell>{format(new Date(item.availabilityDate), "PP")}</TableCell>
-                  <TableCell>{item.location}</TableCell>
+                <TableRow key={item._id} className={styles.tableRow}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.type}</TableCell>
+                  <TableCell>{item.condition}</TableCell>
+                  <TableCell>{item.status}</TableCell>
                   <TableCell>
                     <div className={styles.actionButtons}>
                       <Button
@@ -296,21 +269,11 @@ function ManageEquipment() {
 
         {/* Pagination */}
         <div className={styles.paginationContainer}>
-          <Button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            className={styles.paginationButton}
-          >
+          <Button onClick={handlePreviousPage} disabled={currentPage === 1} className={styles.paginationButton}>
             <ChevronLeft className={styles.icon} /> Previous
           </Button>
-          <span className={styles.paginationInfo}>
-            Page {currentPage} of {totalPages}
-          </span>
-          <Button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className={styles.paginationButton}
-          >
+          <span className={styles.paginationInfo}>Page {currentPage} of {totalPages}</span>
+          <Button onClick={handleNextPage} disabled={currentPage === totalPages} className={styles.paginationButton}>
             Next <ChevronRight className={styles.icon} />
           </Button>
         </div>
@@ -323,42 +286,66 @@ function ManageEquipment() {
             {editEquipment && (
               <div className={styles.formGrid}>
                 <Input
-                  placeholder="Image URL"
-                  name="image"
-                  value={editEquipment.image}
-                  onChange={handleEditEquipmentChange}
-                />
-
-                <Input
                   placeholder="Name"
                   name="name"
                   value={editEquipment.name}
                   onChange={handleEditEquipmentChange}
                 />
-                {errors.name && <p className={styles.errorText}>{errors.name}</p>}
 
                 <Input
-                  type="date"
-                  name="availabilityDate"
-                  value={format(new Date(editEquipment.availabilityDate), "yyyy-MM-dd")}
+                  placeholder="Type"
+                  name="type"
+                  value={editEquipment.type}
                   onChange={handleEditEquipmentChange}
                 />
-                {errors.availabilityDate && <p className={styles.errorText}>{errors.availabilityDate}</p>}
 
-                <Input
-                  placeholder="Location"
-                  name="location"
-                  value={editEquipment.location}
+                <label htmlFor="condition">Condition</label>
+                <select
+                  id="condition"
+                  name="condition"
+                  value={editEquipment.condition}
                   onChange={handleEditEquipmentChange}
-                />
-                {errors.location && (
-                  <p className={styles.errorText}>{errors.location}</p>
-                )}
-
-                <Button
-                  onClick={updateEquipment}
-                  className={styles.saveButton}
                 >
+                  <option value="Good">Good</option>
+                  <option value="Fair">Fair</option>
+                  <option value="Poor">Poor</option>
+                </select>
+
+                <fieldset>
+                  <legend>Status</legend>
+                  <label>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="Available"
+                      checked={editEquipment.status === "Available"}
+                      onChange={handleEditEquipmentChange}
+                    />
+                    Available
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="Unavailable"
+                      checked={editEquipment.status === "Unavailable"}
+                      onChange={handleEditEquipmentChange}
+                    />
+                    Unavailable
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="Under Maintenance"
+                      checked={editEquipment.status === "Under Maintenance"}
+                      onChange={handleEditEquipmentChange}
+                    />
+                    Under Maintenance
+                  </label>
+                </fieldset>
+
+                <Button onClick={updateEquipment} className={styles.saveButton}>
                   Save Changes
                 </Button>
               </div>

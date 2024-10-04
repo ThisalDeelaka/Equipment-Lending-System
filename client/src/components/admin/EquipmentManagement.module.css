@@ -1,146 +1,146 @@
 /* EquipmentManagement.module.css */
 
 .container {
-  min-height: 100vh;
-  padding: 2rem;
-  background: linear-gradient(to bottom right, #f0f4f8, #e6f7ff);
-}
-
-.contentWrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2d3748;
-  margin-bottom: 1.5rem;
-}
-
-.error {
-  color: #e53e3e;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-.equipmentForm {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.inputGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-.input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #cbd5e0;
-  border-radius: 0.5rem;
-  transition: border-color 0.3s;
-}
-
-.input:focus {
-  border-color: #3182ce;
-  outline: none;
-}
-
-.submitButton {
-  width: 100%;
-  padding: 1rem;
-  background-color: #3182ce;
-  color: #ffffff;
-  font-size: 1.125rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submitButton:hover {
-  background-color: #2b6cb0;
-}
-
-.loadingText {
-  text-align: center;
-  font-size: 1.25rem;
-  color: #718096;
-}
-
-.equipmentList {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.equipmentCard {
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.equipmentInfo {
-  display: flex;
-  flex-direction: column;
-}
-
-.equipmentName {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #2d3748;
-}
-
-.equipmentDetails {
-  font-size: 1rem;
-  color: #718096;
-}
-
-.actionButtons {
-  display: flex;
-  gap: 1rem;
-}
-
-.editButton {
-  background-color: #f6ad55;
-  color: #ffffff;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.editButton:hover {
-  background-color: #dd6b20;
-}
-
-.deleteButton {
-  background-color: #e53e3e;
-  color: #ffffff;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.deleteButton:hover {
-  background-color: #c53030;
-}
+    min-height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(to bottom right, #f0f4f8, #e6f7ff);
+  }
+  
+  .contentWrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+  }
+  
+  .error {
+    color: #e53e3e;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .equipmentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .inputGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+  }
+  
+  .input:focus {
+    border-color: #3182ce;
+    outline: none;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 1rem;
+    background-color: #3182ce;
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submitButton:hover {
+    background-color: #2b6cb0;
+  }
+  
+  .loadingText {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #718096;
+  }
+  
+  .equipmentList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .equipmentCard {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .equipmentInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .equipmentName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d3748;
+  }
+  
+  .equipmentDetails {
+    font-size: 1rem;
+    color: #718096;
+  }
+  
+  .actionButtons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .editButton {
+    background-color: #f6ad55;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .editButton:hover {
+    background-color: #dd6b20;
+  }
+  
+  .deleteButton {
+    background-color: #e53e3e;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c53030;
+  }
