@@ -1,39 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/cards";
-import { Settings, Calendar, BarChart, CheckCircle, FileText } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/cards';
+import { Calendar, BarChart, Settings } from 'lucide-react';
 import styles from './Dashboard.module.css';
 
 function AdminDashboard() {
-  const [reservationsData, setReservationsData] = useState([]);
-  const [equipmentData, setEquipmentData] = useState([]);
-  const [checkInOutData, setCheckInOutData] = useState([]);
-  const [reportsData, setReportsData] = useState([]);
+  const [dashboardData, setDashboardData] = useState({
+    totalReservations: 0,
+    totalEquipment: 0,
+    reservationsOverTime: [],
+  });
 
   useEffect(() => {
-    fetchData();
+    fetchDashboardData();
   }, []);
 
-  const fetchData = async () => {
+  const fetchDashboardData = async () => {
     try {
-      const reservationsResponse = await axios.get('/api/reservations/all');
-      const equipmentResponse = await axios.get('/api/equipment/getAll');
-      const checkInOutResponse = await axios.get('/api/equipment/checkInOut');
-      const reportsResponse = await axios.get('/api/reports/getAll');
-      
-      setReservationsData(reservationsResponse.data);
-      setEquipmentData(equipmentResponse.data.equipment);
-      setCheckInOutData(checkInOutResponse.data);
-      setReportsData(reportsResponse.data);
+      const response = await axios.get('/api/dashboard/data');
+      setDashboardData({
+        totalReservations: response.data.totalReservations,
+        totalEquipment: response.data.totalEquipment,
+        reservationsOverTime: getReservationsByDate(response.data.reservations),
+      });
     } catch (error) {
-      console.error('Failed to fetch data', error);
+      console.error('Failed to fetch dashboard data', error);
     }
   };
 
-  const getReservationsByDate = () => {
-    const reservationsByDate = reservationsData.reduce((acc, reservation) => {
-      const date = format(new Date(reservation.createdAt), 'yyyy-MM-dd');
+  // Process reservations to group them by date
+  const getReservationsByDate = (reservations) => {
+    const reservationsByDate = reservations.reduce((acc, reservation) => {
+      const date = format(new Date(reservation.reservationDate), 'yyyy-MM-dd');
       acc[date] = (acc[date] || 0) + 1;
       return acc;
     }, {});
@@ -53,7 +52,7 @@ function AdminDashboard() {
               <Calendar className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
-              <div className={styles.cardValue}>{reservationsData.length}</div>
+              <div className={styles.cardValue}>{dashboardData.totalReservations}</div>
             </CardContent>
           </Card>
 
@@ -63,36 +62,12 @@ function AdminDashboard() {
               <Settings className={styles.cardIcon} />
             </CardHeader>
             <CardContent>
-              <div className={styles.cardValue}>{equipmentData.length}</div>
-            </CardContent>
-          </Card>
-
-          <Card className={styles.summaryCard}>
-            <CardHeader className={styles.cardHeader}>
-              <CardTitle className={styles.cardTitle}>Next Available Equipment</CardTitle>
-              <CheckCircle className={styles.cardIcon} />
-            </CardHeader>
-            <CardContent>
-              <div className={styles.cardValue}>
-                {equipmentData.length > 0
-                  ? format(new Date(Math.min(...equipmentData.map(e => new Date(e.availableDate)))), 'MMM d, yyyy')
-                  : 'No available equipment'}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className={styles.summaryCard}>
-            <CardHeader className={styles.cardHeader}>
-              <CardTitle className={styles.cardTitle}>Recent Check-Ins/Check-Outs</CardTitle>
-              <FileText className={styles.cardIcon} />
-            </CardHeader>
-            <CardContent>
-              <div className={styles.cardValue}>{checkInOutData.length}</div>
+              <div className={styles.cardValue}>{dashboardData.totalEquipment}</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Charts */}
+        {/* Reservations Over Time (Chart) */}
         <div className={styles.chartsGrid}>
           <Card className={styles.chartCard}>
             <CardHeader>
@@ -103,13 +78,15 @@ function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className={styles.chartContent}>
-                {getReservationsByDate().slice(-5).map(({ date, count }) => (
+                {dashboardData.reservationsOverTime.slice(-5).map(({ date, count }) => (
                   <div key={date} className={styles.chartRow}>
                     <div className={styles.chartDate}>{date}</div>
                     <div className={styles.chartBarContainer}>
                       <div
                         className={styles.chartBar}
-                        style={{ width: `${(count / Math.max(...getReservationsByDate().map(b => b.count))) * 100}%` }}
+                        style={{
+                          width: `${(count / Math.max(...dashboardData.reservationsOverTime.map(b => b.count))) * 100}%`,
+                        }}
                       ></div>
                     </div>
                     <div className={styles.chartCount}>{count}</div>
