@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
@@ -17,6 +17,7 @@ const BookingPage = () => {
         specialRequests: ''
     });
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate(); // Initialize useNavigate
 
     // Fetch current user details from local storage
     useEffect(() => {
@@ -53,10 +54,37 @@ const BookingPage = () => {
         fetchBookedDates();
     }, [id]);
 
-    // Handle form input changes
+    // Handle form input changes with validation
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        let inputValue = value;
+        let updatedErrors = { ...errors };
+
+        // Validation logic for Full Name (only alphabetic characters and space)
+        if (name === 'fullName') {
+            inputValue = value.replace(/[^A-Za-z\s]/g, ''); // Remove non-alphabetic characters
+            if (value !== inputValue) {
+                updatedErrors.fullName = 'Only letters and spaces are allowed for Full Name';
+            } else {
+                delete updatedErrors.fullName;
+            }
+        }
+
+        // Validation logic for Phone (only numbers, and exactly 10 digits)
+        if (name === 'phone') {
+            inputValue = value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            if (inputValue.length > 10) {
+                inputValue = inputValue.slice(0, 10); // Restrict to 10 digits
+            }
+            if (inputValue.length !== 10) {
+                updatedErrors.phone = 'Phone number must be exactly 10 digits';
+            } else {
+                delete updatedErrors.phone;
+            }
+        }
+
+        setFormData({ ...formData, [name]: inputValue });
+        setErrors(updatedErrors);
     };
 
     // Handle date range selection
@@ -68,13 +96,13 @@ const BookingPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Check for errors before submission
         if (Object.keys(errors).length > 0) {
             alert('Please fix the errors in the form.');
             return;
         }
 
         try {
-            // Loop over each date in the selected range and create booking requests
             const startDate = new Date(selectedDates[0]);
             const endDate = new Date(selectedDates[1]);
             const dateArray = [];
@@ -85,18 +113,19 @@ const BookingPage = () => {
 
             const bookingData = {
                 equipmentId: id,
-                equipmentName: equipment.name, // Include the equipment name
+                equipmentName: equipment.name,
                 fullName: formData.fullName,
                 userEmail: formData.email,
                 userPhone: formData.phone,
                 specialRequests: formData.specialRequests,
-                reservationDates: dateArray // Send array of selected dates to the backend
+                reservationDates: dateArray
             };
 
             const response = await axios.post('/api/bookings/create', bookingData);
 
             if (response.status === 201) {
                 alert('Booking created successfully!');
+                navigate('/'); // Navigate to home after successful booking
             } else {
                 console.error('Error creating booking:', response.data.message);
             }
@@ -146,6 +175,7 @@ const BookingPage = () => {
                                 placeholder="John Doe"
                                 required
                             />
+                            {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
                         </div>
 
                         {/* Email (disabled) */}
@@ -176,16 +206,17 @@ const BookingPage = () => {
                                 placeholder="07X XXXXXXX"
                                 required
                             />
+                            {errors.phone && <p className={styles.error}>{errors.phone}</p>}
                         </div>
 
                         {/* Calendar Component */}
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Select Reservation Date</label>
                             <Calendar
-                                selectRange // Enable date range selection
-                                onChange={handleDateChange} // Handle range selection
+                                selectRange
+                                onChange={handleDateChange}
                                 value={selectedDates}
-                                tileDisabled={tileDisabled} // Disable already booked dates
+                                tileDisabled={tileDisabled}
                                 className={styles.customCalendar}
                             />
                         </div>
