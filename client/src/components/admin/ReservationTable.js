@@ -34,8 +34,8 @@ function ReservationTable() {
     }
   };
 
-  const filteredReservations = reservations.filter((reservation) =>
-    reservation.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredReservations = reservations.filter((reservation) => 
+    (reservation.equipmentName || "").toLowerCase().includes(searchTerm.toLowerCase()) // Safely handle undefined
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -66,8 +66,8 @@ function ReservationTable() {
 
   const exportToCSV = () => {
     const headers = [
+      "Equipment Name",
       "Full Name",
-      "Email",
       "Phone",
       "Rental Duration",
       "Special Request",
@@ -79,8 +79,8 @@ function ReservationTable() {
         const date = new Date(reservation.createdAt);
         const formattedDate = isNaN(date) ? "Invalid Date" : format(date, "PP");
         return [
-          reservation.fullName,
-          reservation.userEmail,
+          reservation.equipmentName || "N/A",  // Handle missing equipmentName
+          reservation.fullName || "N/A", // Handle missing fullName
           reservation.userPhone,
           reservation.rentalDuration,
           reservation.specialRequest || "N/A",
@@ -113,7 +113,7 @@ function ReservationTable() {
             <Search className={styles.searchIcon} />
             <Input
               type="text"
-              placeholder="Search by name"
+              placeholder="Search by equipment name"
               value={searchTerm}
               onChange={handleSearch}
               className={styles.searchInput}
@@ -127,8 +127,8 @@ function ReservationTable() {
           <Table className={styles.table}>
             <TableHeader>
               <TableRow className={styles.tableHeaderRow}>
-                <TableHead className={styles.tableHead}>Full Name</TableHead>
-                <TableHead className={styles.tableHead}>Email</TableHead>
+                <TableHead className={styles.tableHead}>Equipment Name</TableHead>
+                <TableHead className={styles.tableHead}>Full Name</TableHead> {/* Changed to Full Name */}
                 <TableHead className={styles.tableHead}>Phone</TableHead>
                 <TableHead className={styles.tableHead}>Rental Duration</TableHead>
                 <TableHead className={styles.tableHead}>Special Request</TableHead>
@@ -141,12 +141,24 @@ function ReservationTable() {
                 const formattedDate = isNaN(date) ? "Invalid Date" : format(date, "PP");
                 return (
                   <TableRow key={reservation._id} className={styles.tableRow}>
-                    <TableCell className={styles.tableCell}>{reservation.fullName}</TableCell>
-                    <TableCell className={styles.tableCell}>{reservation.userEmail}</TableCell>
-                    <TableCell className={styles.tableCell}>{reservation.userPhone}</TableCell>
-                    <TableCell className={styles.tableCell}>{reservation.rentalDuration}</TableCell>
-                    <TableCell className={styles.tableCell}>{reservation.specialRequest || 'N/A'}</TableCell>
-                    <TableCell className={styles.tableCell}>{formattedDate}</TableCell>
+                    <TableCell className={styles.tableCell}>
+                      {reservation.equipmentName || "N/A"} {/* Handle undefined equipmentName */}
+                    </TableCell>
+                    <TableCell className={styles.tableCell}>
+                      {reservation.fullName || "N/A"} {/* Display fullName */}
+                    </TableCell>
+                    <TableCell className={styles.tableCell}>
+                      {reservation.userPhone}
+                    </TableCell>
+                    <TableCell className={styles.tableCell}>
+                      {reservation.rentalDuration}
+                    </TableCell>
+                    <TableCell className={styles.tableCell}>
+                      {reservation.specialRequest || "N/A"}
+                    </TableCell>
+                    <TableCell className={styles.tableCell}>
+                      {formattedDate}
+                    </TableCell>
                   </TableRow>
                 );
               })}
