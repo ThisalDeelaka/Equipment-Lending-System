@@ -7,7 +7,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import HomeScreen from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
-import UserProfilePage from "./pages/UserProfilePage";
+
 import BookingPage from "./pages/BookingPage"
 import Footer from "./components/CommonComponents/Footer";
 import EventDetails from "./pages/EquipmentDetails";
@@ -36,11 +36,7 @@ function App() {
                                             element={<BookingPage />}
                                             exact
                                         /> 
-                                        <Route
-                                            path="/profile"
-                                            element={<UserProfilePage />}
-                                            exact
-                                        /> 
+                                        
                                          <Route
                                             path="/my-equipment"
                                             element={<EventDetails />}

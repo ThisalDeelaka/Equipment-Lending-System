@@ -1,115 +1,129 @@
-/* SignupPage.module.css */
-
+/* Main Signup Page Container */
 .signupPageMainContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #f0f4f8, #e6f7ff);
-    padding: 2rem;
-  }
-  
-  .formContainer {
-    background-color: #ffffff;
-    padding: 3rem;
-    border-radius: 1rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #2d3748;
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .subtitle {
-    font-size: 1rem;
-    color: #718096;
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 0.5rem;
-    transition: border-color 0.3s;
-  }
-  
-  .input:focus {
-    border-color: #3182ce;
-    outline: none;
-  }
-  
-  .checkboxContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .checkbox {
-    margin-right: 0.5rem;
-  }
-  
-  .termsLabel {
-    font-size: 0.875rem;
-    color: #4a5568;
-  }
-  
-  .termsLink {
-    color: #3182ce;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  .termsLink:hover {
-    color: #2b6cb0;
-  }
-  
-  .signupButton {
-    width: 100%;
-    padding: 1rem;
-    background-color: #3182ce;
-    color: #ffffff;
-    font-size: 1.125rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .signupButton:hover {
-    background-color: #2b6cb0;
-  }
-  
-  .loginText {
-    text-align: center;
-    color: #718096;
-    margin-top: 1.5rem;
-  }
-  
-  .loginLink {
-    color: #3182ce;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  .loginLink:hover {
-    color: #2b6cb0;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1c1c1c; /* Dark background for consistency */
+  padding: 2rem;
+}
+
+/* Form Container */
+.formContainer {
+  background-color: #2a2a2a; /* Dark form background */
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for form */
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Title */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #EFBF04; /* Gold title color */
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 1rem;
+  color: #A0AEC0; /* Muted subtitle color */
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Input Group */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Input Fields */
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #444444;
+  background-color: #333333;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s ease;
+}
+
+/* Focus State for Inputs */
+.input:focus {
+  border-color: #EFBF04; /* Gold border on focus */
+  outline: none;
+}
+
+/* Checkbox Container */
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Checkbox */
+.checkbox {
+  margin-right: 0.5rem;
+}
+
+/* Terms Label */
+.termsLabel {
+  font-size: 0.875rem;
+  color: #A0AEC0; /* Muted text color */
+}
+
+/* Terms Link */
+.termsLink {
+  color: #EFBF04; /* Gold link */
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.termsLink:hover {
+  color: #ffffff; /* White on hover */
+}
+
+/* Signup Button */
+.signupButton {
+  width: 100%;
+  padding: 1rem;
+  background-color: #EFBF04; /* Gold background */
+  color: #000000; /* Black text */
+  font-size: 1.125rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Signup Button Hover */
+.signupButton:hover {
+  background-color: #D4A903; /* Darker gold on hover */
+}
+
+/* Login Text */
+.loginText {
+  text-align: center;
+  color: #A0AEC0; /* Muted text color */
+  margin-top: 1.5rem;
+}
+
+/* Login Link */
+.loginLink {
+  color: #EFBF04; /* Gold link */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.loginLink:hover {
+  color: #ffffff; /* White on hover */
+}

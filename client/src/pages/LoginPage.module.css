@@ -1,133 +1,151 @@
-/* LoginPage.module.css */
-
+/* Main Container */
 .mainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #f0f4f8, #e6f7ff);
-  }
-  
-  .backgroundContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 2rem;
-  }
-  
-  .formContainer {
-    background-color: #ffffff;
-    padding: 3rem;
-    border-radius: 1rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .titleContainer {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #2d3748;
-  }
-  
-  .subtitle {
-    font-size: 1rem;
-    color: #718096;
-  }
-  
-  .inputFieldsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .inputEmail, .inputPassword {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 0.5rem;
-    transition: border-color 0.3s;
-  }
-  
-  .inputEmail:focus, .inputPassword:focus {
-    border-color: #3182ce;
-    outline: none;
-  }
-  
-  .passwordFieldContainer {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-  
-  .passwordToggleIcon {
-    position: absolute;
-    right: 1rem;
-    cursor: pointer;
-    color: #a0aec0;
-    transition: color 0.3s;
-  }
-  
-  .passwordToggleIcon:hover {
-    color: #2b6cb0;
-  }
-  
-  .rememberMeSection {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .forgotPasswordLink {
-    color: #3182ce;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .forgotPasswordLink:hover {
-    color: #2b6cb0;
-  }
-  
-  .loginButton {
-    width: 100%;
-    padding: 1rem;
-    background-color: #3182ce;
-    color: #ffffff;
-    font-size: 1.125rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .loginButton:hover {
-    background-color: #2b6cb0;
-  }
-  
-  .signupText {
-    text-align: center;
-    color: #718096;
-    margin-top: 1.5rem;
-  }
-  
-  .signupLink {
-    color: #3182ce;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  .signupLink:hover {
-    color: #2b6cb0;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1c1c1c; /* Dark background for consistency */
+}
+
+/* Background Container */
+.backgroundContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* Form Container */
+.formContainer {
+  background-color: #2a2a2a; /* Dark form background */
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for form */
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Title Container */
+.titleContainer {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Form Title */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #EFBF04; /* Gold title color */
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 1rem;
+  color: #A0AEC0; /* Muted color for subtitle */
+}
+
+/* Input Fields Container */
+.inputFieldsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Input Fields */
+.inputEmail,
+.inputPassword {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #444444;
+  background-color: #333333;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s ease;
+}
+
+/* Focus State for Inputs */
+.inputEmail:focus,
+.inputPassword:focus {
+  border-color: #EFBF04; /* Gold border on focus */
+  outline: none;
+}
+
+/* Password Field Container */
+.passwordFieldContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Password Toggle Icon */
+.passwordToggleIcon {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+  color: #A0AEC0;
+  transition: color 0.3s ease;
+}
+
+.passwordToggleIcon:hover {
+  color: #EFBF04; /* Gold icon on hover */
+}
+
+/* Remember Me Section */
+.rememberMeSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Forgot Password Link */
+.forgotPasswordLink {
+  color: #EFBF04; /* Gold link */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgotPasswordLink:hover {
+  color: #ffffff; /* White link on hover */
+}
+
+/* Login Button */
+.loginButton {
+  width: 100%;
+  padding: 1rem;
+  background-color: #EFBF04; /* Gold background */
+  color: #000000; /* Black text */
+  font-size: 1.125rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Login Button Hover */
+.loginButton:hover {
+  background-color: #D4A903; /* Darker gold on hover */
+}
+
+/* Signup Text */
+.signupText {
+  text-align: center;
+  color: #A0AEC0; /* Muted text color */
+  margin-top: 1.5rem;
+}
+
+/* Signup Link */
+.signupLink {
+  color: #EFBF04; /* Gold link */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.signupLink:hover {
+  color: #ffffff; /* White on hover */
+}

@@ -42,7 +42,7 @@ function NavBarUser() {
 
     const items = [
         {
-            label: <a href="/profile">My Account</a>,
+            label: <a href="/">My Account</a>,
             key: "0",
         },
         user && user.userType === "Admin" && {
