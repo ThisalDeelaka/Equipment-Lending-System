@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { Menu, ConfigProvider } from "antd";
 import styles from "./SideMenu.module.css";
+import logo from '../../assets/Logo/logo.jpg'; 
 
 function getItem(label, key, icon) {
     return {
@@ -30,7 +31,8 @@ function SideMenu() {
 
     return (
         <div className={styles.sidebar}>
-            <h2 className={styles.logo}>Farm Dashboard</h2>
+            {/* Replace the text with a logo image */}
+            <img src={logo} alt="Logo" className={styles.logo} />
             <ConfigProvider
                 theme={{
                     token: {

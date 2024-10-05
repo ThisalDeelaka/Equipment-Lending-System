@@ -1,32 +1,32 @@
 /* Sidebar Container */
 .sidebar {
-  width: 220px; /* Slightly narrower for a sleek look */
-  background-color: #1e1e1e; /* Modern dark background, not too black */
+  width: 220px;
+  background-color: #1e1e1e;
   color: white;
   position: fixed;
   height: 100%;
-  padding: 20px 15px; /* Reduced padding for a tighter layout */
+  padding: 20px 15px;
   top: 0;
   left: 0;
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15); /* Deeper shadow for depth */
-  border-radius: 10px 0 0 10px; /* Soft rounded corners on the left */
-  z-index: 999; /* Ensure it's always visible */
+  border-radius: 10px 0 0 10px;
+  z-index: 999;
 }
 
-/* Sidebar Title */
+/* Sidebar Logo Styling */
 .logo {
-  color: #EFBF04; /* Gold for the title */
+  max-width: 100%;
+  height: auto;
   margin-bottom: 20px;
-  font-size: 1.5rem; /* Slightly smaller */
-  font-weight: 700; /* Bold, cleaner look */
-  text-align: left; /* Aligned to the left */
-  letter-spacing: 0.05em;
+  display: block;
+  border-radius: 8px; /* Add a bit of rounding for a modern feel */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for logo */
 }
 
 /* Sidebar Menu Items */
 .menu {
-  margin-top: 1rem;
-  background-color: transparent; /* Transparent background for the menu */
+  margin-top: 1.5rem; /* Slightly increased margin for breathing room */
+  background-color: transparent;
   border: none;
 }
 
@@ -38,31 +38,34 @@
   display: flex;
   align-items: center;
   font-weight: 500;
-  border-radius: 8px; /* More rounded corners for a modern look */
+  border-radius: 8px; /* More rounded corners */
   transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem; /* Standardize font size */
+  font-family: 'Roboto', sans-serif; /* Professional font */
 }
 
 /* Selected Item Styling */
 .menu .ant-menu-item-selected {
-  background-color: #EFBF04 !important; /* Gold background for selected item */
-  color: black !important; /* Black text for selected item */
+  background-color: #EFBF04 !important;
+  color: black !important;
   font-weight: 600;
-  transform: translateX(3px); /* Subtle slide on selection */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for selected item */
+  transform: translateX(3px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Hover Effect for Menu Items */
 .menu .ant-menu-item:hover {
-  background-color: #EFBF04 !important; /* Gold background on hover */
-  color: black !important; /* Black text on hover */
-  transform: translateX(3px); /* Less pronounced slide effect */
+  background-color: #EFBF04 !important;
+  color: black !important;
+  transform: translateX(5px); /* Slightly more pronounced */
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15); /* Subtle shadow on hover */
 }
 
 /* Icon Styling within Menu Items */
 .icon {
   margin-right: 10px;
-  font-size: 1.2rem;
-  color: inherit; /* Inherit color from menu item */
+  font-size: 1.5rem; /* Slightly larger for emphasis */
+  color: inherit;
 }
 
 /* Scrollbar Styling */
