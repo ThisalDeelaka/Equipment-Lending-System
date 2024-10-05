@@ -34,8 +34,8 @@ function ReservationTable() {
     }
   };
 
-  const filteredReservations = reservations.filter((reservation) => 
-    (reservation.equipmentName || "").toLowerCase().includes(searchTerm.toLowerCase()) // Safely handle undefined
+  const filteredReservations = reservations.filter((reservation) =>
+    (reservation.equipmentName || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -69,20 +69,18 @@ function ReservationTable() {
       "Equipment Name",
       "Full Name",
       "Phone",
-      "Rental Duration",
       "Special Request",
       "Reservation Date",
     ];
     const csvContent = [
       headers.join(","),
       ...filteredReservations.map((reservation) => {
-        const date = new Date(reservation.createdAt);
+        const date = new Date(reservation.reservationDate);
         const formattedDate = isNaN(date) ? "Invalid Date" : format(date, "PP");
         return [
-          reservation.equipmentName || "N/A",  // Handle missing equipmentName
-          reservation.fullName || "N/A", // Handle missing fullName
+          reservation.equipmentName || "N/A",
+          reservation.fullName || "N/A",
           reservation.userPhone,
-          reservation.rentalDuration,
           reservation.specialRequest || "N/A",
           formattedDate,
         ].join(",");
@@ -128,33 +126,29 @@ function ReservationTable() {
             <TableHeader>
               <TableRow className={styles.tableHeaderRow}>
                 <TableHead className={styles.tableHead}>Equipment Name</TableHead>
-                <TableHead className={styles.tableHead}>Full Name</TableHead> {/* Changed to Full Name */}
+                <TableHead className={styles.tableHead}>Full Name</TableHead>
                 <TableHead className={styles.tableHead}>Phone</TableHead>
-                <TableHead className={styles.tableHead}>Rental Duration</TableHead>
                 <TableHead className={styles.tableHead}>Special Request</TableHead>
                 <TableHead className={styles.tableHead}>Reservation Date</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentReservations.map((reservation) => {
-                const date = new Date(reservation.createdAt);
+                const date = new Date(reservation.reservationDate);
                 const formattedDate = isNaN(date) ? "Invalid Date" : format(date, "PP");
                 return (
                   <TableRow key={reservation._id} className={styles.tableRow}>
                     <TableCell className={styles.tableCell}>
-                      {reservation.equipmentName || "N/A"} {/* Handle undefined equipmentName */}
+                      {reservation.equipmentName || "N/A"}
                     </TableCell>
                     <TableCell className={styles.tableCell}>
-                      {reservation.fullName || "N/A"} {/* Display fullName */}
+                      {reservation.fullName || "N/A"}
                     </TableCell>
                     <TableCell className={styles.tableCell}>
                       {reservation.userPhone}
                     </TableCell>
                     <TableCell className={styles.tableCell}>
-                      {reservation.rentalDuration}
-                    </TableCell>
-                    <TableCell className={styles.tableCell}>
-                      {reservation.specialRequest || "N/A"}
+                      {reservation.specialRequests || "N/A"}
                     </TableCell>
                     <TableCell className={styles.tableCell}>
                       {formattedDate}
