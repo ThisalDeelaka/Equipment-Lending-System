@@ -6,6 +6,10 @@ const ReservationSchema = new mongoose.Schema({
     ref: 'Equipment',
     required: true,
   },
+  equipmentName: { // Add the equipmentName field
+    type: String,
+    required: true, // Make this required since it's needed for each reservation
+  },
   reservationDate: {
     type: Date,
     required: true,

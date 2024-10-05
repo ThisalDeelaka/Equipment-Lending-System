@@ -2,7 +2,7 @@ const Reservation = require('../models/bookings');
 
 // Create a new reservation
 exports.createReservation = async (req, res) => {
-  const { equipmentId, reservationDates, fullName, userEmail, userPhone, specialRequests } = req.body;
+  const { equipmentId, equipmentName, reservationDates, fullName, userEmail, userPhone, specialRequests } = req.body;
 
   try {
     // Convert the reservationDates to a date range (array of dates)
@@ -21,6 +21,7 @@ exports.createReservation = async (req, res) => {
     // Create the new reservations for each date in the range
     const newReservations = parsedDates.map(date => ({
       equipmentId,
+      equipmentName, // Store the equipment name
       reservationDate: date,
       fullName,
       userEmail,
@@ -35,6 +36,7 @@ exports.createReservation = async (req, res) => {
     res.status(500).json({ message: 'Error creating reservation', error });
   }
 };
+
 
 // Fetch booked dates for specific equipment
 exports.getBookedDates = async (req, res) => {
