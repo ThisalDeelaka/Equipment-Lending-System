@@ -2,32 +2,35 @@ const Reservation = require('../models/bookings');
 
 // Create a new reservation
 exports.createReservation = async (req, res) => {
-  const { equipmentId, reservationDate, rentalDuration, fullName, userEmail, userPhone, specialRequests } = req.body;
+  const { equipmentId, reservationDates, fullName, userEmail, userPhone, specialRequests } = req.body;
 
   try {
-    // Check if the selected reservation date is already booked for this equipment
-    const existingReservation = await Reservation.findOne({
+    // Convert the reservationDates to a date range (array of dates)
+    const parsedDates = reservationDates.map(date => new Date(date));
+
+    // Check if any date within the selected range is already booked
+    const existingReservation = await Reservation.find({
       equipmentId,
-      reservationDate: new Date(reservationDate),
+      reservationDate: { $in: parsedDates }, // Check if any date in the array is already reserved
     });
 
-    if (existingReservation) {
-      return res.status(400).json({ message: 'This date is already booked for the selected equipment.' });
+    if (existingReservation.length > 0) {
+      return res.status(400).json({ message: 'One or more dates are already booked for the selected equipment.' });
     }
 
-    // Create the new reservation
-    const newReservation = new Reservation({
+    // Create the new reservations for each date in the range
+    const newReservations = parsedDates.map(date => ({
       equipmentId,
-      reservationDate: new Date(reservationDate),
-      rentalDuration,
+      reservationDate: date,
       fullName,
       userEmail,
       userPhone,
       specialRequests,
-    });
+    }));
 
-    await newReservation.save();
-    res.status(201).json({ message: 'Reservation created successfully', reservation: newReservation });
+    await Reservation.insertMany(newReservations); // Insert all dates at once
+
+    res.status(201).json({ message: 'Reservations created successfully', reservations: newReservations });
   } catch (error) {
     res.status(500).json({ message: 'Error creating reservation', error });
   }

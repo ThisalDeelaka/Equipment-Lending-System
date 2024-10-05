@@ -10,9 +10,6 @@ const ReservationSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  rentalDuration: {
-    type: Number,
-  },
   userEmail: {
     type: String,
     required: true,
