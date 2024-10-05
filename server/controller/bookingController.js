@@ -45,3 +45,15 @@ exports.getBookedDates = async (req, res) => {
     res.status(500).json({ message: 'Error fetching booked dates', error });
   }
 };
+
+// Fetch all reservations by user email
+exports.getReservationsByEmail = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const reservations = await Reservation.find({ userEmail: email });
+    res.status(200).json(reservations);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching reservations for the user', error });
+  }
+};

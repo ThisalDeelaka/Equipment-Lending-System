@@ -18,6 +18,18 @@ const BookingPage = () => {
     });
     const [errors, setErrors] = useState({});
 
+    // Fetch the currentUser from localStorage
+    useEffect(() => {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            // Pre-fill the email from currentUser into formData
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                email: currentUser.email // Set the email from currentUser
+            }));
+        }
+    }, []); // Empty dependency array to run this effect only once
+
     useEffect(() => {
         const fetchEquipmentDetails = async () => {
             try {
@@ -39,7 +51,7 @@ const BookingPage = () => {
 
         fetchEquipmentDetails();
         fetchBookedDates();
-    }, [id]);
+    }, [id]); // Only re-run this effect when `id` changes
 
     // Handle form data changes with strict validation
     const handleChange = (e) => {
@@ -161,7 +173,7 @@ const BookingPage = () => {
                             {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
                         </div>
 
-                        {/* Email Address */}
+                        {/* Email Address (disabled field) */}
                         <div className={styles.formGroup}>
                             <label htmlFor="email" className={styles.label}>Email Address</label>
                             <input
@@ -169,10 +181,10 @@ const BookingPage = () => {
                                 id="email"
                                 name="email"
                                 className={styles.input}
-                                value={formData.email}
+                                value={formData.email} // Prefilled from currentUser
                                 onChange={handleChange}
+                                disabled // Disabled so it can't be edited
                                 required
-                                placeholder="johndoe@example.com"
                             />
                             {errors.email && <p className={styles.error}>{errors.email}</p>}
                         </div>

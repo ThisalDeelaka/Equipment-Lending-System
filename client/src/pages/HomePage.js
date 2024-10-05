@@ -26,7 +26,7 @@ const HomePage = () => {
   };
 
   const handleMyEquipmentClick = () => {
-    navigate('/eventDetails'); // Redirect to /equipmentDetails
+    navigate('/my-equipment'); // Redirect to /equipmentDetails
   };
 
   const filteredEquipment = equipmentList

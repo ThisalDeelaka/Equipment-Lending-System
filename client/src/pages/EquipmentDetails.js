@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { message } from "antd";
-import Footer from "../components/CommonComponents/Footer";
 import { FaEdit, FaTrashAlt, FaDownload, FaSearch } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -23,17 +22,23 @@ function EquipmentDetails() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredReservations, setFilteredReservations] = useState([]);
 
+  // Get user email from local storage
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userEmail = currentUser ? currentUser.email : null;
+
   useEffect(() => {
-    fetchReservations();
-  }, []);
+    if (userEmail) {
+      fetchReservations(userEmail);
+    }
+  }, [userEmail]);
 
   useEffect(() => {
     handleSearch(searchTerm);
   }, [reservations, searchTerm]);
 
-  const fetchReservations = async () => {
+  const fetchReservations = async (email) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/reservations/all");
+      const response = await axios.get(`http://localhost:5000/api/bookings/user/${email}`);
       setReservations(response.data);
     } catch (error) {
       console.error("Failed to fetch reservations", error);
@@ -128,7 +133,7 @@ function EquipmentDetails() {
     try {
       await updateReservation(formData);
       setIsEditing(false);
-      fetchReservations();
+      fetchReservations(userEmail);
       message.success("Reservation updated successfully.");
     } catch (error) {
       console.error("Failed to update reservation", error);
@@ -159,13 +164,7 @@ function EquipmentDetails() {
     doc.setTextColor(0, 0, 0); // Black color
     doc.text("Equipment Reservation Report", doc.internal.pageSize.getWidth() / 2, 40, { align: "center" });
 
-    const tableColumn = [
-      "Full Name",
-      "Rental Duration",
-      "Email",
-      "Phone",
-      "Special Request",
-    ];
+    const tableColumn = ["Full Name", "Rental Duration", "Email", "Phone", "Special Request"];
     const tableRows = reservations.map((reservation) => [
       reservation.fullName,
       reservation.rentalDuration,
@@ -198,10 +197,7 @@ function EquipmentDetails() {
       <section className={styles.contentSection}>
         <div className={styles.headerSection}>
           <h1 className={styles.title}>Equipment Reservations</h1>
-          <button
-            onClick={handleDownloadReport}
-            className={styles.downloadButton}
-          >
+          <button onClick={handleDownloadReport} className={styles.downloadButton}>
             <FaDownload className={styles.icon} /> Download Report
           </button>
         </div>
@@ -243,16 +239,10 @@ function EquipmentDetails() {
                     <td>{reservation.userPhone}</td>
                     <td>{reservation.specialRequest || "None"}</td>
                     <td className={styles.actionsCell}>
-                      <button
-                        onClick={() => handleEditReservation(reservation)}
-                        className={styles.editButton}
-                      >
+                      <button onClick={() => handleEditReservation(reservation)} className={styles.editButton}>
                         <FaEdit className={styles.icon} />
                       </button>
-                      <button
-                        onClick={() => handleDeleteReservation(reservation._id)}
-                        className={styles.deleteButton}
-                      >
+                      <button onClick={() => handleDeleteReservation(reservation._id)} className={styles.deleteButton}>
                         <FaTrashAlt className={styles.icon} />
                       </button>
                     </td>
@@ -289,9 +279,7 @@ function EquipmentDetails() {
                 onChange={handleInputChange}
                 className={styles.modalInput}
               />
-              {errors.rentalDuration && (
-                <p className={styles.error}>{errors.rentalDuration}</p>
-              )}
+              {errors.rentalDuration && <p className={styles.error}>{errors.rentalDuration}</p>}
             </div>
             <div className={styles.modalFormGroup}>
               <label>Email:</label>
@@ -328,18 +316,13 @@ function EquipmentDetails() {
               <button onClick={handleSave} className={styles.saveButton}>
                 Save
               </button>
-              <button
-                onClick={() => setIsEditing(false)}
-                className={styles.cancelButton}
-              >
+              <button onClick={() => setIsEditing(false)} className={styles.cancelButton}>
                 Cancel
               </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* <Footer /> */}
     </div>
   );
 }

@@ -42,7 +42,7 @@ function App() {
                                             exact
                                         /> 
                                          <Route
-                                            path="/eventDetails"
+                                            path="/my-equipment"
                                             element={<EventDetails />}
                                             exact
                                         />                                     
