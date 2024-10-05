@@ -161,7 +161,7 @@ function EquipmentDetails() {
     doc.line(14, 100, pageWidth - 14, 100); // Line from left to right
 
     // Define the table columns and data
-    const tableColumn = ["Full Name", "Email", "Phone", "Special Requests", "Reservation Date"];
+    const tableColumn = ["Equipment Name", "Email", "Phone", "Special Requests", "Reservation Date"];
     const tableRows = reservations.map((reservation) => [
       reservation.fullName,
       reservation.userEmail,
@@ -242,7 +242,7 @@ function EquipmentDetails() {
             <table className={styles.table}>
               <thead className={styles.tableHeader}>
                 <tr>
-                  <th>Full Name</th>
+                  <th>Equipment Name</th>
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Special Requests</th>
@@ -279,7 +279,7 @@ function EquipmentDetails() {
           <div className={styles.modalContent}>
             <h3 className={styles.modalTitle}>Edit Reservation</h3>
             <div className={styles.modalFormGroup}>
-              <label>Full Name:</label>
+              <label>Equipment Name:</label>
               <input
                 type="text"
                 name="fullName"
