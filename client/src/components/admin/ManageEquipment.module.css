@@ -88,6 +88,13 @@
   background-color: #2a2a2a; /* Darker background for table header */
   color: #EFBF04; /* Gold text for header */
 }
+.imagePreview {
+  width: 50px;   /* Adjust this value to the desired width */
+  height: 50px;  /* Adjust this value to the desired height */
+  object-fit: cover;  /* Ensures the image fits within the given width and height without distortion */
+  border-radius: 4px; /* Optional: Add some rounding to the image corners */
+}
+
 
 /* Table head styling */
 .tableHead {
