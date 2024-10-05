@@ -14,13 +14,13 @@ function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      // Fetch reservations
+      // Fetch reservations data and count objects
       const reservationsResponse = await axios.get('/api/bookings/all');
       setReservationsCount(reservationsResponse.data.length); // Set total reservations count
 
-      // Fetch equipment data
-      const equipmentResponse = await axios.get('/api/equipment/getAll');
-      setEquipmentCount(equipmentResponse.data.length); // Set total equipment count by counting the objects
+      // Fetch equipment data and count objects
+      const equipmentResponse = await axios.get('/api/equipment/getEquipment');
+      setEquipmentCount(equipmentResponse.data.equipment.length); // Count the equipment objects and set the count
     } catch (error) {
       console.error('Failed to fetch data', error);
     }
@@ -44,7 +44,7 @@ function AdminDashboard() {
             </CardContent>
           </Card>
 
-          {/* Total Equipment */}
+          {/* Total Equipment Card */}
           <Card className={styles.summaryCard}>
             <CardHeader className={styles.cardHeader}>
               <CardTitle className={styles.cardTitle}>Total Equipment</CardTitle>

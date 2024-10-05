@@ -14,4 +14,10 @@ router.get('/user/:email', reservationController.getReservationsByEmail);
 // Route to fetch all reservations (admin feature)
 router.get('/all', reservationController.getAllReservations);
 
+// Route to update a specific reservation
+router.put('/:id', reservationController.updateReservation);
+
+// Route to delete a specific reservation
+router.delete('/:id', reservationController.deleteReservation);
+
 module.exports = router;

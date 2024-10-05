@@ -93,7 +93,7 @@ function EquipmentDetails() {
   const updateReservation = async (updatedReservation) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/reservations/${updatedReservation._id}`,
+        `http://localhost:5000/api/bookings/${updatedReservation._id}`,
         updatedReservation
       );
       return response.data;
@@ -122,7 +122,7 @@ function EquipmentDetails() {
 
   const handleDeleteReservation = async (reservationId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/reservations/${reservationId}`);
+      await axios.delete(`http://localhost:5000/api/bookings/${reservationId}`);
       setReservations((prevReservations) =>
         prevReservations.filter((reservation) => reservation._id !== reservationId)
       );

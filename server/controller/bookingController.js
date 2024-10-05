@@ -70,3 +70,48 @@ exports.getAllReservations = async (req, res) => {
     res.status(500).json({ message: 'Error fetching all reservations', error });
   }
 };
+
+
+// Update reservation by ID
+exports.updateReservation = async (req, res) => {
+    const { id } = req.params;
+    const { fullName, userEmail, userPhone, specialRequests } = req.body;
+  
+    try {
+      const updatedReservation = await Reservation.findByIdAndUpdate(
+        id,
+        {
+          fullName,
+          userEmail,
+          userPhone,
+          specialRequests,
+        },
+        { new: true } // Returns the updated document
+      );
+  
+      if (!updatedReservation) {
+        return res.status(404).json({ message: 'Reservation not found' });
+      }
+  
+      res.status(200).json({ message: 'Reservation updated successfully', reservation: updatedReservation });
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating reservation', error });
+    }
+  };
+  
+  // Delete reservation by ID
+  exports.deleteReservation = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const deletedReservation = await Reservation.findByIdAndDelete(id);
+  
+      if (!deletedReservation) {
+        return res.status(404).json({ message: 'Reservation not found' });
+      }
+  
+      res.status(200).json({ message: 'Reservation deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting reservation', error });
+    }
+  };
