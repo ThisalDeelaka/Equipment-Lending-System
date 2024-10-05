@@ -172,7 +172,6 @@ function ManageEquipment() {
               </DialogHeader>
 
               <div className={styles.formGrid}>
-                {/* Row 1: Name */}
                 <div className={styles.formRow}>
                   <label htmlFor="name">Name</label>
                   <Input
@@ -184,7 +183,6 @@ function ManageEquipment() {
                   />
                 </div>
 
-                {/* Row 2: Type */}
                 <div className={styles.formRow}>
                   <label htmlFor="type">Type</label>
                   <Input
@@ -196,7 +194,6 @@ function ManageEquipment() {
                   />
                 </div>
 
-                {/* Additional fields */}
                 <label htmlFor="condition">Condition</label>
                 <select
                   id="condition"
@@ -257,6 +254,7 @@ function ManageEquipment() {
           <Table>
             <TableHeader>
               <TableRow className={styles.tableHeaderRow}>
+                <TableHead className={styles.tableHead}>Image</TableHead>
                 <TableHead className={styles.tableHead}>Name</TableHead>
                 <TableHead className={styles.tableHead}>Type</TableHead>
                 <TableHead className={styles.tableHead}>Condition</TableHead>
@@ -268,6 +266,9 @@ function ManageEquipment() {
               {filteredEquipment.length > 0 ? (
                 filteredEquipment.map((item) => (
                   <TableRow key={item._id} className={styles.tableRow}>
+                    <TableCell >
+                      {item.imageUrl && <img src={`/${item.imageUrl}`} alt={item.name} className={styles.imagePreview} />}
+                    </TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.type}</TableCell>
                     <TableCell>{item.condition}</TableCell>
@@ -299,7 +300,7 @@ function ManageEquipment() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan="5">No equipment available</TableCell>
+                  <TableCell colSpan="6">No equipment available</TableCell>
                 </TableRow>
               )}
             </TableBody>
