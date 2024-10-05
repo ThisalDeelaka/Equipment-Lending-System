@@ -286,6 +286,7 @@ function EquipmentDetails() {
                 value={formData.fullName}
                 onChange={handleInputChange}
                 className={styles.modalInput}
+                disabled // Add this to disable the field
               />
               {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
             </div>
@@ -297,6 +298,7 @@ function EquipmentDetails() {
                 value={formData.userEmail}
                 onChange={handleInputChange}
                 className={styles.modalInput}
+                disabled // Add this to disable the field
               />
               {errors.userEmail && <p className={styles.error}>{errors.userEmail}</p>}
             </div>
