@@ -33,9 +33,7 @@
   color: #ffffff; /* Set text color to white */
 }
 
-.tableRow:hover {
-  background-color: var(--muted-bg-color, #f8f9fa);
-}
+
 
 .tableHead {
   height: 3rem;
@@ -43,13 +41,13 @@
   text-align: left;
   vertical-align: middle;
   font-weight: 500;
-  color: #ffffff; /* Set text color to white */
+  
 }
 
 .tableCell {
   padding: 1rem;
   vertical-align: middle;
-  color: #ffffff; /* Set text color to white */
+ 
 }
 
 .tableCaption {

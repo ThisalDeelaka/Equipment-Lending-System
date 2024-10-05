@@ -1,5 +1,3 @@
-/* ManageEquipment.module.css */
-
 /* Card container styling */
 .card {
   width: calc(100% - 240px); /* Adjust width to account for sidebar */
@@ -9,7 +7,6 @@
   border-radius: 0.75rem;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   position: relative;
-  
 }
 
 /* Adjust for sidebar and navbar */
@@ -47,11 +44,20 @@
   border-left: 4px solid #34d399; /* Green border */
 }
 
+/* Title and Add New Equipment in one row */
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
 /* Title for equipment list */
 .equipmentListTitle {
   font-size: 1.5rem;
   font-weight: 600;
   color: #EFBF04; /* Gold */
+  margin: 0;
 }
 
 /* Add button styling */
@@ -62,6 +68,8 @@
   border-radius: 0.375rem;
   transition: background-color 0.2s ease-in-out;
   font-weight: 500;
+  display: flex;
+  align-items: center;
 }
 
 /* Add hover effect */
@@ -164,14 +172,61 @@
   padding: 2rem;
   background-color: #2a2a2a;
   border-radius: 0.5rem;
+  max-height: 80vh; /* Set max height to prevent overlapping with navbar */
+  overflow-y: auto; /* Enable vertical scroll */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure proper spacing for the button */
 }
 
 /* Form grid styling */
 .formGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  margin-top: 1.5rem;
+}
+
+/* Form row styling */
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Inputs and selects in the form */
+input,
+select {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  width: 100%;
+  transition: border-color 0.2s ease-in-out;
+}
+
+input:focus,
+select:focus {
+  border-color: #3182ce;
+  outline: none;
+}
+
+/* Fieldset styling for status radio buttons */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between; /* Ensures radio buttons are spread out */
+  grid-column: span 2;
+}
+
+legend {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #EFBF04;
+}
+
+.radioOption {
+  margin-right: 0.5rem;
 }
 
 /* Save button styling */
@@ -182,7 +237,8 @@
   border-radius: 0.375rem;
   transition: background-color 0.2s ease-in-out;
   font-weight: 500;
-  grid-column: span 2;
+  margin-top: 1rem; /* Added margin to separate from input fields */
+  text-align: center;
 }
 
 .saveButton:hover {
@@ -197,5 +253,3 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 }
-
-

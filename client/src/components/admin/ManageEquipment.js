@@ -23,7 +23,6 @@ function ManageEquipment() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [errors, setErrors] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4);
 
@@ -74,11 +73,6 @@ function ManageEquipment() {
   };
 
   const addEquipment = async () => {
-    if (Object.keys(errors).length > 0) {
-      showAlert("Please fix the errors before submitting.");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("name", newEquipment.name);
     formData.append("type", newEquipment.type);
@@ -105,11 +99,6 @@ function ManageEquipment() {
   };
 
   const updateEquipment = async () => {
-    if (Object.keys(errors).length > 0) {
-      showAlert("Please fix the errors before submitting.");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("name", editEquipment.name);
     formData.append("type", editEquipment.type);
@@ -181,20 +170,33 @@ function ManageEquipment() {
               <DialogHeader>
                 <DialogTitle>Add New Equipment</DialogTitle>
               </DialogHeader>
-              <div className={styles.formGrid}>
-                <Input
-                  placeholder="Name"
-                  name="name"
-                  value={newEquipment.name}
-                  onChange={handleNewEquipmentChange}
-                />
-                <Input
-                  placeholder="Type"
-                  name="type"
-                  value={newEquipment.type}
-                  onChange={handleNewEquipmentChange}
-                />
 
+              <div className={styles.formGrid}>
+                {/* Row 1: Name */}
+                <div className={styles.formRow}>
+                  <label htmlFor="name">Name</label>
+                  <Input
+                    id="name"
+                    placeholder="Name"
+                    name="name"
+                    value={newEquipment.name}
+                    onChange={handleNewEquipmentChange}
+                  />
+                </div>
+
+                {/* Row 2: Type */}
+                <div className={styles.formRow}>
+                  <label htmlFor="type">Type</label>
+                  <Input
+                    id="type"
+                    placeholder="Type"
+                    name="type"
+                    value={newEquipment.type}
+                    onChange={handleNewEquipmentChange}
+                  />
+                </div>
+
+                {/* Additional fields */}
                 <label htmlFor="condition">Condition</label>
                 <select
                   id="condition"
