@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Calendar from 'react-calendar'; // Calendar component import
-import 'react-calendar/dist/Calendar.css'; // Calendar CSS
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import styles from './BookingPage.module.css';
 
 const BookingPage = () => {
-    const { id } = useParams(); // Get equipment ID from URL
-    const [equipment, setEquipment] = useState(null); // Store equipment data
-    const [bookedDates, setBookedDates] = useState([]); // Store already booked dates
-    const [selectedDate, setSelectedDate] = useState(new Date()); // Store the selected date
+    const { id } = useParams();
+    const [equipment, setEquipment] = useState(null);
+    const [bookedDates, setBookedDates] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -18,23 +18,22 @@ const BookingPage = () => {
     });
     const [errors, setErrors] = useState({});
 
-    // Fetch the currentUser from localStorage
+    // Fetch current user details from local storage
     useEffect(() => {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser) {
-            // Pre-fill the email from currentUser into formData
-            setFormData(prevFormData => ({
+            setFormData((prevFormData) => ({
                 ...prevFormData,
-                email: currentUser.email // Set the email from currentUser
+                email: currentUser.email
             }));
         }
-    }, []); // Empty dependency array to run this effect only once
+    }, []);
 
     useEffect(() => {
         const fetchEquipmentDetails = async () => {
             try {
                 const response = await axios.get(`/api/equipment/getEquipment/${id}`);
-                setEquipment(response.data.equipment); // Set equipment data once it's fetched
+                setEquipment(response.data.equipment);
             } catch (error) {
                 console.error('Error fetching equipment details:', error);
             }
@@ -43,7 +42,7 @@ const BookingPage = () => {
         const fetchBookedDates = async () => {
             try {
                 const response = await axios.get(`/api/bookings/bookedDates/${id}`);
-                setBookedDates(response.data); // Set the already booked dates for the equipment
+                setBookedDates(response.data);
             } catch (error) {
                 console.error('Error fetching booked dates:', error);
             }
@@ -51,57 +50,17 @@ const BookingPage = () => {
 
         fetchEquipmentDetails();
         fetchBookedDates();
-    }, [id]); // Only re-run this effect when `id` changes
+    }, [id]);
 
-    // Handle form data changes with strict validation
+    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        let inputValue = value;
-        let updatedErrors = { ...errors };
-
-        // Validation logic for Full Name (allow only alphabetic characters and space)
-        if (name === 'fullName') {
-            inputValue = value.replace(/[^A-Za-z\s]/g, ''); // Remove non-alphabetic characters
-            if (value !== inputValue) {
-                updatedErrors.fullName = 'Only letters and spaces are allowed for Full Name';
-            } else {
-                delete updatedErrors.fullName;
-            }
-        }
-
-        // Validation logic for Phone (allow only numbers, and exactly 10 digits)
-        if (name === 'phone') {
-            inputValue = value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-            if (inputValue.length > 10) {
-                inputValue = inputValue.slice(0, 10); // Restrict to 10 digits
-            }
-            if (inputValue.length !== 10) {
-                updatedErrors.phone = 'Phone number must be exactly 10 digits';
-            } else {
-                delete updatedErrors.phone;
-            }
-        }
-
-        // Validation logic for Email (check if email structure is valid)
-        if (name === 'email') {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex pattern
-            if (!emailRegex.test(value)) {
-                updatedErrors.email = 'Invalid email address';
-            } else {
-                delete updatedErrors.email;
-            }
-        }
-
-        // Set the sanitized input value to the state
-        setFormData({ ...formData, [name]: inputValue });
-        setErrors(updatedErrors);
+        setFormData({ ...formData, [name]: value });
     };
 
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Perform final validation checks before submission
         if (Object.keys(errors).length > 0) {
             alert('Please fix the errors in the form.');
             return;
@@ -114,11 +73,10 @@ const BookingPage = () => {
                 userEmail: formData.email,
                 userPhone: formData.phone,
                 specialRequests: formData.specialRequests,
-                reservationDate: selectedDate, // Include the selected date for reservation
+                reservationDate: selectedDate
             };
 
             const response = await axios.post('/api/bookings/create', bookingData);
-
             if (response.status === 201) {
                 alert('Booking created successfully!');
             } else {
@@ -131,7 +89,7 @@ const BookingPage = () => {
 
     // Disable already booked dates in the calendar
     const tileDisabled = ({ date }) => {
-        return bookedDates.some(bookedDate => {
+        return bookedDates.some((bookedDate) => {
             const booked = new Date(bookedDate);
             return booked.toDateString() === date.toDateString();
         });
@@ -140,18 +98,18 @@ const BookingPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.bookingCard}>
-                {/* Equipment image section */}
-                <div className={styles.equipmentImageSection}>
-                    {equipment && (
+                {/* Equipment Image in the Header */}
+                {equipment && (
+                    <div className={styles.equipmentImageContainer}>
                         <img
-                            src={`/${equipment.imageUrl}`} // Display equipment image
+                            src={`/${equipment.imageUrl}`}
                             alt={equipment.name}
                             className={styles.equipmentImage}
                         />
-                    )}
-                </div>
+                    </div>
+                )}
 
-                {/* Booking form section */}
+                {/* Booking Form Section */}
                 <div className={styles.bookingFormSection}>
                     <h1 className={styles.title}>Reserve Equipment</h1>
                     <p className={styles.subtitle}>Fill out the details below to confirm your reservation.</p>
@@ -167,13 +125,12 @@ const BookingPage = () => {
                                 className={styles.input}
                                 value={formData.fullName}
                                 onChange={handleChange}
-                                required
                                 placeholder="John Doe"
+                                required
                             />
-                            {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
                         </div>
 
-                        {/* Email Address (disabled field) */}
+                        {/* Email (disabled) */}
                         <div className={styles.formGroup}>
                             <label htmlFor="email" className={styles.label}>Email Address</label>
                             <input
@@ -181,15 +138,14 @@ const BookingPage = () => {
                                 id="email"
                                 name="email"
                                 className={styles.input}
-                                value={formData.email} // Prefilled from currentUser
+                                value={formData.email}
                                 onChange={handleChange}
-                                disabled // Disabled so it can't be edited
+                                disabled
                                 required
                             />
-                            {errors.email && <p className={styles.error}>{errors.email}</p>}
                         </div>
 
-                        {/* Phone Number */}
+                        {/* Phone */}
                         <div className={styles.formGroup}>
                             <label htmlFor="phone" className={styles.label}>Phone Number</label>
                             <input
@@ -199,19 +155,19 @@ const BookingPage = () => {
                                 className={styles.input}
                                 value={formData.phone}
                                 onChange={handleChange}
-                                required
                                 placeholder="07X XXXXXXX"
+                                required
                             />
-                            {errors.phone && <p className={styles.error}>{errors.phone}</p>}
                         </div>
 
                         {/* Calendar Component */}
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Select Reservation Date</label>
                             <Calendar
+                                className={styles.customCalendar}
                                 onChange={setSelectedDate}
                                 value={selectedDate}
-                                tileDisabled={tileDisabled} // Disable already booked dates
+                                tileDisabled={tileDisabled}
                             />
                         </div>
 
@@ -229,10 +185,7 @@ const BookingPage = () => {
                         </div>
 
                         {/* Submit Button */}
-                        <button
-                            type="submit"
-                            className={styles.submitButton}
-                        >
+                        <button type="submit" className={styles.submitButton}>
                             Confirm Reservation
                         </button>
                     </form>
