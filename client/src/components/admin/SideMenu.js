@@ -15,7 +15,7 @@ function getItem(label, key, icon) {
 const items = [
     getItem("Dashboard", "/admin", <Icon icon="material-symbols:dashboard-outline" className={styles.icon} />),
     getItem("Manage Equipment", "/admin/manage-equipment", <Icon icon="ic:outline-inventory" className={styles.icon} />),
-    getItem("Manage Bookings", "/admin/manage-booking", <Icon icon="akar-icons:book" className={styles.icon} />),
+    getItem("Manage reservation", "/admin/manage-reservation", <Icon icon="akar-icons:book" className={styles.icon} />),
 ];
 
 function SideMenu() {

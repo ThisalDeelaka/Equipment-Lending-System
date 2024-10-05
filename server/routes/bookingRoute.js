@@ -11,4 +11,7 @@ router.get('/bookedDates/:equipmentId', reservationController.getBookedDates);
 // Route to fetch all reservations for a specific user by email
 router.get('/user/:email', reservationController.getReservationsByEmail);
 
+// Route to fetch all reservations (admin feature)
+router.get('/all', reservationController.getAllReservations);
+
 module.exports = router;

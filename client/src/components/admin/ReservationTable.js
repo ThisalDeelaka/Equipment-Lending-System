@@ -27,7 +27,7 @@ function ReservationTable() {
 
   const fetchReservations = async () => {
     try {
-      const response = await axios.get("/api/reservations/all");
+      const response = await axios.get("/api/bookings/all");
       setReservations(response.data);
     } catch (error) {
       console.error("Failed to fetch reservations", error);
@@ -75,16 +75,18 @@ function ReservationTable() {
     ];
     const csvContent = [
       headers.join(","),
-      ...filteredReservations.map((reservation) =>
-        [
+      ...filteredReservations.map((reservation) => {
+        const date = new Date(reservation.createdAt);
+        const formattedDate = isNaN(date) ? "Invalid Date" : format(date, "PP");
+        return [
           reservation.fullName,
           reservation.userEmail,
           reservation.userPhone,
           reservation.rentalDuration,
           reservation.specialRequest || "N/A",
-          format(new Date(reservation.createdAt), "PP"),
-        ].join(",")
-      ),
+          formattedDate,
+        ].join(",");
+      }),
     ].join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -107,7 +109,6 @@ function ReservationTable() {
       </CardHeader>
       <CardContent className={styles.cardContent}>
         <div className={styles.topSection}>
-          {/* Search Input */}
           <div className={styles.searchWrapper}>
             <Search className={styles.searchIcon} />
             <Input
@@ -118,17 +119,10 @@ function ReservationTable() {
               className={styles.searchInput}
             />
           </div>
-
-          {/* Export Button */}
-          <Button
-            onClick={exportToCSV}
-            className={styles.exportButton}
-          >
+          <Button onClick={exportToCSV} className={styles.exportButton}>
             <Download className={styles.exportIcon} /> Export to CSV
           </Button>
         </div>
-
-        {/* Table */}
         <div className={styles.tableWrapper}>
           <Table className={styles.table}>
             <TableHeader>
@@ -142,21 +136,23 @@ function ReservationTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentReservations.map((reservation) => (
-                <TableRow key={reservation._id} className={styles.tableRow}>
-                  <TableCell className={styles.tableCell}>{reservation.fullName}</TableCell>
-                  <TableCell className={styles.tableCell}>{reservation.userEmail}</TableCell>
-                  <TableCell className={styles.tableCell}>{reservation.userPhone}</TableCell>
-                  <TableCell className={styles.tableCell}>{reservation.rentalDuration}</TableCell>
-                  <TableCell className={styles.tableCell}>{reservation.specialRequest || 'N/A'}</TableCell>
-                  <TableCell className={styles.tableCell}>{format(new Date(reservation.createdAt), "PP")}</TableCell>
-                </TableRow>
-              ))}
+              {currentReservations.map((reservation) => {
+                const date = new Date(reservation.createdAt);
+                const formattedDate = isNaN(date) ? "Invalid Date" : format(date, "PP");
+                return (
+                  <TableRow key={reservation._id} className={styles.tableRow}>
+                    <TableCell className={styles.tableCell}>{reservation.fullName}</TableCell>
+                    <TableCell className={styles.tableCell}>{reservation.userEmail}</TableCell>
+                    <TableCell className={styles.tableCell}>{reservation.userPhone}</TableCell>
+                    <TableCell className={styles.tableCell}>{reservation.rentalDuration}</TableCell>
+                    <TableCell className={styles.tableCell}>{reservation.specialRequest || 'N/A'}</TableCell>
+                    <TableCell className={styles.tableCell}>{formattedDate}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
-
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className={styles.paginationWrapper}>
             <Button

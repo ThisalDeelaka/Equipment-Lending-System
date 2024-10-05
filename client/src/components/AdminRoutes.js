@@ -9,7 +9,7 @@ function AdminRoutes() {
         <Routes>
             <Route path="/" element={<Dashboard/>}/>
             <Route path="manage-equipment" element={<Equipment/>}/>
-            <Route path="manage-booking" element={<ManageBookings/>}/>
+            <Route path="manage-reservation" element={<ManageBookings/>}/>
             
         </Routes>
     </div>

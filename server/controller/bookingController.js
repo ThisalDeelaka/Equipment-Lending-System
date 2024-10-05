@@ -57,3 +57,13 @@ exports.getReservationsByEmail = async (req, res) => {
     res.status(500).json({ message: 'Error fetching reservations for the user', error });
   }
 };
+
+// Fetch all reservations (admin feature)
+exports.getAllReservations = async (req, res) => {
+  try {
+    const reservations = await Reservation.find({});
+    res.status(200).json(reservations);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching all reservations', error });
+  }
+};
