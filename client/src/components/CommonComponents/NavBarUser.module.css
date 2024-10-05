@@ -1,62 +1,83 @@
-/* NavBarUser.module.css */
-
+/* Navbar Header */
 .header {
-    background-color: rgba(255, 255, 255, 0.8);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid #e2e8f0;
-  }
-  
+  background-color: rgba(30, 30, 30, 0.8); /* Dark background to match sidebar */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Navbar Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoImage {
+  height: 50px;
+  max-width: 100%; /* Ensure the logo fits within the available space */
+  border-radius: 8px; /* Optional: Add rounding to match sidebar logo */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for the logo */
+}
+
+/* User Menu */
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.userAvatar {
+  border: 2px solid #27ae61;
+}
+
+/* Dropdown Icon */
+.dropdownIcon {
+  color: #ffffff;
+}
+
+/* Button Group for Log In and Sign Up */
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Buttons Styling */
+.button {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #27ae61;
+  border: 1px solid #27ae61;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.button:hover {
+  background-color: #27ae61;
+  color: #fff;
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+      padding: 1rem;
   }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #27ae61;
-    text-decoration: none;
+
+  .logoImage {
+      height: 40px;
   }
-  
-  .userMenu {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #2d3748;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .userAvatar {
-    border: 2px solid #27ae61;
-  }
-  
-  .dropdownIcon {
-    color: #718096;
-  }
-  
-  .buttonGroup {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .button {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #27ae61;
-    border: 1px solid #27ae61;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .button:hover {
-    background-color: #27ae61;
-    color: #fff;
-  }
+}

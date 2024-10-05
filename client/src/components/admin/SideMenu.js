@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { Menu, ConfigProvider } from "antd";
 import styles from "./SideMenu.module.css";
-import logo from '../../assets/Logo/logo.jpg'; 
+import logo from '../../assets/Logo/logo.png'; 
 
 function getItem(label, key, icon) {
     return {

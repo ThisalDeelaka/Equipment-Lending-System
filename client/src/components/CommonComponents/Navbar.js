@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {
-    Button,
-    Dropdown,
-    Space,
-    Avatar,
-    ConfigProvider,
-    Grid,
-    theme,
-} from "antd";
+import { Button, Dropdown, Space, Avatar, ConfigProvider, Grid } from "antd";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import styles from "./NavBarUser.module.css";
+import logo from '../../assets/Logo/logo.png'; 
 
-const { useToken } = theme;
 const { useBreakpoint } = Grid;
 
 function NavBarUser() {
-    const { token } = useToken();
     const screens = useBreakpoint();
     const [user, setUser] = useState(null);
     const defaultProfilePic =
@@ -51,21 +42,18 @@ function NavBarUser() {
 
     const items = [
         {
-            label: (
-                <a href="/profile">My Account</a>
-            ),
+            label: <a href="/profile">My Account</a>,
             key: "0",
         },
-        user &&
-            user.userType === "Admin" && {
-                label: (
-                    <a href="/admin">Admin</a>
-                ),
-                key: "admin",
-            },
+        user && user.userType === "Admin" && {
+            label: <a href="/admin">Admin</a>,
+            key: "admin",
+        },
         {
             label: (
-                <a href="/login" onClick={logout}>Log Out</a>
+                <a href="/login" onClick={logout}>
+                    Log Out
+                </a>
             ),
             key: "2",
         },
@@ -81,8 +69,9 @@ function NavBarUser() {
         >
             <nav className={styles.header}>
                 <div className={styles.container}>
+                    {/* Replace "FarmCart" with the logo */}
                     <Link to="/" className={styles.logo}>
-                        FarmCart
+                        <img src={logo} alt="FarmCart Logo" className={styles.logoImage} />
                     </Link>
                     {user ? (
                         <Dropdown menu={{ items }}>
