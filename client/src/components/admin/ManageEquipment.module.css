@@ -12,7 +12,7 @@
 /* Adjust for sidebar and navbar */
 .adjustForSidebarNavbar {
   margin-top: 80px; /* Adjust based on navbar height */
-  padding-left: 320px; /* Adjust to avoid sidebar overlap */
+  padding-left: 240px; /* Adjust to avoid sidebar overlap */
 }
 
 /* Card header styles */

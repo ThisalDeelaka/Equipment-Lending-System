@@ -69,14 +69,16 @@ function NavBarUser() {
         >
             <nav className={styles.header}>
                 <div className={styles.container}>
-                    {/* Logo first on the right */}
-                    <div className={styles.logoNameContainer}>
-                        <img src={logo} alt="Dhananjana Hotel Logo" className={styles.logoImage} />
-                        <div className={styles.brandNameContainer}>
-                            <span className={styles.brandName}>Dhananjana</span>
-                            <span className={styles.hotelName}>Hotel</span>
+                    {/* Wrap the logo in a Link to navigate to '/' */}
+                    <Link to="/" className={styles.logoLink}>
+                        <div className={styles.logoNameContainer}>
+                            <img src={logo} alt="Dhananjana Hotel Logo" className={styles.logoImage} />
+                            <div className={styles.brandNameContainer}>
+                                <span className={styles.brandName}>Dhananjana</span>
+                                <span className={styles.hotelName}>Hotel</span>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                     {user ? (
                         <Dropdown menu={{ items }}>
                             <a onClick={(e) => e.preventDefault()} className={styles.userMenu}>

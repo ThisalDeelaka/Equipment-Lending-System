@@ -107,23 +107,52 @@
   background-color: #444;
 }
 
+/* Actions Cell Styling */
 .actionsCell {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
+  justify-content: flex-start; /* Left-align the action buttons */
 }
 
-.editButton,
-.deleteButton {
-  cursor: pointer;
-  transition: color 0.3s ease;
+/* Modern Edit Button */
+.editButton {
+  background-color: #2f855a; /* Soft green */
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 .editButton:hover {
-  color: #efbf04;
+  background-color: #276749; /* Darker green */
+  transform: scale(1.05); /* Slight scaling */
+}
+
+/* Modern Delete Button */
+.deleteButton {
+  background-color: #e53e3e; /* Soft red */
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 .deleteButton:hover {
-  color: #e53e3e;
+  background-color: #c53030; /* Darker red */
+  transform: scale(1.05); /* Slight scaling */
+}
+
+/* Icon inside buttons */
+.actionsCell .icon {
+  margin-right: 0.5rem; /* Adds space between icon and text */
 }
 
 /* Modal Overlay */
@@ -195,18 +224,40 @@
 .saveButton,
 .cancelButton {
   padding: 0.75rem 1.5rem;
-  background: #444;
-  color: white;
   border-radius: 0.75rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.saveButton:hover {
-  background-color: #efbf04;
+/* Save Button */
+.saveButton {
+  background-color: #efbf04; /* Set base color for Save button */
   color: black;
 }
 
+.saveButton:hover {
+  background-color: #d4a903; /* Darker shade of #efbf04 on hover */
+  color: black;
+}
+
+/* Cancel Button */
+.cancelButton {
+  background-color: #e53e3e; /* Set base color for Cancel button */
+  color: white;
+}
+
 .cancelButton:hover {
-  background-color: #e53e3e;
+  background-color: #c53030; /* Darker shade of #e53e3e on hover */
+  color: white;
+}
+
+
+/* No Reservations Message */
+.noReservationsMessage {
+  text-align: center;
+  padding: 2rem;
+  background-color: #2a2a2a;
+  color: #efbf04;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }

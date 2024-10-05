@@ -217,7 +217,7 @@ function EquipmentDetails() {
             <table className={styles.table}>
               <thead className={styles.tableHeader}>
                 <tr>
-                  <th>Full Name</th>
+                  <th>Equipment Name</th>
                   <th>Rental Duration</th>
                   <th>Email</th>
                   <th>Phone</th>
@@ -254,7 +254,7 @@ function EquipmentDetails() {
           <div className={styles.modalContent}>
             <h3 className={styles.modalTitle}>Edit Reservation</h3>
             <div className={styles.modalFormGroup}>
-              <label>Full Name:</label>
+              <label>Equipment Name:</label>
               <input
                 type="text"
                 name="fullName"

@@ -1,3 +1,25 @@
+Sidebar Styling
+.sidebar {
+  width: 280px; /* Fixed width for sidebar */
+  background-color: #1c1c1c;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 2rem;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Sidebar Title */
+.sidebar h2 {
+  color: #EFBF04; /* Gold */
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
 
 /* Sidebar Menu Items */
 .sidebar ul {
