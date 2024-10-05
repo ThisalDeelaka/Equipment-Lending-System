@@ -1,221 +1,212 @@
-/* EventDetails.module.css */
-
+/* Main Container */
 .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background: linear-gradient(to bottom left, #ffffff, #e0f0e0);
-  }
-  
-  .contentSection {
-    padding: 2.5rem;
-    max-width: 1000px;
-    margin: 0 auto;
-    flex-grow: 1;
-  }
-  
-  .headerSection {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #2f855a;
-  }
-  
-  .downloadButton {
-    background-color: #e0f0e0;
-    color: #4a5568;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.3s;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .downloadButton:hover {
-    background-color: #38a169;
-    color: #fff;
-  }
-  
-  .icon {
-    margin-right: 0.5rem;
-  }
-  
-  .searchSection {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .searchInput {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 0.5rem;
-    transition: border-color 0.3s;
-  }
-  
-  .searchInput:focus {
-    border-color: #38a169;
-    outline: none;
-  }
-  
-  .searchIcon {
-    margin-left: 0.5rem;
-    color: #718096;
-  }
-  
-  .noBookingsMessage {
-    text-align: center;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tableWrapper {
-    overflow-x: auto;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  
-  .tableHeader {
-    background-color: #e0f0e0;
-    color: #2d3748;
-  }
-  
-  .table th, .table td {
-    padding: 1rem;
-    text-align: left;
-    font-size: 0.875rem;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  
-  .tableRow:hover {
-    background-color: #f7fafc;
-  }
-  
-  .actionsCell {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .editButton {
-    color: #38a169;
-    transition: color 0.3s;
-  }
-  
-  .editButton:hover {
-    color: #276749;
-  }
-  
-  .deleteButton {
-    color: #e53e3e;
-    transition: color 0.3s;
-  }
-  
-  .deleteButton:hover {
-    color: #c53030;
-  }
-  
-  .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modalContent {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  .modalTitle {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #2f855a;
-    margin-bottom: 1.5rem;
-  }
-  
-  .modalFormGroup {
-    margin-bottom: 1.5rem;
-  }
-  
-  .modalInput, .modalTextarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 0.5rem;
-    transition: border-color 0.3s;
-  }
-  
-  .modalInput:focus, .modalTextarea:focus {
-    border-color: #38a169;
-    outline: none;
-  }
-  
-  .modalTextarea {
-    min-height: 100px;
-    resize: vertical;
-  }
-  
-  .error {
-    color: #e53e3e;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-  }
-  
-  .modalActions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-  
-  .saveButton {
-    padding: 0.75rem 1.5rem;
-    background: #38a169;
-    color: #fff;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .saveButton:hover {
-    background: #2f855a;
-  }
-  
-  .cancelButton {
-    padding: 0.75rem 1.5rem;
-    background: #718096;
-    color: #fff;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .cancelButton:hover {
-    background: #4a5568;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #1c1c1c;
+  padding: 3rem;
+}
+
+/* Content Section */
+.contentSection {
+  padding: 2.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex-grow: 1;
+  background-color: #2a2a2a;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Section */
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Title */
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #efbf04;
+}
+
+/* Download Button */
+.downloadButton {
+  background-color: #efbf04;
+  color: black;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem; 
+}
+
+.downloadButton:hover {
+  background-color: black;
+  color: white;
+}
+
+.icon {
+  margin-right: 0.5rem;
+}
+
+/* Search Section */
+.searchSection {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.75rem;
+  background-color: #333;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  background-color: #444;
+}
+
+.searchIcon {
+  margin-left: 0.5rem;
+  color: #efbf04;
+}
+
+/* Table Styling */
+.tableWrapper {
+  overflow-x: auto;
+  background-color: #2a2a2a;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.tableRow:hover {
+  background-color: #444;
+}
+
+.actionsCell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editButton,
+.deleteButton {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.editButton:hover {
+  color: #efbf04;
+}
+
+.deleteButton:hover {
+  color: #e53e3e;
+}
+
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modalContent {
+  background: #2a2a2a;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.modalTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #efbf04;
+  margin-bottom: 1.5rem;
+}
+
+.modalFormGroup {
+  margin-bottom: 1.5rem;
+}
+
+/* Inputs and Textareas */
+.modalInput,
+.modalTextarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #333;
+  border-radius: 0.75rem;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.modalInput:focus,
+.modalTextarea:focus {
+  outline: none;
+  background-color: #444;
+}
+
+.modalTextarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Modal Actions */
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Buttons */
+.saveButton,
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: #444;
+  color: white;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: #efbf04;
+  color: black;
+}
+
+.cancelButton:hover {
+  background-color: #e53e3e;
+}

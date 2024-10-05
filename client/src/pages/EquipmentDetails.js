@@ -22,7 +22,6 @@ function EquipmentDetails() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredReservations, setFilteredReservations] = useState([]);
 
-  // Get user email from local storage
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const userEmail = currentUser ? currentUser.email : null;
 
@@ -46,15 +45,13 @@ function EquipmentDetails() {
     }
   };
 
-  // Handle input changes with real-time validation
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let updatedValue = value;
     let updatedErrors = { ...errors };
 
-    // Restrict Full Name to alphabetic characters and spaces
     if (name === "fullName") {
-      updatedValue = value.replace(/[^A-Za-z\s]/g, ""); // Remove non-alphabetic characters
+      updatedValue = value.replace(/[^A-Za-z\s]/g, "");
       if (updatedValue !== value) {
         updatedErrors.fullName = "Only letters and spaces are allowed for Full Name";
       } else {
@@ -62,9 +59,8 @@ function EquipmentDetails() {
       }
     }
 
-    // Restrict Rental Duration to positive numbers only
     if (name === "rentalDuration") {
-      updatedValue = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+      updatedValue = value.replace(/[^0-9]/g, "");
       if (updatedValue !== value || updatedValue === "" || Number(updatedValue) <= 0) {
         updatedErrors.rentalDuration = "Rental duration must be a positive number";
       } else {
@@ -72,7 +68,6 @@ function EquipmentDetails() {
       }
     }
 
-    // Validate Email structure
     if (name === "userEmail") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value)) {
@@ -82,11 +77,10 @@ function EquipmentDetails() {
       }
     }
 
-    // Restrict Phone to exactly 10 digits
     if (name === "userPhone") {
-      updatedValue = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+      updatedValue = value.replace(/[^0-9]/g, "");
       if (updatedValue.length > 10) {
-        updatedValue = updatedValue.slice(0, 10); // Limit to 10 digits
+        updatedValue = updatedValue.slice(0, 10);
       }
       if (updatedValue.length !== 10) {
         updatedErrors.userPhone = "Phone number must be exactly 10 digits";
@@ -157,11 +151,11 @@ function EquipmentDetails() {
   const handleDownloadReport = () => {
     const doc = new jsPDF();
     doc.setFontSize(24);
-    doc.setTextColor(0, 128, 0); // Green color
+    doc.setTextColor(0, 128, 0);
     doc.text("Equipment Lending", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
     doc.setFontSize(16);
-    doc.setTextColor(0, 0, 0); // Black color
+    doc.setTextColor(0, 0, 0);
     doc.text("Equipment Reservation Report", doc.internal.pageSize.getWidth() / 2, 40, { align: "center" });
 
     const tableColumn = ["Full Name", "Rental Duration", "Email", "Phone", "Special Request"];
@@ -190,15 +184,16 @@ function EquipmentDetails() {
       item.fullName.toLowerCase().includes(lowercasedFilter)
     );
     setFilteredReservations(filteredData);
-  }, 300); // Debounced search for performance
+  }, 300);
 
   return (
     <div className={styles.container}>
       <section className={styles.contentSection}>
         <div className={styles.headerSection}>
           <h1 className={styles.title}>Equipment Reservations</h1>
+          
           <button onClick={handleDownloadReport} className={styles.downloadButton}>
-            <FaDownload className={styles.icon} /> Download Report
+            <FaDownload className={styles.icon} /> Report
           </button>
         </div>
 
@@ -254,7 +249,6 @@ function EquipmentDetails() {
         )}
       </section>
 
-      {/* Edit Modal */}
       {isEditing && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
