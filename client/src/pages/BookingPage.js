@@ -6,10 +6,10 @@ import axios from 'axios';
 import styles from './BookingPage.module.css';
 
 const BookingPage = () => {
-    const { id } = useParams();
-    const [equipment, setEquipment] = useState(null);
-    const [bookedDates, setBookedDates] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const { id } = useParams(); // Get the equipment ID from the URL
+    const [equipment, setEquipment] = useState(null); // Store equipment data
+    const [bookedDates, setBookedDates] = useState([]); // Store already booked dates
+    const [selectedDates, setSelectedDates] = useState([]); // Updated to handle multiple selected dates
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -29,6 +29,7 @@ const BookingPage = () => {
         }
     }, []);
 
+    // Fetch equipment details and booked dates
     useEffect(() => {
         const fetchEquipmentDetails = async () => {
             try {
@@ -58,25 +59,41 @@ const BookingPage = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    // Handle date range selection
+    const handleDateChange = (dates) => {
+        setSelectedDates(dates); // Set the selected range of dates
+    };
+
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (Object.keys(errors).length > 0) {
             alert('Please fix the errors in the form.');
             return;
         }
 
         try {
+            // Loop over each date in the selected range and create booking requests
+            const startDate = new Date(selectedDates[0]);
+            const endDate = new Date(selectedDates[1]);
+            const dateArray = [];
+
+            for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+                dateArray.push(new Date(date));
+            }
+
             const bookingData = {
                 equipmentId: id,
                 fullName: formData.fullName,
                 userEmail: formData.email,
                 userPhone: formData.phone,
                 specialRequests: formData.specialRequests,
-                reservationDate: selectedDate
+                reservationDates: dateArray // Send array of selected dates to the backend
             };
 
             const response = await axios.post('/api/bookings/create', bookingData);
+
             if (response.status === 201) {
                 alert('Booking created successfully!');
             } else {
@@ -164,10 +181,11 @@ const BookingPage = () => {
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Select Reservation Date</label>
                             <Calendar
+                                selectRange // Enable date range selection
+                                onChange={handleDateChange} // Handle range selection
+                                value={selectedDates}
+                                tileDisabled={tileDisabled} // Disable already booked dates
                                 className={styles.customCalendar}
-                                onChange={setSelectedDate}
-                                value={selectedDate}
-                                tileDisabled={tileDisabled}
                             />
                         </div>
 
