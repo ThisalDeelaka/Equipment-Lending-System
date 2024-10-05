@@ -85,6 +85,7 @@ const BookingPage = () => {
 
             const bookingData = {
                 equipmentId: id,
+                equipmentName: equipment.name, // Include the equipment name
                 fullName: formData.fullName,
                 userEmail: formData.email,
                 userPhone: formData.phone,
