@@ -1,184 +1,172 @@
-/* HomePage.module.css */
-
+/* Main container */
 .container {
     width: 100%;
     padding: 2rem;
     margin: 0 auto;
     box-sizing: border-box;
-}
-
-/* Hero Section */
-.heroSection {
-    background: linear-gradient(to right, #38b2ac, #4299e1);
-    color: white;
+  }
+  
+  /* Hero Section */
+  .heroSection {
+    background-color: #1c1c1c;
     padding: 5rem 0;
+    color: white;
     text-align: center;
-}
-
-.heroContent {
-    max-width: 768px;
+  }
+  
+  .heroContent {
+    max-width: 1200px;
     margin: 0 auto;
-}
-
-.heroTitle {
+  }
+  
+  .heroTitle {
     font-size: 4rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-}
-
-.heroSubtitle {
+    font-weight: bold;
+    color: #efbf04; /* Gold */
+  }
+  
+  .heroSubtitle {
     font-size: 2rem;
     font-weight: 500;
-    margin-bottom: 1.5rem;
-}
-
-.heroText {
-    font-size: 1.25rem;
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-}
-
-.heroButtons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.myEquipmentButton {
-    background-color: white;
-    color: #2f855a;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 500;
-    border-radius: 9999px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.myEquipmentButton:hover {
-    background-color: #edf2f7;
-}
-
-.learnMoreButton {
-    border: 2px solid white;
+    margin-top: 1rem;
     color: white;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 500;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.learnMoreButton:hover {
-    background-color: white;
-    color: #2f855a;
-}
-
-/* Search Section */
-.searchSection {
-    margin-top: 3rem;
+  }
+  
+  .heroText {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    color: #d1d1d1;
+  }
+  
+  .heroButtons {
     display: flex;
     justify-content: center;
-}
-
-.searchInput {
-    border: 1px solid #d1d5db;
-    border-radius: 9999px;
-    padding: 0.75rem 1rem;
-    width: 33%;
-    color: #4a5568;
-    transition: border 0.3s;
-}
-
-.searchInput:focus {
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  
+  .myEquipmentButton,
+  .learnMoreButton {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.125rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .myEquipmentButton {
+    background-color: #efbf04; /* Gold */
+    color: #1c1c1c;
+  }
+  
+  .myEquipmentButton:hover {
+    background-color: #d4a903;
+  }
+  
+  .learnMoreButton {
+    background-color: transparent;
+    color: white;
+    border: 2px solid #efbf04; /* Gold */
+  }
+  
+  .learnMoreButton:hover {
+    background-color: #efbf04;
+    color: #1c1c1c;
+  }
+  
+  /* Search Section */
+  .searchSection {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .searchInput {
+    width: 40%;
+    padding: 1rem;
+    border: 1px solid #efbf04; /* Gold border */
+    border-radius: 50px;
+    font-size: 1.125rem;
+    color: #1c1c1c;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .searchInput::placeholder {
+    color: #a0a0a0;
+  }
+  
+  .searchInput:focus {
     outline: none;
-    border-color: #38b2ac;
-}
-
-/* Available Equipment Section */
-.availableEquipmentSection {
+    border-color: #d4a903;
+  }
+  
+  /* Available Equipment Section */
+  .availableEquipmentSection {
     margin-top: 4rem;
-}
-
-.sectionTitle {
+  }
+  
+  .sectionTitle {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: bold;
     text-align: center;
-    color: #2d3748;
-    margin-bottom: 3rem;
-}
-
-.equipmentGrid {
+    color: #1c1c1c;
+    margin-bottom: 2rem;
+  }
+  
+  .equipmentGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-}
-
-.equipmentCard {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .equipmentCard {
     background-color: white;
-    border-radius: 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-}
-
-.equipmentCard:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-}
-
-.equipmentImage {
+  }
+  
+  .equipmentCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .equipmentImage {
     width: 100%;
-    height: 12rem;
+    height: 200px;
     object-fit: cover;
-}
-
-.equipmentContent {
+  }
+  
+  .equipmentContent {
     padding: 1.5rem;
-}
-
-.equipmentAvailability {
-    color: #718096;
-    font-size: 0.875rem;
-}
-
-.equipmentName {
+    text-align: center;
+  }
+  
+  .equipmentAvailability {
+    color: #efbf04; /* Gold */
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .equipmentName {
     font-size: 1.5rem;
-    font-weight: 600;
-    color: #2d3748;
+    font-weight: bold;
+    color: #1c1c1c;
     margin-top: 0.5rem;
-}
-
-.equipmentType {
-    color: #4a5568;
-    margin-top: 0.5rem;
-}
-
-.noEquipmentMessage {
+  }
+  
+  .equipmentType {
+    color: #666;
+    margin-top: 0.25rem;
+  }
+  
+  .noEquipmentMessage {
     text-align: center;
-    color: #4a5568;
-}
-
-.loadMoreContainer {
-    text-align: center;
-    margin-top: 3rem;
-}
-
-.loadMoreButton {
-    padding: 0.75rem 2rem;
-    background-color: #38b2ac;
-    color: white;
-    font-size: 1.125rem;
-    font-weight: 600;
-    border-radius: 9999px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.loadMoreButton:hover {
-    background-color: #2c7a7b;
-}
+    color: #666;
+    font-size: 1.25rem;
+  }
+  

@@ -3,7 +3,7 @@ import { Button, Dropdown, Space, Avatar, ConfigProvider, Grid } from "antd";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import styles from "./NavBarUser.module.css";
-import logo from '../../assets/Logo/logo.png'; 
+import logo from '../../assets/Logo/logo.home.png'; // Import your logo image
 
 const { useBreakpoint } = Grid;
 
@@ -69,10 +69,14 @@ function NavBarUser() {
         >
             <nav className={styles.header}>
                 <div className={styles.container}>
-                    {/* Replace "FarmCart" with the logo */}
-                    <Link to="/" className={styles.logo}>
-                        <img src={logo} alt="FarmCart Logo" className={styles.logoImage} />
-                    </Link>
+                    {/* Logo first on the right */}
+                    <div className={styles.logoNameContainer}>
+                        <img src={logo} alt="Dhananjana Hotel Logo" className={styles.logoImage} />
+                        <div className={styles.brandNameContainer}>
+                            <span className={styles.brandName}>Dhananjana</span>
+                            <span className={styles.hotelName}>Hotel</span>
+                        </div>
+                    </div>
                     {user ? (
                         <Dropdown menu={{ items }}>
                             <a onClick={(e) => e.preventDefault()} className={styles.userMenu}>

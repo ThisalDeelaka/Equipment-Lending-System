@@ -11,7 +11,7 @@ const HomePage = () => {
   const fetchEquipment = async () => {
     try {
       const response = await axios.get("/api/equipment/getEquipment");
-      setEquipmentList(response.data.equipments || []); // Use `equipments` to match the backend
+      setEquipmentList(response.data.equipments || []);
     } catch (error) {
       console.error("Error fetching equipment:", error);
     }
@@ -22,19 +22,21 @@ const HomePage = () => {
   }, []);
 
   const handleCardClick = (equipmentId) => {
-    navigate(`/booking/${equipmentId}`); // Navigate to the booking page for the equipment
+    navigate(`/booking/${equipmentId}`);
   };
 
   const handleMyEquipmentClick = () => {
-    navigate('/my-equipment'); // Redirect to /equipmentDetails
+    navigate("/my-equipment");
   };
 
   const filteredEquipment = equipmentList
-    .filter(equipment => equipment.status === "Available") // Filter by status "Available"
+    .filter((equipment) => equipment.status === "Available")
     .filter((equipment) => {
       const searchTextMatch =
-        (equipment.name && equipment.name.toLowerCase().includes(searchText.toLowerCase())) ||
-        (equipment.type && equipment.type.toLowerCase().includes(searchText.toLowerCase()));
+        (equipment.name &&
+          equipment.name.toLowerCase().includes(searchText.toLowerCase())) ||
+        (equipment.type &&
+          equipment.type.toLowerCase().includes(searchText.toLowerCase()));
       return searchTextMatch;
     });
 
@@ -48,7 +50,8 @@ const HomePage = () => {
             Explore Event Equipment Available for Reservation
           </h2>
           <p className={styles.heroText}>
-            Discover the best event-related equipment for your needs. Reserve audio-visual gear, lighting, staging materials, and more with ease.
+            Discover the best event-related equipment for your needs. Reserve
+            audio-visual gear, lighting, staging materials, and more with ease.
           </p>
           <div className={styles.heroButtons}>
             <button
@@ -57,9 +60,7 @@ const HomePage = () => {
             >
               My Equipment
             </button>
-            <button className={styles.learnMoreButton}>
-              Learn More
-            </button>
+            <button className={styles.learnMoreButton}>Learn More</button>
           </div>
         </div>
       </section>
@@ -87,13 +88,19 @@ const HomePage = () => {
                 onClick={() => handleCardClick(equipment._id)}
               >
                 <img
-                  src={equipment.imageUrl ? `/${equipment.imageUrl}` : "/default-image.jpg"} // Use imageUrl from the backend
+                  src={
+                    equipment.imageUrl
+                      ? `/${equipment.imageUrl}`
+                      : "/default-image.jpg"
+                  }
                   alt={equipment.name}
                   className={styles.equipmentImage}
                 />
                 <div className={styles.equipmentContent}>
                   <p className={styles.equipmentAvailability}>
-                    {equipment.status === "Available" ? "Available" : "Not Available"}
+                    {equipment.status === "Available"
+                      ? "Available"
+                      : "Not Available"}
                   </p>
                   <h4 className={styles.equipmentName}>{equipment.name}</h4>
                   <p className={styles.equipmentType}>{equipment.type}</p>
@@ -101,7 +108,9 @@ const HomePage = () => {
               </div>
             ))
           ) : (
-            <p className={styles.noEquipmentMessage}>No equipment available for reservation.</p>
+            <p className={styles.noEquipmentMessage}>
+              No equipment available for reservation.
+            </p>
           )}
         </div>
       </section>

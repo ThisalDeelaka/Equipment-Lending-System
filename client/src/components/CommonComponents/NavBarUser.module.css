@@ -19,17 +19,44 @@
   align-items: center;
 }
 
-/* Logo */
-.logo {
+/* Flexbox for Logo and Brand Name */
+.logoNameContainer {
   display: flex;
-  align-items: center;
+  align-items: center; /* Align logo and text vertically */
+  justify-content: flex-start;
 }
 
+/* Logo Image Styling */
 .logoImage {
-  height: 50px;
-  max-width: 100%; /* Ensure the logo fits within the available space */
-  border-radius: 8px; /* Optional: Add rounding to match sidebar logo */
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for the logo */
+  height: 80px; /* Increase logo size */
+  max-width: 100%; /* Ensure the logo fits within available space */
+  margin-right: 15px; /* Add some space between the logo and text */
+}
+
+/* Brand Name Container */
+.brandNameContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+/* "Dhananjana" - in white */
+.brandName {
+  font-size: 2.5rem; /* Larger font size for "Dhananjana" */
+  font-family: 'Georgia', serif; /* Classic Serif font */
+  color: #ffffff; /* White color */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem; /* Increase letter spacing for luxury feel */
+}
+
+/* "Hotel" - in gold */
+.hotelName {
+  font-size: 1.5rem; /* Slightly larger font size for "Hotel" */
+  font-family: 'Georgia', serif;
+  color: #EFBF04; /* Gold color */
+  text-transform: uppercase;
+  letter-spacing: 0.15rem; /* Larger letter spacing for a more spaced look */
+  margin-top: -5px; /* Slight negative margin to pull it closer to "Dhananjana" */
 }
 
 /* User Menu */
@@ -78,6 +105,14 @@
   }
 
   .logoImage {
-      height: 40px;
+      height: 70px; /* Slightly smaller logo for mobile devices */
+  }
+
+  .brandName {
+      font-size: 2rem; /* Adjust brand name font size for smaller screens */
+  }
+
+  .hotelName {
+      font-size: 1.2rem;
   }
 }
