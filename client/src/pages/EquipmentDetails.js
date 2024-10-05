@@ -5,6 +5,7 @@ import { FaEdit, FaTrashAlt, FaDownload, FaSearch } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import debounce from "lodash.debounce";
+import { format } from "date-fns"; // Import date formatting utility
 import styles from "./EquipmentDetails.module.css";
 
 function EquipmentDetails() {
@@ -13,15 +14,15 @@ function EquipmentDetails() {
   const [formData, setFormData] = useState({
     _id: "",
     fullName: "",
-    rentalDuration: 1,
     userEmail: "",
     userPhone: "",
-    specialRequest: "",
+    specialRequests: "",
   });
   const [errors, setErrors] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredReservations, setFilteredReservations] = useState([]);
 
+  // Fetch current user data
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const userEmail = currentUser ? currentUser.email : null;
 
@@ -35,6 +36,7 @@ function EquipmentDetails() {
     handleSearch(searchTerm);
   }, [reservations, searchTerm]);
 
+  // Fetch reservations by user email
   const fetchReservations = async (email) => {
     try {
       const response = await axios.get(`http://localhost:5000/api/bookings/user/${email}`);
@@ -50,30 +52,13 @@ function EquipmentDetails() {
     let updatedValue = value;
     let updatedErrors = { ...errors };
 
+    // Validation for Full Name (only alphabetic characters and spaces)
     if (name === "fullName") {
       updatedValue = value.replace(/[^A-Za-z\s]/g, "");
       if (updatedValue !== value) {
         updatedErrors.fullName = "Only letters and spaces are allowed for Full Name";
       } else {
         delete updatedErrors.fullName;
-      }
-    }
-
-    if (name === "rentalDuration") {
-      updatedValue = value.replace(/[^0-9]/g, "");
-      if (updatedValue !== value || updatedValue === "" || Number(updatedValue) <= 0) {
-        updatedErrors.rentalDuration = "Rental duration must be a positive number";
-      } else {
-        delete updatedErrors.rentalDuration;
-      }
-    }
-
-    if (name === "userEmail") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value)) {
-        updatedErrors.userEmail = "Invalid email address";
-      } else {
-        delete updatedErrors.userEmail;
       }
     }
 
@@ -98,10 +83,9 @@ function EquipmentDetails() {
     setFormData({
       _id: reservation._id,
       fullName: reservation.fullName,
-      rentalDuration: reservation.rentalDuration,
       userEmail: reservation.userEmail,
       userPhone: reservation.userPhone,
-      specialRequest: reservation.specialRequest,
+      specialRequests: reservation.specialRequests,
     });
   };
 
@@ -151,20 +135,20 @@ function EquipmentDetails() {
   const handleDownloadReport = () => {
     const doc = new jsPDF();
     doc.setFontSize(24);
-    doc.setTextColor(0, 128, 0);
+    doc.setTextColor(0, 128, 0); // Green color
     doc.text("Equipment Lending", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
     doc.setFontSize(16);
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(0, 0, 0); // Black color
     doc.text("Equipment Reservation Report", doc.internal.pageSize.getWidth() / 2, 40, { align: "center" });
 
-    const tableColumn = ["Full Name", "Rental Duration", "Email", "Phone", "Special Request"];
+    const tableColumn = ["Full Name", "Email", "Phone", "Special Requests", "Reservation Date"];
     const tableRows = reservations.map((reservation) => [
       reservation.fullName,
-      reservation.rentalDuration,
       reservation.userEmail,
       reservation.userPhone,
-      reservation.specialRequest || "None",
+      reservation.specialRequests || "None",
+      format(new Date(reservation.reservationDate), "PP"), // Format reservation date
     ]);
 
     doc.autoTable({
@@ -191,9 +175,8 @@ function EquipmentDetails() {
       <section className={styles.contentSection}>
         <div className={styles.headerSection}>
           <h1 className={styles.title}>Equipment Reservations</h1>
-          
           <button onClick={handleDownloadReport} className={styles.downloadButton}>
-            <FaDownload className={styles.icon} /> Report
+            <FaDownload className={styles.icon} /> Download Report
           </button>
         </div>
 
@@ -217,11 +200,11 @@ function EquipmentDetails() {
             <table className={styles.table}>
               <thead className={styles.tableHeader}>
                 <tr>
-                  <th>Equipment Name</th>
-                  <th>Rental Duration</th>
+                  <th>Full Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Special Request</th>
+                  <th>Special Requests</th>
+                  <th>Reservation Date</th> {/* Added column for reservation date */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -229,10 +212,10 @@ function EquipmentDetails() {
                 {filteredReservations.map((reservation) => (
                   <tr key={reservation._id} className={styles.tableRow}>
                     <td>{reservation.fullName}</td>
-                    <td>{reservation.rentalDuration}</td>
                     <td>{reservation.userEmail}</td>
                     <td>{reservation.userPhone}</td>
-                    <td>{reservation.specialRequest || "None"}</td>
+                    <td>{reservation.specialRequests || "None"}</td>
+                    <td>{format(new Date(reservation.reservationDate), "PP")}</td> {/* Display reservation date */}
                     <td className={styles.actionsCell}>
                       <button onClick={() => handleEditReservation(reservation)} className={styles.editButton}>
                         <FaEdit className={styles.icon} />
@@ -254,7 +237,7 @@ function EquipmentDetails() {
           <div className={styles.modalContent}>
             <h3 className={styles.modalTitle}>Edit Reservation</h3>
             <div className={styles.modalFormGroup}>
-              <label>Equipment Name:</label>
+              <label>Full Name:</label>
               <input
                 type="text"
                 name="fullName"
@@ -263,17 +246,6 @@ function EquipmentDetails() {
                 className={styles.modalInput}
               />
               {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
-            </div>
-            <div className={styles.modalFormGroup}>
-              <label>Rental Duration:</label>
-              <input
-                type="number"
-                name="rentalDuration"
-                value={formData.rentalDuration}
-                onChange={handleInputChange}
-                className={styles.modalInput}
-              />
-              {errors.rentalDuration && <p className={styles.error}>{errors.rentalDuration}</p>}
             </div>
             <div className={styles.modalFormGroup}>
               <label>Email:</label>
@@ -298,10 +270,10 @@ function EquipmentDetails() {
               {errors.userPhone && <p className={styles.error}>{errors.userPhone}</p>}
             </div>
             <div className={styles.modalFormGroup}>
-              <label>Special Request:</label>
+              <label>Special Requests:</label>
               <textarea
-                name="specialRequest"
-                value={formData.specialRequest}
+                name="specialRequests"
+                value={formData.specialRequests}
                 onChange={handleInputChange}
                 className={styles.modalTextarea}
               />
