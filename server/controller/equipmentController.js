@@ -2,7 +2,7 @@ const Equipment = require('../models/equipment');
 
 // Create new equipment
 exports.createEquipment = async (req, res) => {
-  const { name, type, condition, status } = req.body;
+  const { name, type, condition, status,price } = req.body;
   const imageUrl = req.file ? req.file.path : null; // Get the image URL from the uploaded file, if provided
 
   try {
@@ -11,6 +11,7 @@ exports.createEquipment = async (req, res) => {
       type,
       condition,
       status,
+      price,
       imageUrl, // Store the image path in the database
     });
 

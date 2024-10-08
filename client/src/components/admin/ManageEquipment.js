@@ -18,6 +18,7 @@ function ManageEquipment() {
     condition: "Good",
     status: "Available",
     image: null,
+    price: "", // Add price field
   });
   const [editEquipment, setEditEquipment] = useState(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -76,6 +77,7 @@ function ManageEquipment() {
     const formData = new FormData();
     formData.append("name", newEquipment.name);
     formData.append("type", newEquipment.type);
+    formData.append("price", newEquipment.price); // Append price to form data
     formData.append("condition", newEquipment.condition);
     formData.append("status", newEquipment.status);
     if (newEquipment.image) {
@@ -89,7 +91,7 @@ function ManageEquipment() {
         },
       });
       setEquipmentList([...equipmentList, response.data.equipment]);
-      setNewEquipment({ name: "", type: "", condition: "Good", status: "Available", image: null });
+      setNewEquipment({ name: "", type: "", price: "" , condition: "Good", status: "Available", image: null });
       setIsAddDialogOpen(false);
       showAlert("Equipment added successfully!");
     } catch (error) {
@@ -193,6 +195,17 @@ function ManageEquipment() {
                     onChange={handleNewEquipmentChange}
                   />
                 </div>
+                {/* <div className={styles.formRow}>
+                  <label htmlFor="price">Price</label>
+                  <Input
+                    id="price"
+                    type="number"
+                    placeholder="Price"
+                    name="price"
+                    value={newEquipment.price}
+                    onChange={handleNewEquipmentChange}
+                  />
+                </div> */}
 
                 <label htmlFor="condition">Condition</label>
                 <select
@@ -257,6 +270,7 @@ function ManageEquipment() {
                 <TableHead className={styles.tableHead}>Image</TableHead>
                 <TableHead className={styles.tableHead}>Name</TableHead>
                 <TableHead className={styles.tableHead}>Type</TableHead>
+                {/* <TableHead className={styles.tableHead}>Price</TableHead> */}
                 <TableHead className={styles.tableHead}>Condition</TableHead>
                 <TableHead className={styles.tableHead}>Status</TableHead>
                 <TableHead className={styles.tableHead}>Actions</TableHead>
@@ -271,6 +285,7 @@ function ManageEquipment() {
                     </TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.type}</TableCell>
+                    {/* <TableCell>{item.price}</TableCell> */}
                     <TableCell>{item.condition}</TableCell>
                     <TableCell>{item.status}</TableCell>
                     <TableCell>
